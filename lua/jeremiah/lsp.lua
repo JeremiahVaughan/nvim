@@ -1,0 +1,133 @@
+local declaration_keymap = 'gD'                    -- GD key for finding the variable declarations
+local definition_keymap = 'gd'                     -- GD key for finding the variable definitions
+local hover_keymap = 'K'                           -- K key to display hover documentations
+local implementation_keymap = 'gi'                 -- GI for implementation of interfaces
+local signature_help_keymap = '<C-k>'              -- Control K to view function signature help
+local add_workspace_folder_keymap = '<space>wa'    -- Space wa to add workspace folder
+local remove_workspace_folder_keymap = '<space>wr' -- Space wr to remove workspace folder
+local list_workspace_folders_keymap = '<space>wl'  -- Space wl to list workspace folder
+local type_definition_keymap = '<space>D'          -- Space D to go to type definitions of selected variable
+local rename_keymap = '<space>rn'                  -- Space rn to rename symbol or variable
+local code_action_keymap = '<space>ca'             -- Space ca executes code actions
+local references_keymap = 'gr'                     -- GR to find reference of variable or symbol in scope
+local formatting_keymap = '<space>f'               -- Space f to format the document
+
+
+local lsp_zero = require('lsp-zero')
+local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+local lsp_format_on_save = function(bufnr)
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd('BufWritePre', {
+        group = augroup,
+        buffer = bufnr,
+        callback = function()
+            vim.lsp.buf.format()
+        end,
+    })
+end
+
+-- Mason setup
+require("mason").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = { "gopls", "lua_ls", "pyright", "tsserver", "eslint" },
+    automatic_installation = true,
+    handlers = {
+        lsp_zero.default_setup,
+        lua_ls = function()
+            local lua_opts = lsp_zero.nvim_lua_ls()
+            require('lspconfig').lua_ls.setup(lua_opts)
+        end,
+    }
+})
+
+
+lsp_zero.on_attach(function(client, bufnr)
+    lsp_format_on_save(bufnr)
+    local opts = { buffer = bufnr, remap = false }
+
+    vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
+    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
+    vim.keymap.set('n', '<leader>vws', function() vim.lsp.buf.workspace_symbol() end, opts)
+    vim.keymap.set('n', '<leader>vd', function() vim.diagnostic.open_float() end, opts)
+    vim.keymap.set('n', '[d',
+        function()
+            vim.diagnostic.goto_next({ popup_opts = { focusable = false } }); vim.cmd("normal! zz")
+        end, opts)
+    vim.keymap.set('n', ']d',
+        function()
+            vim.diagnostic.goto_prev({ popup_opts = { focusable = false } }); vim.cmd("normal! zz")
+        end, opts)
+    vim.keymap.set('n', '<leader>vca', function() vim.lsp.buf.code_action() end, opts)
+    vim.keymap.set('n', references_keymap, function() vim.lsp.buf.references() end, opts)
+    vim.keymap.set('n', rename_keymap, function() vim.lsp.buf.rename() end, opts)
+    vim.keymap.set('i', '<C-k>', function() vim.lsp.buf.signature_help() end, opts)
+    vim.keymap.set('n', formatting_keymap, function() vim.lsp.buf.format() end, opts)
+end)
+
+local cmp = require('cmp')
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
+
+cmp.setup({
+    sources = {
+        { name = 'path' },
+        { name = 'nvim_lsp' },
+        { name = 'nvim_lua' },
+        { name = 'luasnip', keyword_length = 2 },
+        { name = 'buffer',  keyword_length = 3 },
+    },
+    formatting = lsp_zero.cmp_format({ details = false }),
+    mapping = cmp.mapping.preset.insert({
+        ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+        ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+        ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-Space>'] = cmp.mapping.complete(),
+    }),
+    snippet = {
+        expand = function(args)
+            require('luasnip').lsp_expand(args.body)
+        end,
+    },
+})
+
+-- Configure gopls for Golang
+-- lspconfig.gopls.setup({
+--     filetypes = { "go", "gomod", "gowork", "gotmpl" },
+--     settings = {
+--         gopls = {
+--             analyses = {
+--                 unusedparams = true,
+--                 shadow = true,
+--             },
+--             completeUnimported = true,
+--             usePlaceholders = true,
+--             staticcheck = true,
+--         },
+--     },
+--     on_attach = on_attach
+-- })
+
+-- Configure Pyright for Python
+-- lspconfig.pyright.setup({
+--     on_attach = on_attach
+-- })
+
+-- Configure lua_ls for Lua
+-- lspconfig.lua_ls.setup({
+--     settings = {
+--         Lua = {
+--             runtime = {
+--                 version = 'LuaJIT',  -- If you're working with Neovim, LuaJIT is the default
+--             },
+--             diagnostics = {
+--                 globals = {'vim'},  -- Recognize 'vim' as a global variable, crucial for Neovim config
+--             },
+--             workspace = {
+--                 library = vim.api.nvim_get_runtime_file("", true),  -- Make the server aware of Neovim runtime files
+--             },
+--             telemetry = {
+--                 enable = false,  -- Disable telemetry for privacy
+--             },
+--         },
+--     },
+--     on_attach = on_attach
+-- })

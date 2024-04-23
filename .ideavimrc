@@ -1,0 +1,66 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+" Remap the Enter key to act as the Escape key in different modes:
+" Disable the functionality of the original Escape key:
+" Insert mode
+" imap <Esc> <Nop>
+" Normal mode
+" nmap <Esc> <Nop>
+" Visual mode
+" vmap <Esc> <Nop>
+" Insert mode
+" imap <CR> <Esc>
+" Visual mode
+" vmap <CR> <Esc>
+
+" Insert mode
+inoremap <Esc> <Nop>
+inoremap <CR> <Esc>
+inoremap <S-Enter> <Enter>
+" Normal mode
+nnoremap <Esc> <Nop>
+" Visual mode
+vnoremap <Esc> <Nop>
+vnoremap <CR> <Esc>
+
+
+
+
+
+let mapleader = "\\"
+nnoremap <Leader>rn :action RenameElement<CR>
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Enable Relative line numbers
+set relativenumber
+
+" Do incremental searching.
+set incsearch
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)
