@@ -11,6 +11,7 @@ local find_files_keymap = '<leader>ff' -- Leader followed by 'ff' triggers findi
 local grep_files_keymap = '<leader>g'  -- grep through files to find files by text
 local grep_string_keymap = '<leader>fs'
 local search_buffers_keymap = '<leader>b'
+local search_registers_keymap = '<leader>y'
 local nvim_tree_toggle_keymap = '<leader>n' -- Leader n will toggle the file explorer
 local shortcut_init_selection = "gnn"
 local shortcut_node_incremental = "grn"
@@ -132,6 +133,7 @@ vim.api.nvim_set_keymap('n', find_files_keymap, ':Telescope find_files<CR>', { n
 vim.api.nvim_set_keymap('n', grep_files_keymap, ':Telescope live_grep<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', grep_string_keymap, ':Telescope grep_string<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', search_buffers_keymap, ':Telescope buffers<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', search_registers_keymap, ':Telescope registers<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', open_reference_window, ':copen<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', close_reference_window, ':cclose<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', next_error, ':cnext<CR>', { noremap = true, silent = true })
@@ -225,9 +227,6 @@ require('nvim-treesitter.configs').setup {
 -- nvim tree setup
 vim.opt.termguicolors = true
 
--- empty setup using defaults
-require("nvim-tree").setup()
-
 -- OR setup with some options
 require("nvim-tree").setup({
     sort = {
@@ -243,4 +242,5 @@ require("nvim-tree").setup({
         dotfiles = true,
     },
 })
+
 vim.api.nvim_set_keymap('n', nvim_tree_toggle_keymap, ':NvimTreeToggle<CR>', { noremap = true, silent = true })
