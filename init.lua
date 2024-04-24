@@ -6,10 +6,11 @@ local previous_error = '<F7>'
 local open_reference_window = '<C-w>r'
 local close_reference_window = '<C-w>q'
 local leader_keymap = " "
-local maplocalleader = " "                  -- Local Leader key is set to '\'
-local find_files_keymap = '<leader>ff'      -- Leader followed by 'ff' triggers finding files
-local grep_files_keymap = '<leader>g'       -- grep through files to find files by text
+local maplocalleader = " "             -- Local Leader key is set to '\'
+local find_files_keymap = '<leader>ff' -- Leader followed by 'ff' triggers finding files
+local grep_files_keymap = '<leader>g'  -- grep through files to find files by text
 local grep_string_keymap = '<leader>fs'
+local search_buffers_keymap = '<leader>b'
 local nvim_tree_toggle_keymap = '<leader>n' -- Leader n will toggle the file explorer
 local shortcut_init_selection = "gnn"
 local shortcut_node_incremental = "grn"
@@ -130,6 +131,7 @@ vim.g.maplocalleader = maplocalleader -- Same for `maplocalleader`
 vim.api.nvim_set_keymap('n', find_files_keymap, ':Telescope find_files<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', grep_files_keymap, ':Telescope live_grep<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', grep_string_keymap, ':Telescope grep_string<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', search_buffers_keymap, ':Telescope buffers<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', open_reference_window, ':copen<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', close_reference_window, ':cclose<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', next_error, ':cnext<CR>', { noremap = true, silent = true })
@@ -139,85 +141,85 @@ vim.api.nvim_set_keymap('n', undo_tree, ':UndotreeToggle<CR>', { noremap = true,
 -- Auto-save function when Neovim loses focus or files are changed
 local group = vim.api.nvim_create_augroup('Autosave', { clear = true })
 vim.api.nvim_create_autocmd({ "FocusLost", "WinLeave" }, {
-	group = group,
-	pattern = '*',
-	command = 'silent! wa'
+    group = group,
+    pattern = '*',
+    command = 'silent! wa'
 })
 
 
 -- Status bar setup
 require('lualine').setup {
-	options = {
-		icons_enabled = true,
-		theme = 'wombat',
-		component_separators = { left = '', right = '' },
-		section_separators = { left = '', right = '' },
-		disabled_filetypes = {
-			statusline = {},
-			winbar = {},
-		},
-		ignore_focus = {},
-		always_divide_middle = true,
-		globalstatus = false,
-		refresh = {
-			statusline = 1000,
-			tabline = 1000,
-			winbar = 1000,
-		}
-	},
-	sections = {
-		lualine_a = { 'mode' },
-		lualine_b = { 'branch', 'diff', 'diagnostics' },
-		lualine_c = {
-			{
-				'filename',
-				path = 1,
-			},
-		},
-		lualine_x = {},
-		lualine_y = { 'progress' },
-		lualine_z = { 'location' }
-	},
-	inactive_sections = {
-		lualine_a = {},
-		lualine_b = {},
-		lualine_c = {},
-		lualine_x = { 'location', 'encoding', 'fileformat', 'filetype' },
-		lualine_y = {},
-		lualine_z = {}
-	},
-	tabline = {},
-	winbar = {},
-	inactive_winbar = {},
-	extensions = {}
+    options = {
+        icons_enabled = true,
+        theme = 'wombat',
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        disabled_filetypes = {
+            statusline = {},
+            winbar = {},
+        },
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = false,
+        refresh = {
+            statusline = 1000,
+            tabline = 1000,
+            winbar = 1000,
+        }
+    },
+    sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = {
+            {
+                'filename',
+                path = 1,
+            },
+        },
+        lualine_x = {},
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = { 'location', 'encoding', 'fileformat', 'filetype' },
+        lualine_y = {},
+        lualine_z = {}
+    },
+    tabline = {},
+    winbar = {},
+    inactive_winbar = {},
+    extensions = {}
 }
 
 
 -- Telescope Setup
 require('telescope').setup {
-	defaults = {
-		file_ignore_patterns = {
-			"node_modules",
-			"%.jpg",
-			"%.png" }
-	},
+    defaults = {
+        file_ignore_patterns = {
+            "node_modules",
+            "%.jpg",
+            "%.png" }
+    },
 }
 
 
 -- Treesitter setup
 require('nvim-treesitter.configs').setup {
-	ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query" }, -- Install parsers for Go and Python only
-	highlight = {
-		enable = true,                                                                              -- Enable syntax highlighting
-		additional_vim_regex_highlighting = false                                                   -- Disable regex based highlighting
-	},
-	incremental_selection = {
-		enable = true,
-		init_selection = shortcut_init_selection,
-		node_incremental = shortcut_node_incremental,
-		node_decremental = shortcut_node_decremental
-	},
-	indent = { enable = true } -- Enable indentation
+    ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query" }, -- Install parsers for Go and Python only
+    highlight = {
+        enable = true,                                                                                         -- Enable syntax highlighting
+        additional_vim_regex_highlighting = false                                                              -- Disable regex based highlighting
+    },
+    incremental_selection = {
+        enable = true,
+        init_selection = shortcut_init_selection,
+        node_incremental = shortcut_node_incremental,
+        node_decremental = shortcut_node_decremental
+    },
+    indent = { enable = true } -- Enable indentation
 }
 
 -- nvim tree setup
@@ -228,17 +230,17 @@ require("nvim-tree").setup()
 
 -- OR setup with some options
 require("nvim-tree").setup({
-	sort = {
-		sorter = "case_sensitive",
-	},
-	view = {
-		width = 30,
-	},
-	renderer = {
-		group_empty = true,
-	},
-	filters = {
-		dotfiles = true,
-	},
+    sort = {
+        sorter = "case_sensitive",
+    },
+    view = {
+        width = 30,
+    },
+    renderer = {
+        group_empty = true,
+    },
+    filters = {
+        dotfiles = true,
+    },
 })
 vim.api.nvim_set_keymap('n', nvim_tree_toggle_keymap, ':NvimTreeToggle<CR>', { noremap = true, silent = true })
