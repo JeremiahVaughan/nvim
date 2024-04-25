@@ -49,61 +49,61 @@ vim.api.nvim_set_keymap('c', '<Backspace>', '<Nop>', { noremap = true, silent = 
 -- Color Scheme --
 vim.opt.cursorline = true
 vim.cmd [[
+  highlight @boolean guifg=#ff00ff gui=bold
+  highlight @comment guifg=#808080
+  highlight @constant.builtin guifg=#ff00ff gui=bold
+  highlight @function.builtin guifg=#a7e22e
+  highlight @keyword guifg=#ff00ff gui=bold
+  highlight @keyword.conditional.ternary guifg=#a9b7c5
+  highlight @number guifg=#ae81ff
+  highlight @operator guifg=#a9b7c5
+  highlight @property guifg=#cf8823
+  highlight @punctuation.bracket guifg=#a9b7c5
+  highlight @punctuation.delimiter guifg=#a9b7c5
+  highlight @punctuation.special guifg=#a9b7c5
+  highlight @string guifg=#e6db74
+  highlight @tag gui=bold guifg=#28bda4
+  highlight @tag.attribute guifg=#cecece
+  highlight @tag.builtin gui=bold guifg=#e8be69
+  highlight @tag.delimiter guifg=#a9b7c5
+  highlight @type guifg=#66d9ef
+  highlight @type.builtin guifg=#20999d
+  highlight @type.definition guifg=#66d9ef
+  highlight @variable guifg=#cbad96
+  highlight @variable.member guifg=#cf8823
+  highlight cssBackgroundProp guifg=#a9b7c5
+  highlight cssBorderProp guifg=#a9b7c5
+  highlight cssBoxProp guifg=#a9b7c5
+  highlight cssColor guifg=#FD971F
+  highlight cssColorProp guifg=#a9b7c5
+  highlight cssFlexibleBoxAttr guifg=#679342
+  highlight cssFlexibleBoxProp guifg=#a9b7c5
+  highlight cssFontAttr guifg=#679342
+  highlight cssFontProp guifg=#a9b7c5
+  highlight cssMediaProp guifg=#a9b7c5
+  highlight cssMultiColumnAttr guifg=#679342
+  highlight cssPositioningAttr guifg=#679342
+  highlight cssPositioningProp guifg=#a9b7c5
+  highlight cssPseudoClass guifg=#C5BE69 gui=bold
+  highlight cssPseudoClassId guifg=#C5BE69 gui=bold
+  highlight cssTextAttr guifg=#679342
+  highlight cssTextProp guifg=#a9b7c5
+  highlight cssUIAttr guifg=#679342
+  highlight cssUIProp guifg=#a9b7c5
+  highlight cssUnitDecorators guifg=#679342
+  highlight cssValueLength guifg=#ae81ff
+  highlight cssValueNumber guifg=#ae81ff
   highlight CursorLine cterm=NONE ctermbg=236 ctermfg=NONE guibg=#414141
+  highlight Function guifg=#a7e22e
   highlight Normal guibg=#2c2c2c
   highlight Pmenu guifg=#FFFFFF guibg=#707070
   highlight PmenuSel guifg=#000000 guibg=#909090
-  highlight TelescopeSelection gui=bold guibg=White guifg=Black
-  highlight TelescopeSelectionCaret guifg=Re
-  highlight @variable.member guifg=#cf8823
-  highlight Function guifg=#a7e22e
-  highlight @function.builtin guifg=#a7e22e
-  highlight @keyword guifg=#ff00ff gui=bold
-  highlight @boolean guifg=#ff00ff gui=bold
-  highlight @constant.builtin guifg=#ff00ff gui=bold
-  highlight @operator guifg=#a9b7c5
-  highlight @tag.delimiter guifg=#a9b7c5
-  highlight @punctuation.delimiter guifg=#a9b7c5
-  highlight @punctuation.special guifg=#a9b7c5
-  highlight @keyword.conditional.ternary guifg=#a9b7c5
-  highlight @punctuation.bracket guifg=#a9b7c5
-  highlight @string guifg=#e6db74
-  highlight @number guifg=#ae81ff
-  highlight @variable guifg=#cbad96
-  highlight @comment guifg=#808080
-  highlight @type guifg=#66d9ef
-  highlight @type.definition guifg=#66d9ef
-  highlight @type.builtin guifg=#20999d
-  highlight @property guifg=#cf8823
-  highlight @tag.builtin gui=bold guifg=#e8be69
-  highlight @tag gui=bold guifg=#28bda4
-  highlight @tag.attribute guifg=#cecece
-  highlight sassClass guifg=#C5BE69 gui=bold
   highlight sassAmpersand guifg=#C5BE69 gui=bold
-  highlight cssPseudoClass guifg=#C5BE69 gui=bold
-  highlight cssPseudoClassId guifg=#C5BE69 gui=bold
+  highlight sassClass guifg=#C5BE69 gui=bold
   highlight sassDefinition guifg=#a9b7c5
   highlight sassProperty guifg=#a9b7c5
-  highlight cssBorderProp guifg=#a9b7c5
-  highlight cssBoxProp guifg=#a9b7c5
-  highlight cssFontProp guifg=#a9b7c5
-  highlight cssMediaProp guifg=#a9b7c5
-  highlight cssBackgroundProp guifg=#a9b7c5
-  highlight cssPositioningProp guifg=#a9b7c5
-  highlight cssTextProp guifg=#a9b7c5
-  highlight cssFlexibleBoxProp guifg=#a9b7c5
-  highlight cssUIProp guifg=#a9b7c5
-  highlight cssValueLength guifg=#ae81ff
-  highlight cssValueNumber guifg=#ae81ff
-  highlight cssUnitDecorators guifg=#679342
-  highlight cssPositioningAttr guifg=#679342
-  highlight cssColor guifg=#FD971F
-  highlight cssColorProp guifg=#a9b7c5
-  highlight cssUIAttr guifg=#679342
-  highlight cssFontAttr guifg=#679342
-  highlight cssTextAttr guifg=#679342
-  highlight cssFlexibleBoxAttr guifg=#679342
-  highlight cssMultiColumnAttr guifg=#679342
+  highlight TelescopeSelection gui=bold guibg=White guifg=Black
+  highlight TelescopeSelectionCaret guifg=Re
 ]]
 
 -- disabled for nvim tree
