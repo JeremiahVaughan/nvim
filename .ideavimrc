@@ -25,6 +25,9 @@ nnoremap <Esc> <Nop>
 " Visual mode
 vnoremap <Esc> <Nop>
 vnoremap <CR> <Esc>
+" Replace mode
+rnoremap <Esc> <Nop>
+rnoremap <CR> <Esc>
 
 
 
