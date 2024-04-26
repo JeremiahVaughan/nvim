@@ -129,6 +129,10 @@ vim.o.wrap = false
 vim.cmd('syntax enable')              -- Enables syntax highlighting
 vim.g.mapleader = leader_keymap       -- Setting space as the leader key
 vim.g.maplocalleader = maplocalleader -- Same for `maplocalleader`
+
+-- Use system clipboard by default
+vim.opt.clipboard = "unnamedplus"
+
 vim.api.nvim_set_keymap('n', find_files_keymap, ':Telescope find_files<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', grep_files_keymap, ':Telescope live_grep<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', grep_string_keymap, ':Telescope grep_string<CR>', { noremap = true, silent = true })
