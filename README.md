@@ -13,7 +13,7 @@
      1. https://visualstudio.microsoft.com/downloads/?q=build+tools
      2. Choose the workload called "Desktop development with C++"
      3. Click install
-     5. Will want to install some fonts too: https://www.nerdfonts.com/font-downloads I am currently used to this one: 
+     4. Will want to install some fonts too: https://www.nerdfonts.com/font-downloads I am currently used to this one: 
          - `Hack Nerd Font Mono` @ https://github.com/ryanoasis/nerd-fonts`
 5. Install mingw for the things visual studio misses: 
     - `choco install mingw`
