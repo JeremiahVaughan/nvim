@@ -37,6 +37,27 @@ require("mason-lspconfig").setup({
             local lua_opts = lsp_zero.nvim_lua_ls()
             require('lspconfig').lua_ls.setup(lua_opts)
         end,
+        gopls = function() -- Custom handler for gopls
+            local gopls_opts = {
+                settings = {
+                    gopls = {
+                        analyses = {
+                            -- ref: https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
+                            unusedparams = true,
+                            shadow = true,
+                            unusedvariable = true,
+                            unusedwrite = true,
+                            useany = true,
+                        },
+                        completeUnimported = true,
+                        usePlaceholders = true,
+                        staticcheck = true, -- ref: https://github.com/dominikh/go-tools?tab=readme-ov-file
+                    },
+                },
+            }
+            -- Use lspconfig to setup gopls with the defined options
+            require('lspconfig').gopls.setup(gopls_opts)
+        end,
     }
 })
 
@@ -131,3 +152,19 @@ cmp.setup({
 --     },
 --     on_attach = on_attach
 -- })
+--
+--
+
+function PrintLSPConfig()
+    local clients = vim.lsp.get_active_clients()
+    if #clients == 0 then
+        print("ARRGGGH!! No active LSP clients.")
+        return
+    end
+    for _, client in ipairs(clients) do
+        print("LSP client:", client.name)
+        print(vim.inspect(client.config.settings))
+    end
+end
+
+vim.cmd([[ command! PrintLSPConfig lua PrintLSPConfig() ]])
