@@ -55,6 +55,8 @@ vim.g.have_nerd_font = true
 vim.opt.showmode = false -- mode is already in the status line
 
 -- Color Scheme --
+vim.api.nvim_set_hl(0, 'LineNrAbove', { fg = '#75aaff' })
+vim.api.nvim_set_hl(0, 'LineNrBelow', { fg = '#008518' })
 vim.opt.cursorline = true
 vim.cmd [[
   highlight @boolean guifg=#ff00ff gui=bold

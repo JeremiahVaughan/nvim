@@ -50,8 +50,8 @@ require("mason-lspconfig").setup({
                             useany = true,
                         },
                         completeUnimported = true,
-                        usePlaceholders = true,
-                        staticcheck = true, -- ref: https://github.com/dominikh/go-tools?tab=readme-ov-file
+                        usePlaceholders = false, -- disabling because it is not working properly
+                        staticcheck = true,      -- ref: https://github.com/dominikh/go-tools?tab=readme-ov-file
                     },
                 },
             }
