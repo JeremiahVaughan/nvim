@@ -30,7 +30,8 @@
 10. Install plugins:
     - `:PackerInstall`
 11. Restart nvim
-
+12. Install firenvim
+    - `https://github.com/glacambre/firenvim?tab=readme-ov-file` 
 
 Note:
 - nvim-qt is available on mac too: https://github.com/equalsraf/neovim-qt

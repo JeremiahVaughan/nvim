@@ -248,3 +248,13 @@ require("nvim-tree").setup({
 })
 
 vim.api.nvim_set_keymap('n', nvim_tree_toggle_keymap, ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+
+--- Firenvim
+vim.g.firenvim_config = {
+    localSettings = {
+        ['https://www.evernote.com/'] = {
+            selector = "en-note",
+            takeover = "always"
+        }
+    }
+}
