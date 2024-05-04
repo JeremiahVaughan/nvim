@@ -6,7 +6,7 @@ local previous_error = '<F7>'
 local open_reference_window = '<C-w>r'
 local close_reference_window = '<C-w>q'
 local leader_keymap = " "
-local maplocalleader = " "             -- Local Leader key is set to '\'
+local maplocalleader = "\\"            -- Local Leader key is set to '\'
 local find_files_keymap = '<leader>ff' -- Leader followed by 'ff' triggers finding files
 local grep_files_keymap = '<leader>g'  -- grep through files to find files by text
 local grep_string_keymap = '<leader>fs'
@@ -16,7 +16,12 @@ local nvim_tree_toggle_keymap = '<leader>n' -- Leader n will toggle the file exp
 local shortcut_init_selection = "gnn"
 local shortcut_node_incremental = "grn"
 local shortcut_node_decremental = "grm"
+local toggle_trouble = "<leader>tt"
+
+vim.g.mapleader = leader_keymap       -- Setting space as the leader key
+vim.g.maplocalleader = maplocalleader -- Same for `maplocalleader`
 -- Built in Comment/Uncomment --> normal mode gcgc --> visual mode gc
+
 
 -- Remap esc to enter
 -- Disable <Esc> in Insert mode
@@ -34,6 +39,7 @@ vim.api.nvim_set_keymap('v', '<CR>', '<Esc>', { noremap = true, silent = true })
 -- Replace mode
 vim.api.nvim_set_keymap('!', '<CR>', '<Esc>', { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap('n', toggle_trouble, ':TroubleToggle<CR>', { noremap = true, silent = true })
 -- Disabling backspace so I use control + h instead since its closer
 -- Disable <Backspace> in Normal mode
 vim.api.nvim_set_keymap('i', '<Backspace>', '<Nop>', { noremap = true, silent = true })
@@ -45,6 +51,8 @@ vim.api.nvim_set_keymap('c', '<Backspace>', '<Nop>', { noremap = true, silent = 
 --   autocmd VimEnter * silent! lua require('telescope.builtin').find_files()
 -- ]]
 
+vim.g.have_nerd_font = true
+vim.opt.showmode = false -- mode is already in the status line
 
 -- Color Scheme --
 vim.opt.cursorline = true
@@ -106,6 +114,10 @@ vim.cmd [[
   highlight TelescopeSelectionCaret guifg=Re
 ]]
 
+-- white space visuals
+-- vim.opt.list = true
+-- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
 -- disabled for nvim tree
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -123,12 +135,20 @@ vim.o.backup = false
 vim.o.undodir = os.getenv("HOME") .. "/.vim/undodir" ]]
 vim.o.undofile = true
 
+-- make auto save to swap file more frequent
+vim.o.updatetime = 250
+vim.o.signcolumn = 'yes'
+
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 10
+
+vim.opt.inccommand = 'split'
+
+vim.o.timeoutlen = 900
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.o.wrap = false
-vim.cmd('syntax enable')              -- Enables syntax highlighting
-vim.g.mapleader = leader_keymap       -- Setting space as the leader key
-vim.g.maplocalleader = maplocalleader -- Same for `maplocalleader`
+vim.cmd('syntax enable') -- Enables syntax highlighting
 
 -- Use system clipboard by default
 vim.opt.clipboard = "unnamedplus"

@@ -1,20 +1,19 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
-ensure_packer()
+vim.opt.rtp:prepend(lazypath)
 
 
-require("packer").startup(function()
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
-    use {
+require("lazy").setup({
+    {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
         requires = {
@@ -27,46 +26,50 @@ require("packer").startup(function()
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'L3MON4D3/LuaSnip' },
         }
-    }
-    use 'tpope/vim-commentary'
-    --    use 'Mofiqul/dracula.nvim'
-    use 'nvim-lua/plenary.nvim'
-    -- use 'nvim-lua/popup.nvim'
-    -- fuzzy search stuff
-    use 'nvim-telescope/telescope.nvim'
-    -- Syntax highlight and parsing
-    use {
+    },
+    'tpope/vim-commentary',
+    {
+        'nvim-telescope/telescope.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' }
+    },
+    {
         'nvim-treesitter/nvim-treesitter',
         run = function()
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
             ts_update()
         end,
-    }
-    use 'nvim-treesitter/playground'
-    use 'mbbill/undotree'
-    use 'williamboman/mason.nvim'
-    use 'williamboman/mason-lspconfig.nvim'
-    use 'neovim/nvim-lspconfig'
-    use {
+    },
+    'nvim-treesitter/playground',
+    'mbbill/undotree',
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'neovim/nvim-lspconfig',
+    {
         'nvim-tree/nvim-tree.lua',
         requires = {
-            'nvim-tree/nvim-web-devicons',  -- optional
+            'nvim-tree/nvim-web-devicons', -- optional
         },
-    }
+    },
     -- auto-completion stuff
-    use 'hrsh7th/nvim-cmp'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'saadparwaiz1/cmp_luasnip'
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-nvim-lua'
-
-    use {
+    'hrsh7th/nvim-cmp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'saadparwaiz1/cmp_luasnip',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lua',
+    'L3MON4D3/LuaSnip',
+    {
         'nvim-lualine/lualine.nvim',
         requires = {
             'nvim-tree/nvim-web-devicons',
             opt = true,
         },
+    },
+    -- using nvim in the browser, fantastic
+    'glacambre/firenvim',
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {}, -- for default options, refer to the configuration section for custom setup.
     }
-    use 'glacambre/firenvim'
-end)
+})
