@@ -1,5 +1,5 @@
 -- Reference: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
--- Book mark: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L330
+-- Book mark: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L701
 require("jeremiah")
 
 local undo_tree = '<leader>ut'
@@ -93,63 +93,67 @@ vim.opt.showmode = false -- mode is already in the status line
 vim.api.nvim_set_hl(0, 'LineNrAbove', { fg = '#75aaff' })
 vim.api.nvim_set_hl(0, 'LineNrBelow', { fg = '#008518' })
 vim.opt.cursorline = true
-vim.cmd [[
-  highlight @boolean guifg=#ff00ff gui=bold
-  highlight @comment guifg=#808080
-  highlight @constant.builtin guifg=#ff00ff gui=bold
-  highlight @function.builtin guifg=#a7e22e
-  highlight @keyword guifg=#ff00ff gui=bold
-  highlight @keyword.conditional.ternary guifg=#a9b7c5
-  highlight @number guifg=#ae81ff
-  highlight @operator guifg=#a9b7c5
-  highlight @property guifg=#cf8823
-  highlight @punctuation.bracket guifg=#a9b7c5
-  highlight @punctuation.delimiter guifg=#a9b7c5
-  highlight @punctuation.special guifg=#a9b7c5
-  highlight @string guifg=#e6db74
-  highlight @tag gui=bold guifg=#28bda4
-  highlight @tag.attribute guifg=#cecece
-  highlight @tag.builtin gui=bold guifg=#e8be69
-  highlight @tag.delimiter guifg=#a9b7c5
-  highlight @type guifg=#66d9ef
-  highlight @type.builtin guifg=#20999d
-  highlight @type.definition guifg=#66d9ef
-  highlight @variable guifg=#cbad96
-  highlight @variable.member guifg=#cf8823
-  highlight cssBackgroundProp guifg=#a9b7c5
-  highlight cssBorderProp guifg=#a9b7c5
-  highlight cssBoxProp guifg=#a9b7c5
-  highlight cssColor guifg=#FD971F
-  highlight cssColorProp guifg=#a9b7c5
-  highlight cssFlexibleBoxAttr guifg=#679342
-  highlight cssFlexibleBoxProp guifg=#a9b7c5
-  highlight cssFontAttr guifg=#679342
-  highlight cssFontProp guifg=#a9b7c5
-  highlight cssMediaProp guifg=#a9b7c5
-  highlight cssMultiColumnAttr guifg=#679342
-  highlight cssPositioningAttr guifg=#679342
-  highlight cssPositioningProp guifg=#a9b7c5
-  highlight cssPseudoClass guifg=#C5BE69 gui=bold
-  highlight cssPseudoClassId guifg=#C5BE69 gui=bold
-  highlight cssTextAttr guifg=#679342
-  highlight cssTextProp guifg=#a9b7c5
-  highlight cssUIAttr guifg=#679342
-  highlight cssUIProp guifg=#a9b7c5
-  highlight cssUnitDecorators guifg=#679342
-  highlight cssValueLength guifg=#ae81ff
-  highlight cssValueNumber guifg=#ae81ff
-  highlight CursorLine cterm=NONE ctermbg=236 ctermfg=NONE guibg=#414141
-  highlight Function guifg=#a7e22e
-  highlight Normal guibg=#2c2c2c
-  highlight Pmenu guifg=#FFFFFF guibg=#707070
-  highlight PmenuSel guifg=#000000 guibg=#909090
-  highlight sassAmpersand guifg=#C5BE69 gui=bold
-  highlight sassClass guifg=#C5BE69 gui=bold
-  highlight sassDefinition guifg=#a9b7c5
-  highlight sassProperty guifg=#a9b7c5
-  highlight TelescopeSelection gui=bold guibg=White guifg=Black
-  highlight TelescopeSelectionCaret guifg=Re
+local function i_want_my_colors_back()
+    vim.cmd [[
+        highlight @boolean guifg=#ff00ff gui=bold
+        highlight @comment guifg=#808080
+        highlight @constant.builtin guifg=#ff00ff gui=bold
+        highlight @function guifg=#a7e22e
+        highlight @function.builtin guifg=#a7e22e
+        highlight @function.call guifg=#a7e22e
+        highlight @keyword guifg=#ff00ff gui=bold
+        highlight @keyword.conditional.ternary guifg=#a9b7c5
+        highlight @number guifg=#ae81ff
+        highlight @operator guifg=#a9b7c5
+        highlight @property guifg=#cf8823
+        highlight @punctuation.bracket guifg=#a9b7c5
+        highlight @punctuation.delimiter guifg=#a9b7c5
+        highlight @punctuation.special guifg=#a9b7c5
+        highlight @string guifg=#e6db74
+        highlight @tag gui=bold guifg=#28bda4
+        highlight @tag.attribute guifg=#cecece
+        highlight @tag.builtin gui=bold guifg=#e8be69
+        highlight @tag.delimiter guifg=#a9b7c5
+        highlight @type guifg=#66d9ef
+        highlight @type.builtin guifg=#20999d
+        highlight @type.definition guifg=#66d9ef
+        highlight @variable guifg=#cbad96
+        highlight @variable.member guifg=#cf8823
+        highlight cssBackgroundProp guifg=#a9b7c5
+        highlight cssBorderProp guifg=#a9b7c5
+        highlight cssBoxProp guifg=#a9b7c5
+        highlight cssColor guifg=#FD971F
+        highlight cssColorProp guifg=#a9b7c5
+        highlight cssFlexibleBoxAttr guifg=#679342
+        highlight cssFlexibleBoxProp guifg=#a9b7c5
+        highlight cssFontAttr guifg=#679342
+        highlight cssFontProp guifg=#a9b7c5
+        highlight cssMediaProp guifg=#a9b7c5
+        highlight cssMultiColumnAttr guifg=#679342
+        highlight cssPositioningAttr guifg=#679342
+        highlight cssPositioningProp guifg=#a9b7c5
+        highlight cssPseudoClass guifg=#C5BE69 gui=bold
+        highlight cssPseudoClassId guifg=#C5BE69 gui=bold
+        highlight cssTextAttr guifg=#679342
+        highlight cssTextProp guifg=#a9b7c5
+        highlight cssUIAttr guifg=#679342
+        highlight cssUIProp guifg=#a9b7c5
+        highlight cssUnitDecorators guifg=#679342
+        highlight cssValueLength guifg=#ae81ff
+        highlight cssValueNumber guifg=#ae81ff
+        highlight CursorLine cterm=NONE ctermbg=236 ctermfg=NONE guibg=#414141
+        highlight Normal guibg=#2c2c2c
+        highlight Pmenu guifg=#FFFFFF guibg=#707070
+        highlight PmenuSel guifg=#000000 guibg=#909090
+        highlight sassAmpersand guifg=#C5BE69 gui=bold
+        highlight sassClass guifg=#C5BE69 gui=bold
+        highlight sassDefinition guifg=#a9b7c5
+        highlight sassProperty guifg=#a9b7c5
+        highlight TelescopeSelection gui=bold guibg=White guifg=Black
+        highlight TelescopeSelectionCaret guifg=Re
 ]]
+end
+i_want_my_colors_back()
 
 -- white space visuals
 -- vim.opt.list = true
@@ -181,7 +185,7 @@ vim.opt.scrolloff = 10
 
 vim.opt.inccommand = 'split'
 
-vim.o.timeoutlen = 900
+vim.o.timeoutlen = 500
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.o.wrap = false
@@ -259,22 +263,36 @@ require('lualine').setup {
 
 
 -- Telescope Setup
+local teleBuiltin = require 'telescope.builtin'
 require('telescope').setup {
     defaults = {
+        -- todo figure out how to make this fuzzy refine thing work
+        -- mappings = {
+        --     i = { ['<C-s>'] = 'to_fuzzy_refine' },
+        -- },
         file_ignore_patterns = {
             "node_modules",
             "%.jpg",
-            "%.png" }
+            "%.png"
+        },
     },
 }
 
+-- Enable Telescope extensions if they are installed
+pcall(require('telescope').load_extension, 'fzf')
+pcall(require('telescope').load_extension, 'ui-select')
+
+-- Shortcut for searching your Neovim configuration files
+vim.keymap.set('n', '<leader>sn', function()
+    teleBuiltin.find_files { cwd = vim.fn.stdpath 'config' }
+end, { desc = '[S]earch [N]eovim files' })
 
 -- Treesitter setup
 require('nvim-treesitter.configs').setup {
     ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query" }, -- Install parsers for Go and Python only
     highlight = {
         enable = true,                                                                                         -- Enable syntax highlighting
-        additional_vim_regex_highlighting = false                                                              -- Disable regex based highlighting
+        additional_vim_regex_highlighting = false,
     },
     incremental_selection = {
         enable = true,
@@ -315,3 +333,14 @@ vim.g.firenvim_config = {
         }
     }
 }
+
+
+-- Define the 'Help' command that opens the help menu in a vertical split on the right
+vim.api.nvim_create_user_command(
+    'Help',                        -- Command name
+    'rightbelow vert help <args>', -- Execute 'rightbelow vert help' with additional arguments
+    { nargs = '+' }                -- This command requires at least one argument
+)
+
+-- Map <Leader>h to the 'Help' command
+vim.api.nvim_set_keymap('n', '<Leader>h', ':Help ', { noremap = true, silent = true })

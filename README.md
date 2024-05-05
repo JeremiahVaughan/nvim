@@ -32,6 +32,8 @@
 11. Restart nvim
 12. Install firenvim
     - `https://github.com/glacambre/firenvim?tab=readme-ov-file` 
+13. Run this to ensure everything is working properly
+    - `:checkhealth`
 
 Note:
 - nvim-qt is available on mac too: https://github.com/equalsraf/neovim-qt

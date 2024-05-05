@@ -14,6 +14,12 @@ local formatting_keymap = '<space>f'               -- Space f to format the docu
 
 
 local lsp_zero = require('lsp-zero')
+lsp_zero.set_server_config({
+    on_init = function(client)
+        client.server_capabilities.semanticTokensProvider = nil -- this prevents lsps from trying to format on top of my existing treesitter color scheme
+    end,
+})
+
 local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
 local lsp_format_on_save = function(bufnr)
     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })

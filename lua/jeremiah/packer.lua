@@ -13,6 +13,51 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
+    { -- Autoformat that is smarter and more effecient than the lsp formatters
+        'stevearc/conform.nvim',
+        lazy = false,
+        keys = {
+            {
+                '<leader>f',
+                function()
+                    require('conform').format { async = true, lsp_fallback = true }
+                end,
+                mode = '',
+                desc = '[F]ormat buffer',
+            },
+        },
+        opts = {
+            notify_on_error = false,
+            format_on_save = function(bufnr)
+                -- Disable "format_on_save lsp_fallback" for languages that don't
+                -- have a well standardized coding style. You can add additional
+                -- languages here or re-enable it for the disabled ones.
+                local disable_filetypes = { c = true, cpp = true }
+                return {
+                    timeout_ms = 500,
+                    lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+                }
+            end,
+            formatters_by_ft = {
+                lua = { 'stylua' },
+                -- Conform can also run multiple formatters sequentially
+                python = { "isort", "black" },
+                --
+                -- You can use a sub-list to tell conform to run *until* a formatter
+                -- is found.
+                javascript = { { "prettierd", "prettier" } }, -- Adding gofmt for Go files
+                go = {
+                    function()
+                        return {
+                            exe = "gofmt",
+                            args = { "-s" },
+                            stdin = true
+                        }
+                    end
+                },
+            },
+        },
+    },
     -- See `:help gitsigns` to understand what the configuration keys do
     { -- Adds git related signs to the gutter, as well as utilities for managing changes
         'lewis6991/gitsigns.nvim',
@@ -29,7 +74,7 @@ require("lazy").setup({
     {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
-        requires = {
+        dependencies = {
             --- Uncomment the two plugins below if you want to manage the language servers from neovim
             { 'williamboman/mason.nvim' },
             { 'williamboman/mason-lspconfig.nvim' },
@@ -44,7 +89,7 @@ require("lazy").setup({
     {
         'nvim-telescope/telescope.nvim',
         event = 'VimEnter',
-        dependencies = { 
+        dependencies = {
             'nvim-lua/plenary.nvim',
             { -- If encountering errors, see telescope-fzf-native README for installation instructions
                 'nvim-telescope/telescope-fzf-native.nvim',
@@ -62,15 +107,16 @@ require("lazy").setup({
             { 'nvim-telescope/telescope-ui-select.nvim' },
 
             -- Useful for getting pretty icons, but requires a Nerd Font.
-            { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+            { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
         }
     },
     {
         'nvim-treesitter/nvim-treesitter',
-        run = function()
-            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-            ts_update()
-        end,
+        -- todo remove this if it not required
+        -- run = function()
+        --     local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+        --     ts_update()
+        -- end,
     },
     'nvim-treesitter/playground',
     'mbbill/undotree',
@@ -79,7 +125,7 @@ require("lazy").setup({
     'neovim/nvim-lspconfig',
     {
         'nvim-tree/nvim-tree.lua',
-        requires = {
+        dependencies = {
             'nvim-tree/nvim-web-devicons', -- optional
         },
     },
@@ -93,7 +139,7 @@ require("lazy").setup({
     'L3MON4D3/LuaSnip',
     {
         'nvim-lualine/lualine.nvim',
-        requires = {
+        dependencies = {
             'nvim-tree/nvim-web-devicons',
             opt = true,
         },
