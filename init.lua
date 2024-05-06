@@ -291,7 +291,7 @@ end, { desc = '[S]earch [N]eovim files' })
 require('nvim-treesitter.configs').setup {
     ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query" }, -- Install parsers for Go and Python only
     highlight = {
-        enable = true,                                                                                         -- Enable syntax highlighting
+        enable = true,
         additional_vim_regex_highlighting = false,
     },
     incremental_selection = {

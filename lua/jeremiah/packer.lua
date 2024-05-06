@@ -45,16 +45,7 @@ require("lazy").setup({
                 --
                 -- You can use a sub-list to tell conform to run *until* a formatter
                 -- is found.
-                javascript = { { "prettierd", "prettier" } }, -- Adding gofmt for Go files
-                go = {
-                    function()
-                        return {
-                            exe = "gofmt",
-                            args = { "-s" },
-                            stdin = true
-                        }
-                    end
-                },
+                javascript = { { "prettierd", "prettier" } },
             },
         },
     },
