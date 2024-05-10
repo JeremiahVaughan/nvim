@@ -47,8 +47,9 @@ set relativenumber
 " Do incremental searching.
 set incsearch
 
-" Use system clipboard by default for yank register
-set clipboard=unnamedplus
+" Use system clipboard by default for yank register todo trying this as
+" disabled to see if I like it more
+" set clipboard=unnamedplus
 
 
 " Don't use Ex mode, use Q for formatting.

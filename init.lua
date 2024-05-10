@@ -188,11 +188,12 @@ vim.opt.inccommand = 'split'
 vim.o.timeoutlen = 500
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.o.infercase = true
 vim.o.wrap = false
 vim.cmd('syntax enable') -- Enables syntax highlighting
 
--- Use system clipboard by default
-vim.opt.clipboard = "unnamedplus"
+-- Use system clipboard by default todo trying this out disabled to see if I like it better
+-- vim.opt.clipboard = "unnamedplus"
 
 vim.api.nvim_set_keymap('n', find_files_keymap, ':Telescope find_files<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', grep_files_keymap, ':Telescope live_grep<CR>', { noremap = true, silent = true })
