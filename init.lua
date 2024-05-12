@@ -276,6 +276,15 @@ require('telescope').setup {
             "%.jpg",
             "%.png"
         },
+        layout_strategy = 'flex',
+        layout_config = {
+            flex = {
+                flip_columns = 120 -- Adjust this value based on your preference
+            },
+            width = 0.95,          -- Percentage of the screen width
+            height = 0.95,         -- Percentage of the screen height
+            preview_cutoff = 120,  -- When to start showing the preview pane
+        }
     },
 }
 
