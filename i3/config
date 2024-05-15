@@ -7,6 +7,11 @@
 
 exec --no-startup-id xmodmap ~/.Xmodmap
 
+#Disable auto screen turnoff
+    exec xset dpms 0 0 0
+    exec xset -dpms
+    exec xset s 0
+
 # i3 config file (v4)
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
