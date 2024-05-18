@@ -30,3 +30,14 @@ nnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>
 inoremap <silent><RightMouse> <Esc>:call GuiShowContextMenu()<CR>
 xnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>gv
 snoremap <silent><RightMouse> <C-G>:call GuiShowContextMenu()<CR>gv
+
+" Default shell to use for terminal mode should be git bash since it has the
+" most unix feel
+" ginit.vim - GUI-specific settings for nvim-qt
+"
+" " Set Git Bash as the default shell
+ let &shell = 'C:/Program Files/Git/bin/bash.exe'
+ let &shellcmdflag = '-c'
+ let &shellquote = ''
+ let &shellxquote = ''
+

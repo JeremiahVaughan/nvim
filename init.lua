@@ -93,67 +93,66 @@ vim.opt.showmode = false -- mode is already in the status line
 vim.api.nvim_set_hl(0, 'LineNrAbove', { fg = '#75aaff' })
 vim.api.nvim_set_hl(0, 'LineNrBelow', { fg = '#008518' })
 vim.opt.cursorline = true
-local function i_want_my_colors_back()
-    vim.cmd [[
-        highlight @boolean guifg=#ff00ff gui=bold
-        highlight @comment guifg=#808080
-        highlight @constant.builtin guifg=#ff00ff gui=bold
-        highlight @function guifg=#a7e22e
-        highlight @function.builtin guifg=#a7e22e
-        highlight @function.call guifg=#a7e22e
-        highlight @keyword guifg=#ff00ff gui=bold
-        highlight @keyword.conditional.ternary guifg=#a9b7c5
-        highlight @number guifg=#ae81ff
-        highlight @operator guifg=#a9b7c5
-        highlight @property guifg=#cf8823
-        highlight @punctuation.bracket guifg=#a9b7c5
-        highlight @punctuation.delimiter guifg=#a9b7c5
-        highlight @punctuation.special guifg=#a9b7c5
-        highlight @string guifg=#e6db74
-        highlight @tag gui=bold guifg=#28bda4
-        highlight @tag.attribute guifg=#cecece
-        highlight @tag.builtin gui=bold guifg=#e8be69
-        highlight @tag.delimiter guifg=#a9b7c5
-        highlight @type guifg=#66d9ef
-        highlight @type.builtin guifg=#20999d
-        highlight @type.definition guifg=#66d9ef
-        highlight @variable guifg=#cbad96
-        highlight @variable.member guifg=#cf8823
-        highlight cssBackgroundProp guifg=#a9b7c5
-        highlight cssBorderProp guifg=#a9b7c5
-        highlight cssBoxProp guifg=#a9b7c5
-        highlight cssColor guifg=#FD971F
-        highlight cssColorProp guifg=#a9b7c5
-        highlight cssFlexibleBoxAttr guifg=#679342
-        highlight cssFlexibleBoxProp guifg=#a9b7c5
-        highlight cssFontAttr guifg=#679342
-        highlight cssFontProp guifg=#a9b7c5
-        highlight cssMediaProp guifg=#a9b7c5
-        highlight cssMultiColumnAttr guifg=#679342
-        highlight cssPositioningAttr guifg=#679342
-        highlight cssPositioningProp guifg=#a9b7c5
-        highlight cssPseudoClass guifg=#C5BE69 gui=bold
-        highlight cssPseudoClassId guifg=#C5BE69 gui=bold
-        highlight cssTextAttr guifg=#679342
-        highlight cssTextProp guifg=#a9b7c5
-        highlight cssUIAttr guifg=#679342
-        highlight cssUIProp guifg=#a9b7c5
-        highlight cssUnitDecorators guifg=#679342
-        highlight cssValueLength guifg=#ae81ff
-        highlight cssValueNumber guifg=#ae81ff
-        highlight CursorLine cterm=NONE ctermbg=236 ctermfg=NONE guibg=#414141
-        highlight Normal guibg=#2c2c2c
-        highlight Pmenu guifg=#FFFFFF guibg=#707070
-        highlight PmenuSel guifg=#000000 guibg=#909090
-        highlight sassAmpersand guifg=#C5BE69 gui=bold
-        highlight sassClass guifg=#C5BE69 gui=bold
-        highlight sassDefinition guifg=#a9b7c5
-        highlight sassProperty guifg=#a9b7c5
-        highlight TelescopeSelection gui=bold guibg=White guifg=Black
-        highlight TelescopeSelectionCaret guifg=Re
+vim.cmd [[
+    highlight link TermCursor Cursor
+    highlight TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
+    highlight @boolean guifg=#ff00ff gui=bold
+    highlight @comment guifg=#808080
+    highlight @constant.builtin guifg=#ff00ff gui=bold
+    highlight @function guifg=#a7e22e
+    highlight @function.builtin guifg=#a7e22e
+    highlight @function.call guifg=#a7e22e
+    highlight @keyword guifg=#ff00ff gui=bold
+    highlight @keyword.conditional.ternary guifg=#a9b7c5
+    highlight @number guifg=#ae81ff
+    highlight @operator guifg=#a9b7c5
+    highlight @property guifg=#cf8823
+    highlight @punctuation.bracket guifg=#a9b7c5
+    highlight @punctuation.delimiter guifg=#a9b7c5
+    highlight @punctuation.special guifg=#a9b7c5
+    highlight @string guifg=#e6db74
+    highlight @tag gui=bold guifg=#28bda4
+    highlight @tag.attribute guifg=#cecece
+    highlight @tag.builtin gui=bold guifg=#e8be69
+    highlight @tag.delimiter guifg=#a9b7c5
+    highlight @type guifg=#66d9ef
+    highlight @type.builtin guifg=#20999d
+    highlight @type.definition guifg=#66d9ef
+    highlight @variable guifg=#cbad96
+    highlight @variable.member guifg=#cf8823
+    highlight cssBackgroundProp guifg=#a9b7c5
+    highlight cssBorderProp guifg=#a9b7c5
+    highlight cssBoxProp guifg=#a9b7c5
+    highlight cssColor guifg=#FD971F
+    highlight cssColorProp guifg=#a9b7c5
+    highlight cssFlexibleBoxAttr guifg=#679342
+    highlight cssFlexibleBoxProp guifg=#a9b7c5
+    highlight cssFontAttr guifg=#679342
+    highlight cssFontProp guifg=#a9b7c5
+    highlight cssMediaProp guifg=#a9b7c5
+    highlight cssMultiColumnAttr guifg=#679342
+    highlight cssPositioningAttr guifg=#679342
+    highlight cssPositioningProp guifg=#a9b7c5
+    highlight cssPseudoClass guifg=#C5BE69 gui=bold
+    highlight cssPseudoClassId guifg=#C5BE69 gui=bold
+    highlight cssTextAttr guifg=#679342
+    highlight cssTextProp guifg=#a9b7c5
+    highlight cssUIAttr guifg=#679342
+    highlight cssUIProp guifg=#a9b7c5
+    highlight cssUnitDecorators guifg=#679342
+    highlight cssValueLength guifg=#ae81ff
+    highlight cssValueNumber guifg=#ae81ff
+    highlight CursorLine cterm=NONE ctermbg=236 ctermfg=NONE guibg=#414141
+    highlight Normal guibg=#2c2c2c
+    highlight Pmenu guifg=#FFFFFF guibg=#707070
+    highlight PmenuSel guifg=#000000 guibg=#909090
+    highlight sassAmpersand guifg=#C5BE69 gui=bold
+    highlight sassClass guifg=#C5BE69 gui=bold
+    highlight sassDefinition guifg=#a9b7c5
+    highlight sassProperty guifg=#a9b7c5
+    highlight TelescopeSelection gui=bold guibg=White guifg=Black
+    highlight TelescopeSelectionCaret guifg=Re
 ]]
-end
-i_want_my_colors_back()
 
 -- white space visuals
 -- vim.opt.list = true
@@ -364,3 +363,18 @@ vim.api.nvim_create_user_command(
     end,
     { desc = "Save buffer and run make" } -- Description for the command
 )
+
+-- Remap <Enter> in terminal mode to exit to normal mode
+vim.api.nvim_set_keymap('t', '<Enter>', [[<C-\><C-n>]], { noremap = true, silent = true })
+
+-- Remap <S-Enter> in terminal mode to act as the default <Enter>
+vim.api.nvim_set_keymap('t', '<S-Enter>', '<Enter>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<S-Enter>', 'i<CR>', { noremap = true, silent = true })
+
+-- Set insert mode to default when opening a new terminal
+vim.api.nvim_create_augroup('TerminalAutocmd', { clear = true })
+vim.api.nvim_create_autocmd('TermOpen', {
+    group = 'TerminalAutocmd',
+    pattern = '*',
+    command = 'startinsert',
+})
