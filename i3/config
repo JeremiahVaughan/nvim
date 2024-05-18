@@ -5,7 +5,6 @@
 # this file and re-run i3-config-wizard(1).
 #
 
-exec --no-startup-id xmodmap ~/.Xmodmap
 
 #Disable auto screen turnoff
     exec xset dpms 0 0 0
@@ -71,9 +70,9 @@ bindsym $mod+e exec --no-startup-id dmenu_run
 
 # change focus
 bindsym $mod+h focus left
-bindsym $mod+t focus down
-bindsym $mod+n focus up
-bindsym $mod+s focus right
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left

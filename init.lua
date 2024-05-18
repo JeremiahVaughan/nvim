@@ -357,10 +357,10 @@ vim.api.nvim_set_keymap('n', '<Leader>h', ':Help ', { noremap = true, silent = t
 
 -- Create a custom command 'Make' that saves the buffer and runs 'make'
 vim.api.nvim_create_user_command(
-    'M',                                -- Command name
+    'M',                                  -- Command name
     function()
-        vim.cmd('write')                -- Save the current buffer
-        vim.cmd('make')                 -- Run make
+        vim.cmd('write')                  -- Save the current buffer
+        vim.cmd('make')                   -- Run make
     end,
     { desc = "Save buffer and run make" } -- Description for the command
 )
