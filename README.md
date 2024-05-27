@@ -38,6 +38,8 @@
     - `https://github.com/glacambre/firenvim?tab=readme-ov-file` 
 15. Run this to ensure everything is working properly
     - `:checkhealth`
+16. Install LazyGit
+    - `https://github.com/jesseduffield/lazygit`
 
 Note:
 - nvim-qt is available on mac too: https://github.com/equalsraf/neovim-qt
