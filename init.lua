@@ -40,7 +40,8 @@ vim.api.nvim_set_keymap('v', '<CR>', '<Esc>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('!', '<CR>', '<Esc>', { noremap = true, silent = true })
 
 -- Easy exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+-- todo problem with pressing escape twice is that I sometimes actually want to press it a few times quickly in the program itself like when navigating in k9s
+-- vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- Disable arrow keys in normal mode
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
