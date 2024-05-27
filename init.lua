@@ -14,7 +14,6 @@ local grep_files_keymap = '<leader>g'  -- grep through files to find files by te
 local grep_string_keymap = '<leader>fs'
 local search_buffers_keymap = '<leader>b'
 local search_registers_keymap = '<leader>y'
-local nvim_tree_toggle_keymap = '<leader>n' -- Leader n will toggle the file explorer
 local shortcut_init_selection = "gnn"
 local shortcut_node_incremental = "grn"
 local shortcut_node_decremental = "grm"
@@ -158,9 +157,6 @@ vim.cmd [[
 -- vim.opt.list = true
 -- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
--- disabled for nvim tree
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
 
 vim.o.number = true         -- Line numbers
 vim.o.relativenumber = true -- Shows relative line numbers to your cursor so I can jump up or down easier
@@ -312,26 +308,6 @@ require('nvim-treesitter.configs').setup {
     indent = { enable = true } -- Enable indentation
 }
 
--- nvim tree setup
-vim.opt.termguicolors = true
-
--- OR setup with some options
-require("nvim-tree").setup({
-    sort = {
-        sorter = "case_sensitive",
-    },
-    view = {
-        width = 60,
-    },
-    renderer = {
-        group_empty = true,
-    },
-    filters = {
-        dotfiles = true,
-    },
-})
-
-vim.api.nvim_set_keymap('n', nvim_tree_toggle_keymap, ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
 --- Firenvim
 vim.g.firenvim_config = {

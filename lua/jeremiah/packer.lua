@@ -17,6 +17,9 @@ require("lazy").setup({
         "tpope/vim-dispatch",
         cmd = { "Dispatch", "Make", "Focus", "Start" }
     },
+    {
+        "tpope/vim-fugitive",
+    },
     { -- Autoformat that is smarter and more effecient than the lsp formatters
         'stevearc/conform.nvim',
         lazy = false,
@@ -107,23 +110,12 @@ require("lazy").setup({
     },
     {
         'nvim-treesitter/nvim-treesitter',
-        -- todo remove this if it not required
-        -- run = function()
-        --     local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-        --     ts_update()
-        -- end,
     },
     'nvim-treesitter/playground',
     'mbbill/undotree',
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
-    {
-        'nvim-tree/nvim-tree.lua',
-        dependencies = {
-            'nvim-tree/nvim-web-devicons', -- optional
-        },
-    },
     -- auto-completion stuff
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
