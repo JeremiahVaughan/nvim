@@ -23,7 +23,6 @@ vim.g.mapleader = leader_keymap       -- Setting space as the leader key
 vim.g.maplocalleader = maplocalleader -- Same for `maplocalleader`
 -- Built in Comment/Uncomment --> normal mode gcgc --> visual mode gc
 
-
 -- Remap esc to enter
 -- Disable <Esc> in Insert mode
 vim.api.nvim_set_keymap('i', '<Esc>', '<Nop>', { noremap = true, silent = true })
