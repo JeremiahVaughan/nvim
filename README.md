@@ -20,18 +20,16 @@
 8. Open nvim:
     - `nvim-qt`
 9. You will see an install error, its ok, it just means something needs to be installed before it can be used so just need to install
-10. Install plugins:
-    - `:PackerInstall`
-11. Restart nvim
-12. Install firenvim
+10. Restart nvim
+11. Install firenvim
     - `https://github.com/glacambre/firenvim?tab=readme-ov-file` 
-13. Run this to ensure everything is working properly
+12. Run this to ensure everything is working properly
     - `:checkhealth`
-14. Install LazyGit
+13. Install LazyGit
     - `https://github.com/jesseduffield/lazygit`
-15. Install LazyDocker
+14. Install LazyDocker
     - `https://github.com/jesseduffield/lazydocker`
-16. Install k9s
+15. Install k9s
     - `https://k9scli.io/topics/install`
 
 Note:
