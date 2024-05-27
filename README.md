@@ -15,34 +15,23 @@
 5. If on windows install 'git bash'
 6. Install staticcheck for more golang static checkness
     - https://github.com/dominikh/go-tools?tab=readme-ov-file 
-7. If working with windows you will need to install Visual Studio community
-     1. https://visualstudio.microsoft.com/downloads/?q=build+tools
-     2. Choose the workload called "Desktop development with C++"
-     3. Click install
-     4. Will want to install some fonts too: https://www.nerdfonts.com/font-downloads I am currently used to this one: 
-         - `Hack Nerd Font Mono` @ https://github.com/ryanoasis/nerd-fonts`
-8. Install mingw for the things visual studio misses: 
-    - `choco install mingw`
-9. Clone config repo:
-    - Windows: 
-        - `git clone https://github.com/JeremiahVaughan/nvim-struggle ~/AppData/Local/nvim`
-    - Not Windows: 
-        - `git clone https://github.com/JeremiahVaughan/nvim-struggle ~/.config/nvim`
-10. Open nvim:
+7. Install zig to avoid compilation issues
+    - https://ziglang.org/learn/getting-started/#installing-zig
+8. Open nvim:
     - `nvim-qt`
-11. You will see an install error, its ok, it just means something needs to be installed before it can be used so just need to install
-12. Install plugins:
+9. You will see an install error, its ok, it just means something needs to be installed before it can be used so just need to install
+10. Install plugins:
     - `:PackerInstall`
-13. Restart nvim
-14. Install firenvim
+11. Restart nvim
+12. Install firenvim
     - `https://github.com/glacambre/firenvim?tab=readme-ov-file` 
-15. Run this to ensure everything is working properly
+13. Run this to ensure everything is working properly
     - `:checkhealth`
-16. Install LazyGit
+14. Install LazyGit
     - `https://github.com/jesseduffield/lazygit`
-17. Install LazyDocker
+15. Install LazyDocker
     - `https://github.com/jesseduffield/lazydocker`
-18. Install k9s
+16. Install k9s
     - `https://k9scli.io/topics/install`
 
 Note:
