@@ -40,6 +40,10 @@
     - `:checkhealth`
 16. Install LazyGit
     - `https://github.com/jesseduffield/lazygit`
+17. Install LazyDocker
+    - `https://github.com/jesseduffield/lazydocker`
+18. Install k9s
+    - `https://k9scli.io/topics/install`
 
 Note:
 - nvim-qt is available on mac too: https://github.com/equalsraf/neovim-qt
