@@ -35,9 +35,4 @@ snoremap <silent><RightMouse> <C-G>:call GuiShowContextMenu()<CR>gv
 " most unix feel
 " ginit.vim - GUI-specific settings for nvim-qt
 "
-" " Set Git Bash as the default shell
- let &shell = 'C:/Program Files/Git/bin/bash.exe'
- let &shellcmdflag = '-c'
- let &shellquote = ''
- let &shellxquote = ''
 
