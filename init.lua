@@ -286,7 +286,7 @@ require('telescope').setup {
             "node_modules",
             "%.jpg",
             "%.png",
-            ".git"
+            "%.git"
         },
         layout_strategy = 'flex',
         layout_config = {
