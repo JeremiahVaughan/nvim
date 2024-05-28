@@ -13,6 +13,15 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
+    { -- Used for keeping only one instance of Nvim, noticable when opening a file within lazygit with 'e'
+        "willothy/flatten.nvim",
+        config = true,
+        -- or pass configuration with
+        --     -- opts = {  }
+        --         -- Ensure that it runs first to minimize delay when opening file from terminal
+        lazy = false,
+        priority = 1001,
+    },
     {
         "tpope/vim-dispatch",
         cmd = { "Dispatch", "Make", "Focus", "Start" }

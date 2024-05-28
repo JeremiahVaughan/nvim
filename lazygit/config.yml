@@ -1,2 +1,15 @@
 os:
-  editCommand: `floaterm` # When editing files open up the file in the same instance of nvim
+  editCommand: 'floaterm' # When editing files open up the file in the same instance of nvim
+
+gui:
+  theme:
+    selectedLineBgColor:
+      - underline
+    selectedRangeBgColor:
+      - underline
+
+git:
+  paging:
+    colorArg: never
+    pager: delta --dark --paging=never
+

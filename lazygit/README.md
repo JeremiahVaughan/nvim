@@ -1,5 +1,2 @@
-Place the config.yml file in the following locations:
-    - Windows:
-        `%APPDATA%\lazygit\config.yml`
-    - Non-Windows:
-        `.config\lazygit\config.yml`
+Config file location requirements: `https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md`
+

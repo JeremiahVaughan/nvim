@@ -27,9 +27,11 @@
     - `:checkhealth`
 13. Install LazyGit
     - `https://github.com/jesseduffield/lazygit`
-14. Install LazyDocker
+14. Install Delta-diff for better diff indicators for LazyGit
+    - `https://github.com/dandavison/delta`
+15. Install LazyDocker
     - `https://github.com/jesseduffield/lazydocker`
-15. Install k9s
+16. Install k9s
     - `https://k9scli.io/topics/install`
 
 Note:
@@ -40,5 +42,4 @@ Note:
 
 Good References:
     - https://github.com/nvim-treesitter/nvim-treesitter/wiki/Windows-support
-
 

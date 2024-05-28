@@ -270,10 +270,23 @@ require('telescope').setup {
         -- mappings = {
         --     i = { ['<C-s>'] = 'to_fuzzy_refine' },
         -- },
+        find_command = { 'rg', '--files', '--hidden', '--glob', '!.git/*' },
+        vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--hidden',         -- Add this line to include hidden files
+            '--glob', '!.git/*' -- Optionally exclude .git directory
+        },
         file_ignore_patterns = {
             "node_modules",
             "%.jpg",
-            "%.png"
+            "%.png",
+            ".git"
         },
         layout_strategy = 'flex',
         layout_config = {
@@ -285,6 +298,11 @@ require('telescope').setup {
             preview_cutoff = 120,  -- When to start showing the preview pane
         }
     },
+    pickers = {
+        find_files = {
+            hidden = true
+        }
+    }
 }
 
 -- Enable Telescope extensions if they are installed
