@@ -49,8 +49,8 @@ vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
--- Adding shortcut to open lazygit
-vim.api.nvim_set_keymap('n', '<leader>lg', ':te lazygit<CR>', { noremap = true, silent = true })
+-- Adding shortcut to save current file and open lazygit
+vim.api.nvim_set_keymap('n', '<leader>lg', ':w|:te lazygit<CR>', { noremap = true, silent = true })
 
 
 -- [[ Basic Autocommands ]]
