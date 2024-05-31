@@ -28,10 +28,12 @@
 13. Install LazyGit
     - `https://github.com/jesseduffield/lazygit`
 14. Install Delta-diff for better diff indicators for LazyGit
+15. Install jq
+    - `https://jqlang.github.io/jq/download/`
     - `https://github.com/dandavison/delta`
-15. Install LazyDocker
+17. Install LazyDocker
     - `https://github.com/jesseduffield/lazydocker`
-16. Install k9s
+18. Install k9s
     - `https://k9scli.io/topics/install`
 
 Note:
