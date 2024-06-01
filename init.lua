@@ -166,9 +166,11 @@ vim.o.number = true         -- Line numbers
 vim.o.relativenumber = true -- Shows relative line numbers to your cursor so I can jump up or down easier
 vim.o.tabstop = 4           -- Number of spaces a tab counts for
 vim.o.shiftwidth = 4        -- Size of an indent
-vim.o.expandtab = true      -- expands tab to spaces
-vim.o.hlsearch = true       -- Highlight search results
-vim.o.incsearch = true      -- Shows the match while typing
+
+-- Commenting this out because Makefiles require tabs instead of spaces and I don't understand how this is helping me anyways
+-- vim.o.expandtab = true      -- expands tab to spaces
+vim.o.hlsearch = true  -- Highlight search results
+vim.o.incsearch = true -- Shows the match while typing
 
 --[[ vim.o.swapfile = false
 vim.o.backup = false
