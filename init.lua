@@ -293,7 +293,7 @@ require('telescope').setup {
             '--line-number',
             '--column',
             '--smart-case',
-            '--hidden', -- Add this line to include hidden files
+            '--hidden',         -- Add this line to include hidden files
             '--glob', '!.git/*' -- Optionally exclude .git directory
         },
         file_ignore_patterns = {
@@ -307,9 +307,9 @@ require('telescope').setup {
             flex = {
                 flip_columns = 120 -- Adjust this value based on your preference
             },
-            width = 0.95, -- Percentage of the screen width
-            height = 0.95, -- Percentage of the screen height
-            preview_cutoff = 120, -- When to start showing the preview pane
+            width = 0.95,          -- Percentage of the screen width
+            height = 0.95,         -- Percentage of the screen height
+            preview_cutoff = 120,  -- When to start showing the preview pane
         }
     },
     pickers = {
@@ -358,9 +358,9 @@ vim.g.firenvim_config = {
 
 -- Define the 'Help' command that opens the help menu in a vertical split on the right
 vim.api.nvim_create_user_command(
-    'Help',                     -- Command name
+    'Help',                        -- Command name
     'rightbelow vert help <args>', -- Execute 'rightbelow vert help' with additional arguments
-    { nargs = '+' }             -- This command requires at least one argument
+    { nargs = '+' }                -- This command requires at least one argument
 )
 
 -- Map <Leader>h to the 'Help' command
@@ -368,10 +368,10 @@ vim.api.nvim_set_keymap('n', '<Leader>h', ':Help ', { noremap = true, silent = t
 
 -- Create a custom command 'Make' that saves the buffer and runs 'make'
 vim.api.nvim_create_user_command(
-    'M',                               -- Command name
+    'M',                                  -- Command name
     function()
-        vim.cmd('write')               -- Save the current buffer
-        vim.cmd('make')                -- Run make
+        vim.cmd('write')                  -- Save the current buffer
+        vim.cmd('make')                   -- Run make
     end,
     { desc = "Save buffer and run make" } -- Description for the command
 )
@@ -390,3 +390,18 @@ vim.api.nvim_create_autocmd('TermOpen', {
     pattern = '*',
     command = 'startinsert',
 })
+
+-- Check the operating system
+if vim.loop.os_uname().sysname == "Windows_NT" then
+    -- Windows-specific settings
+    vim.opt.shell = "powershell"      -- Set the shell to PowerShell
+    vim.opt.shellcmdflag = "-Command" -- Use '-Command' to pass commands to PowerShell
+    vim.opt.shellquote = "\""         -- Use double quotes to quote the command
+    vim.opt.shellxquote = ""          -- Do not add extra quotes around the command
+else
+    -- Non-Windows settings (adjust as needed)
+    vim.opt.shell = "/bin/bash" -- Set the shell to Bash
+    vim.opt.shellcmdflag = "-c" -- Use '-c' to pass commands to Bash
+    vim.opt.shellquote = "\""   -- Use double quotes to quote the command
+    vim.opt.shellxquote = ""    -- Do not add extra quotes around the command
+end
