@@ -17,23 +17,25 @@
     - https://github.com/dominikh/go-tools?tab=readme-ov-file 
 7. Install zig to avoid compilation issues
     - https://ziglang.org/learn/getting-started/#installing-zig
-8. Open nvim:
+8. Install nerd-fonts-hack for Hack Nerd Font Mono
+    - `https://github.com/ryanoasis/nerd-fonts`
+9. Open nvim:
     - `nvim-qt`
-9. You will see an install error, its ok, it just means something needs to be installed before it can be used so just need to install
-10. Restart nvim
-11. Install firenvim
+10. You will see an install error, its ok, it just means something needs to be installed before it can be used so just need to install
+11. Restart nvim
+12. Install firenvim
     - `https://github.com/glacambre/firenvim?tab=readme-ov-file` 
-12. Run this to ensure everything is working properly
+13. Run this to ensure everything is working properly
     - `:checkhealth`
-13. Install LazyGit
+14. Install LazyGit
     - `https://github.com/jesseduffield/lazygit`
-14. Install Delta-diff for better diff indicators for LazyGit
-15. Install jq
+15. Install Delta-diff for better diff indicators for LazyGit
+16. Install jq
     - `https://jqlang.github.io/jq/download/`
     - `https://github.com/dandavison/delta`
-17. Install LazyDocker
+18. Install LazyDocker
     - `https://github.com/jesseduffield/lazydocker`
-18. Install k9s
+19. Install k9s
     - `https://k9scli.io/topics/install`
 
 Note:
