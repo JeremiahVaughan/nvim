@@ -1,0 +1,87 @@
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+)
+
+type $CAMEL_CASE_NAME$Request struct {
+	Input string `json:"input"`
+}
+
+type $CAMEL_CASE_NAME$Response struct {
+	Result string `json:"result"`
+}
+
+
+func validate$NAME$Request(req *$CAMEL_CASE_NAME$Request) error {
+	var errorFeedback []error
+	if len(req.Input) == 0 {
+		errorFeedback = append(errorFeedback, errors.New("input string cannot be empty"))
+	}
+	if len(req.Input) > 255 {
+		errorFeedback = append(errorFeedback, errors.New("input string cannot be more that 255 chars"))
+	}
+	if len(errorFeedback) > 0 {
+		return fmt.Errorf("errors, when validating request: %v", errorFeedback)
+	}
+	return nil
+}
+
+func handle$NAME$(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPut {
+		http.Error(w, "error, only PUT method is supported", http.StatusMethodNotAllowed)
+		return
+	}
+
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "error, failed to read request body", http.StatusBadRequest)
+		return
+	}
+
+	var req $CAMEL_CASE_NAME$Request
+	err = json.Unmarshal(body, &req)
+	if err != nil {
+		http.Error(w, "error, failed to parse JSON", http.StatusBadRequest)
+		return
+	}
+	err = r.Body.Close()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("error, when attempting to close request body: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	err = validate$NAME$Request(&req)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	result, err := $CAMEL_CASE_NAME$(req.Input)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("error, failed to perform $CAMEL_CASE_NAME$ handler action: %v", err), http.StatusInternalServerError)
+	    return
+	}
+	res := $CAMEL_CASE_NAME$Response{Result: result}
+	responseData, err := json.Marshal(res)
+	if err != nil {
+		http.Error(w, "error, failed to create JSON response", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, err = w.Write(responseData)
+	if err != nil {
+		http.Error(w, "error, failed to write response", http.StatusInternalServerError)
+		return
+	}
+}
+
+func $CAMEL_CASE_NAME$(s string) (string, error) {
+	// todo implement something
+	return "id#123", nil
+}
+

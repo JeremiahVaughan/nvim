@@ -1,0 +1,42 @@
+func RequestWithRetry(client *http.Client, request *http.Request, retryLimit int) (*http.Response, error) {
+	retryBackoff := time.Duration(3)
+	var response *http.Response
+	var err error
+	for i := 0; i < retryLimit; i++ {
+		response, err = func(client *http.Client, request *http.Request) (*http.Response, error) {
+			response, err = client.Do(request)
+			if response != nil && (response.StatusCode < 200 || response.StatusCode > 299) {
+				if response.StatusCode == http.StatusNotFound {
+					log.Printf("recieved a 404 when attempting url: %s", request.URL)
+				}
+				var rb []byte
+				rb, err = io.ReadAll(response.Body)
+				if err != nil {
+					return nil, fmt.Errorf("error, when reading error response body: %v", err)
+				}
+				return nil, fmt.Errorf("error, when performing get request. ERROR: %v. RESPONSE CODE: %d. RESPONSE MESSAGE: %s", err, response.StatusCode, string(rb))
+			}
+			if err != nil {
+				if response != nil {
+					err = fmt.Errorf("error: %v. RESPONSE CODE: %d", err, response.StatusCode)
+				}
+				return nil, fmt.Errorf("error, when performing post request. ERROR: %v", err)
+			}
+			return response, nil
+		}(client, request)
+		if err != nil {
+			err = fmt.Errorf("error, when attempting to send request. Error: %v", err)
+			if response != nil {
+				err = fmt.Errorf("%v. Response code: %d", err, response.StatusCode)
+			}
+			log.Printf("error, request failed, retrying in %d seconds", retryBackoff)
+			time.Sleep(time.Second * retryBackoff)
+		} else {
+			break
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	return response, nil
+}

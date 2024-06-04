@@ -1,0 +1,72 @@
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"net/http"
+)
+
+type $CAMEL_CASE_NAME$Request struct {
+	Id string `json:"id"`
+}
+
+type $CAMEL_CASE_NAME$Response struct {
+	Result string `json:"result"`
+}
+
+
+func validate$NAME$Request(req *$CAMEL_CASE_NAME$Request) error {
+	var errorFeedback []error
+	if len(req.Id) == 0 {
+		errorFeedback = append(errorFeedback, errors.New("input string cannot be empty"))
+	}
+	if len(req.Id) > 255 {
+		errorFeedback = append(errorFeedback, errors.New("input string cannot be more that 255 chars"))
+	}
+	if len(errorFeedback) > 0 {
+		return fmt.Errorf("errors, when validating request: %v", errorFeedback)
+	}
+	return nil
+}
+
+func handle$NAME$(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "error, only GET method is supported", http.StatusMethodNotAllowed)
+		return
+	}
+
+	id := r.URL.Query().Get("id")
+	req := $CAMEL_CASE_NAME$Request{Id: id}
+
+
+	err := validate$NAME$Request(&req)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	result, err := $CAMEL_CASE_NAME$(req.Id)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("error, failed to perform $CAMEL_CASE_NAME$ handler action: %v", err), http.StatusInternalServerError)
+	    return
+	}
+	res := $CAMEL_CASE_NAME$Response{Result: result}
+	responseData, err := json.Marshal(res)
+	if err != nil {
+		http.Error(w, "error, failed to create JSON response", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, err = w.Write(responseData)
+	if err != nil {
+		http.Error(w, "error, failed to write response", http.StatusInternalServerError)
+		return
+	}
+}
+
+func $CAMEL_CASE_NAME$(s string) (string, error) {
+	// todo implement something
+	return "id#123", nil
+}
+

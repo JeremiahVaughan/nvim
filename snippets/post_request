@@ -1,0 +1,41 @@
+requestBody, err := json.Marshal($PAYLOAD$)
+if err != nil {
+    return fmt.Errorf("error, when attempting to marshall payload to json: %v", err)
+}
+
+request, err := http.NewRequest(http.MethodPost, $URL$, bytes.NewBuffer(requestBody))
+if err != nil {
+    return fmt.Errorf("error, when creating post request. ERROR: %v", err)
+}
+
+request.Header.Set("Content-Type", "application/json")
+
+client := &http.Client{}
+response, err := client.Do(request)
+if response != nil {
+    defer func(Body io.ReadCloser) {
+        err = Body.Close()
+        if err != nil {
+            log.Printf("error, when attempting to close response body: %v", err)
+        }
+    }(response.Body)
+}
+if response != nil && (response.StatusCode < 200 || response.StatusCode > 299) {
+    if response.StatusCode == http.StatusNotFound {
+        log.Printf("recieved a 404 when attempting url: %s", request.URL)
+    }
+    var rb []byte
+    rb, err = io.ReadAll(response.Body)
+    if err != nil {
+        return fmt.Errorf("error, when reading error response body: %v", err)
+    }
+    return fmt.Errorf("error, when performing post request. ERROR: %v. RESPONSE CODE: %d. RESPONSE MESSAGE: %s", err, response.StatusCode, string(rb))
+}
+if err != nil {
+    if response != nil {
+        err = fmt.Errorf("error: %v. RESPONSE CODE: %d", err, response.StatusCode)
+    }
+    return fmt.Errorf("error, when performing post request. ERROR: %v", err)
+}
+
+return nil

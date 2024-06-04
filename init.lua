@@ -416,10 +416,4 @@ if vim.loop.os_uname().sysname == "Windows_NT" then
     vim.opt.shellcmdflag = "-Command" -- Use '-Command' to pass commands to PowerShell
     vim.opt.shellquote = "\""         -- Use double quotes to quote the command
     vim.opt.shellxquote = ""          -- Do not add extra quotes around the command
-else
-    -- Non-Windows settings (adjust as needed)
-    vim.opt.shell = "/bin/bash" -- Set the shell to Bash
-    vim.opt.shellcmdflag = "-c" -- Use '-c' to pass commands to Bash
-    vim.opt.shellquote = "\""   -- Use double quotes to quote the command
-    vim.opt.shellxquote = ""    -- Do not add extra quotes around the command
 end

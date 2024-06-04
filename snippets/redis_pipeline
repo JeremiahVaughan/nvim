@@ -1,0 +1,37 @@
+rpl := config.RedisConnectionPool.Pipeline()
+var results []model.$SomeStruct$
+var cmds []*redis.StringCmd
+
+// Prepare the pipeline commands
+for _, key := range constants.$RedisKeyList$ {
+	cmds = append(cmds, rpl.Get(ctx, key))
+}
+
+// Execute the pipeline
+_, err := rpl.Exec(ctx)
+if err != nil && !errors.Is(err, redis.Nil) {
+	return nil, fmt.Errorf("error, when executing Redis pipeline: %v", err)
+}
+
+// Collect and process results
+for i, cmd := range cmds {
+	var redisResult string
+	redisResult, err = cmd.Result()
+	redisValueExists := !errors.Is(err, redis.Nil)
+	if err != nil && redisValueExists {
+		return nil, fmt.Errorf("error, when fetching value from redis: %v", err)
+	}
+
+	var parsedResult *model.$SomeStruct$
+	parsedResult = &model.$SomeStruct${}
+	key := constants.$RedisKeyList$[i]
+	if redisValueExists {
+		err = json.Unmarshal([]byte(redisResult), parsedResult)
+		if err != nil {
+			return nil, fmt.Errorf("error, when attempting to unmarshal redis result. Error: %v", err)
+		}
+	}
+	results = append(results, *parsedResult)
+}
+
+return results, nil
