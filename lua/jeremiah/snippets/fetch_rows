@@ -1,4 +1,4 @@
-rows, err := config.DB.Query(
+rows, err := _DATABASE_CONNECTION_POOL_.Query(
     "SELECT st.id, st.some_column \nFROM some_table st\nJOIN some_other_table sot ON st.id = sot.id\nWHERE sot.some_column = $1",
     someArg,
 )
@@ -9,7 +9,7 @@ defer func(rows *sql.Rows) {
         if closeRowsError != nil {
             // no choice but to log the error since defer doesn't let us return errors
             // defer is needed though because it ensures a cleanup attempt is made even if we should return early due to an error
-            log.Printf("error, when attempting to close database rows: %v", err)
+            log.Printf("error, when attempting to close database rows: %v", closeRowsError)
         }
     }
 }(rows)
@@ -18,12 +18,12 @@ if err != nil {
     return nil, fmt.Errorf("error, when attempting to retrieve records. Error: %v", err)
 }
 
-var result []SomeStruct
+var result []_RESULT_STRUCT_
 for rows.Next() {
-    var r SomeStruct
+    var r _RESULT_STRUCT_
     err = rows.Scan(
         &r.Id,
-        &r.SomeProperty,
+        &r._SOME_PROPERTY_,
     )
     if err != nil {
         return nil, fmt.Errorf("error, when scanning database rows: %v", err)

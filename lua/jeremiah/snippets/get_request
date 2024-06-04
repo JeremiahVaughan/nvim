@@ -1,4 +1,4 @@
-request, err := http.NewRequest(http.MethodGet, $URL$, nil)
+request, err := http.NewRequest(http.MethodGet, _URL_, nil)
 if err != nil {
     return fmt.Errorf("error, when generating get request: %v", err)
 }
@@ -37,8 +37,8 @@ if err != nil {
 }
 
 
-var $RESPONSE_STRUCT_VAR$ $RESPONSE_STRUCT$
-err = json.Unmarshal(responseBody, &$RESPONSE_STRUCT_VAR$)
+var _RESPONSE_STRUCT_VAR_ _RESPONSE_STRUCT_
+err = json.Unmarshal(responseBody, &_RESPONSE_STRUCT_VAR_)
 if err != nil {
     return fmt.Errorf("error, when unmarshalling response body: %v", err)
 }

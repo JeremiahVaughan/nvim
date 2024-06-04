@@ -1,9 +1,9 @@
-requestBody, err := json.Marshal($PAYLOAD$)
+requestBody, err := json.Marshal(_PAYLOAD_)
 if err != nil {
     return fmt.Errorf("error, when attempting to marshall payload to json: %v", err)
 }
 
-request, err := http.NewRequest(http.MethodPut, $URL$, bytes.NewBuffer(requestBody))
+request, err := http.NewRequest(http.MethodPut, _URL_, bytes.NewBuffer(requestBody))
 if err != nil {
     return fmt.Errorf("error, when attempting to generate a put request. Error: %v", err)
 }

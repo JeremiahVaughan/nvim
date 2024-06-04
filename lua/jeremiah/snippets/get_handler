@@ -5,16 +5,16 @@ import (
 	"net/http"
 )
 
-type $CAMEL_CASE_NAME$Request struct {
+type _CAMEL_CASE_NAME_Request struct {
 	Id string `json:"id"`
 }
 
-type $CAMEL_CASE_NAME$Response struct {
+type _CAMEL_CASE_NAME_Response struct {
 	Result string `json:"result"`
 }
 
 
-func validate$NAME$Request(req *$CAMEL_CASE_NAME$Request) error {
+func validate_NAME_Request(req *_CAMEL_CASE_NAME_Request) error {
 	var errorFeedback []error
 	if len(req.Id) == 0 {
 		errorFeedback = append(errorFeedback, errors.New("input string cannot be empty"))
@@ -28,28 +28,28 @@ func validate$NAME$Request(req *$CAMEL_CASE_NAME$Request) error {
 	return nil
 }
 
-func handle$NAME$(w http.ResponseWriter, r *http.Request) {
+func handle_NAME_(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "error, only GET method is supported", http.StatusMethodNotAllowed)
 		return
 	}
 
 	id := r.URL.Query().Get("id")
-	req := $CAMEL_CASE_NAME$Request{Id: id}
+	req := _CAMEL_CASE_NAME_Request{Id: id}
 
 
-	err := validate$NAME$Request(&req)
+	err := validate_NAME_Request(&req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	result, err := $CAMEL_CASE_NAME$(req.Id)
+	result, err := _CAMEL_CASE_NAME_(req.Id)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("error, failed to perform $CAMEL_CASE_NAME$ handler action: %v", err), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("error, failed to perform _CAMEL_CASE_NAME_ handler action: %v", err), http.StatusInternalServerError)
 	    return
 	}
-	res := $CAMEL_CASE_NAME$Response{Result: result}
+	res := _CAMEL_CASE_NAME_Response{Result: result}
 	responseData, err := json.Marshal(res)
 	if err != nil {
 		http.Error(w, "error, failed to create JSON response", http.StatusInternalServerError)
@@ -65,7 +65,7 @@ func handle$NAME$(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func $CAMEL_CASE_NAME$(s string) (string, error) {
+func _CAMEL_CASE_NAME_(s string) (string, error) {
 	// todo implement something
 	return "id#123", nil
 }

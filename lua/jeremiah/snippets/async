@@ -1,0 +1,39 @@
+var wg sync.WaitGroup
+errChan := make(chan error, 1)
+var results sync.Map
+
+//	loop example:
+for key, value := range someMap {
+    wg.Add(1) // Increment the wait group counter
+    go func(k, v string) {
+        defer wg.Done() // Decrement the wait group counter when done
+        item, e := someMethod(k, v)
+        if e != nil {
+            errChan <- e
+            return
+        }
+        results.Store(k, item)
+    }(key, value)
+}
+
+// inline example:
+wg.Add(1)
+go func() {
+    defer wg.Done()
+    var e error
+    someResult, e = someMethod()
+    if e != nil {
+        errChan <- fmt.Errorf("error, when someMethod() for someParentMethod(). Error: %v", e)
+        return
+    }
+    results.Store(someMapKey, someResult)
+}()
+
+go func() {
+    wg.Wait()
+    close(errChan)
+}()
+
+if errChanError := <-errChan; errChanError != nil {
+    return fmt.Errorf("error, when attempting to fetch data. Error: %v", errChanError)
+}
