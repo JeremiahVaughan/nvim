@@ -1,6 +1,12 @@
 -- Reference: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 -- Book mark: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L701
 --
+-- if you don't specify the leader remaps first then any keybinds mapped before this remap will use the default leader key
+local leader_keymap = " "
+local maplocalleader = "\\"           -- Local Leader key is set to '\'
+vim.g.mapleader = leader_keymap       -- Setting space as the leader key
+vim.g.maplocalleader = maplocalleader -- Same for `maplocalleader`
+
 require("jeremiah")
 
 local undo_tree = '<leader>ut'
@@ -8,8 +14,6 @@ local next_error = '<F8>'
 local previous_error = '<F7>'
 local open_reference_window = '<C-w>r'
 local close_reference_window = '<C-w>q'
-local leader_keymap = " "
-local maplocalleader = "\\"            -- Local Leader key is set to '\'
 local find_files_keymap = '<leader>ff' -- Leader followed by 'ff' triggers finding files
 local grep_files_keymap = '<leader>g'  -- grep through files to find files by text
 local grep_string_keymap = '<leader>fs'
@@ -20,8 +24,6 @@ local shortcut_node_incremental = "grn"
 local shortcut_node_decremental = "grm"
 local toggle_trouble = "<leader>tt"
 
-vim.g.mapleader = leader_keymap       -- Setting space as the leader key
-vim.g.maplocalleader = maplocalleader -- Same for `maplocalleader`
 -- Built in Comment/Uncomment --> normal mode gcgc --> visual mode gc
 
 -- Remap esc to enter
