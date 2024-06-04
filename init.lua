@@ -408,12 +408,3 @@ vim.api.nvim_create_autocmd('TermOpen', {
     pattern = '*',
     command = 'startinsert',
 })
-
--- Check the operating system
-if vim.loop.os_uname().sysname == "Windows_NT" then
-    -- Windows-specific settings
-    vim.opt.shell = "powershell"      -- Set the shell to PowerShell
-    vim.opt.shellcmdflag = "-Command" -- Use '-Command' to pass commands to PowerShell
-    vim.opt.shellquote = "\""         -- Use double quotes to quote the command
-    vim.opt.shellxquote = ""          -- Do not add extra quotes around the command
-end
