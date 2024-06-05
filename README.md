@@ -37,6 +37,8 @@
     - `https://github.com/jesseduffield/lazydocker`
 19. Install k9s
     - `https://k9scli.io/topics/install`
+20. Install bat (currently using this for my snippets generator)
+    - `https://github.com/sharkdp/bat?tab=readme-ov-file#installation`
 
 Note:
 - nvim-qt is available on mac too: https://github.com/equalsraf/neovim-qt
