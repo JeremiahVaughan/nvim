@@ -36,6 +36,8 @@ end
 
 -- Function to toggle the server state (start or restart)
 function ToggleServer()
+    vim.cmd('write') -- saving changes so they are in play when the server is launched
+
     local buf = FindServerTerminalBuffer()
     if buf then
         -- Server is running, so restart it
