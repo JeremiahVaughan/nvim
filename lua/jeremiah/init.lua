@@ -1,3 +1,5 @@
 require("jeremiah.packer")
 require("jeremiah.lsp")
 require("jeremiah.snippet")
+require("jeremiah.local_server")
+require("jeremiah.lazygit")
