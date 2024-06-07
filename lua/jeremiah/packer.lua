@@ -22,10 +22,6 @@ require("lazy").setup({
         lazy = false,
         priority = 1001,
     },
-    {
-        "tpope/vim-dispatch",
-        cmd = { "Dispatch", "Make", "Focus", "Start" }
-    },
     { -- Autoformat that is smarter and more effecient than the lsp formatters
         'stevearc/conform.nvim',
         lazy = false,
