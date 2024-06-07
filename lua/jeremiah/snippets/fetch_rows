@@ -1,5 +1,8 @@
 rows, err := _DATABASE_CONNECTION_POOL_.Query(
-    "SELECT st.id, st.some_column \nFROM some_table st\nJOIN some_other_table sot ON st.id = sot.id\nWHERE sot.some_column = $1",
+    `SELECT st.id, st.some_column
+    FROM some_table st
+    JOIN some_other_table sot ON st.id = sot.id
+    WHERE sot.some_column = $1`,
     someArg,
 )
 
