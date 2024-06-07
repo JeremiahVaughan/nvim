@@ -19,7 +19,10 @@ function OpenLazygitTerminal()
 end
 
 function ToggleLazyGitTerminal()
-    vim.cmd('write') -- saving changes so they appear in lazygit for staging
+    local currentBuf = vim.api.nvim_get_current_buf()
+    if not IsTerminalBuffer(currentBuf) then
+        vim.cmd('write') -- saving changes so they appear in lazygit for staging
+    end
 
     local buf = FindLazygitTerminalBuffer()
     if buf then

@@ -40,15 +40,11 @@ function FindServerTerminalBuffer(label)
     return nil
 end
 
-local function is_terminal_buffer(buf)
-    local buftype = vim.api.nvim_get_option_value('buftype', { buf = buf })
-    return buftype == 'terminal'
-end
 
 -- Function to toggle the server state (start or restart)
 function ToggleServer(label)
     local currentBuf = vim.api.nvim_get_current_buf()
-    if not is_terminal_buffer(currentBuf) then
+    if not IsTerminalBuffer(currentBuf) then
         vim.cmd('write') -- saving changes so they are in play when the server is launched
     end
 
