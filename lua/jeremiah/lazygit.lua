@@ -20,7 +20,7 @@ end
 
 function ToggleLazyGitTerminal()
     local currentBuf = vim.api.nvim_get_current_buf()
-    if not IsTerminalBuffer(currentBuf) then
+    if not IsTerminalBuffer(currentBuf) and vim.api.nvim_buf_get_name(currentBuf) ~= "" then
         vim.cmd('write') -- saving changes so they appear in lazygit for staging
     end
 
