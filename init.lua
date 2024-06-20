@@ -294,6 +294,9 @@ require('lualine').setup {
     extensions = {}
 }
 
+-- In case grep is used in the command line, ensuring it is set to ripgrep
+vim.opt.grepprg = 'rg -n $*'
+vim.opt.grepformat = '%f:%l:%m,%f:%l%m,%f %l%m'
 
 -- Telescope Setup
 local teleBuiltin = require 'telescope.builtin'
