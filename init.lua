@@ -238,6 +238,7 @@ vim.api.nvim_set_keymap('n', next_error, ':cnext<CR>', { noremap = true, silent 
 vim.api.nvim_set_keymap('n', previous_error, ':cprev<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', undo_tree, ':UndotreeToggle<CR>', { noremap = true, silent = true })
 
+-- todo this hasn't worked a couple of times, so thinking of just not trusting it and ensuring I always save myself
 -- Auto-save function when Neovim loses focus or files are changed
 local group = vim.api.nvim_create_augroup('Autosave', { clear = true })
 vim.api.nvim_create_autocmd({ "FocusLost", "WinLeave" }, {
@@ -393,10 +394,7 @@ vim.api.nvim_set_keymap('n', '<Leader>h', ':Help ', { noremap = true, silent = t
 vim.api.nvim_create_user_command(
     'M', -- Command name
     function()
-        local currentBuf = vim.api.nvim_get_current_buf()
-        if not IsTerminalBuffer(currentBuf) and vim.api.nvim_buf_get_name(currentBuf) ~= "" then
-            vim.cmd('write')              -- Save the current buffer
-        end
+        jeremiah.utils.SaveAll()
         vim.cmd('make')                   -- Run make
     end,
     { desc = "Save buffer and run make" } -- Description for the command
