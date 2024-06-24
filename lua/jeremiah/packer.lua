@@ -120,8 +120,6 @@ require("lazy").setup({
             opt = true,
         },
     },
-    -- using nvim in the browser, fantastic
-    'glacambre/firenvim',
     {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
