@@ -9,7 +9,7 @@ for _, key := range constants._REDIS_KEY_LIST_ {
 
 // Execute the pipeline
 _, err := rpl.Exec(ctx)
-if err != nil && !errors.Is(err, redis.Nil) {
+if err != nil {
 	return nil, fmt.Errorf("error, when executing Redis pipeline: %v", err)
 }
 
