@@ -169,7 +169,7 @@ vim.o.relativenumber = true -- Shows relative line numbers to your cursor so I c
 vim.o.tabstop = 4           -- Number of spaces a tab counts for
 vim.o.shiftwidth = 4        -- Size of an indent
 
-vim.o.expandtab = true      -- expands tab to spaces
+vim.o.expandtab = false      -- using tab chars because they are required in makefiles
 
 -- Function to set options for Makefiles
 local function set_makefile_options()
