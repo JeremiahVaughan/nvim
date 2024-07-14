@@ -39,6 +39,9 @@
     - `https://k9scli.io/topics/install`
 20. Install bat (currently using this for my snippets generator)
     - `https://github.com/sharkdp/bat?tab=readme-ov-file#installation`
+21. Ensure the latest version of curl is installed, because leetcode.nvim requires it.
+    - `https://curl.se/windows/`
+    - Ensure the bin folder is on the path and before all other paths (system too) to ensure that the new version of curl is found before the old one is.
 
 Note:
 - nvim-qt is available on mac too: https://github.com/equalsraf/neovim-qt
