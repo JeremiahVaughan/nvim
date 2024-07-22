@@ -171,34 +171,6 @@ vim.o.shiftwidth = 4        -- Size of an indent
 
 vim.o.expandtab = false      -- using tab chars because they are required in makefiles
 
--- Function to set options for Makefiles
-local function set_makefile_options()
-    vim.bo.expandtab = false
-    vim.notify("Makefile options set: expandtab is set to " .. tostring(vim.bo.expandtab))
-end
-
--- Function to unset options for non-Makefiles
-local function unset_makefile_options()
-    vim.bo.expandtab = true
-    vim.notify("Makefile options unset: expandtab is set to " .. tostring(vim.bo.expandtab))
-end
-
-vim.api.nvim_create_augroup('MakefileSettings', { clear = true })
-
--- Autocommand for BufRead and BufNewFile events
-vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-    group = 'MakefileSettings',
-    pattern = 'Makefile,*.make',
-    callback = set_makefile_options
-})
-
--- Autocommand for BufLeave event to unset Makefile options when leaving a buffer
-vim.api.nvim_create_autocmd('BufLeave', {
-    group = 'MakefileSettings',
-    pattern = 'Makefile,*.make',
-    callback = unset_makefile_options
-})
-
 
 vim.o.hlsearch = true  -- Highlight search results
 vim.o.incsearch = true -- Shows the match while typing
