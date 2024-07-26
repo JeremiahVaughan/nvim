@@ -62,11 +62,11 @@ vim.cmd('command! M write | make')
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Highlight when yanking (copying) text',
-    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-    callback = function()
-        vim.highlight.on_yank()
-    end,
+	desc = 'Highlight when yanking (copying) text',
+	group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
 })
 
 -- Keybinds to make split navigation easier.
@@ -169,7 +169,7 @@ vim.o.relativenumber = true -- Shows relative line numbers to your cursor so I c
 vim.o.tabstop = 4           -- Number of spaces a tab counts for
 vim.o.shiftwidth = 4        -- Size of an indent
 
-vim.o.expandtab = false      -- using tab chars because they are required in makefiles
+vim.o.expandtab = false     -- using tab chars because they are required in makefiles
 
 
 vim.o.hlsearch = true  -- Highlight search results
@@ -214,57 +214,57 @@ vim.api.nvim_set_keymap('n', undo_tree, ':UndotreeToggle<CR>', { noremap = true,
 -- Auto-save function when Neovim loses focus or files are changed
 local group = vim.api.nvim_create_augroup('Autosave', { clear = true })
 vim.api.nvim_create_autocmd({ "FocusLost", "WinLeave" }, {
-    group = group,
-    pattern = '*',
-    command = 'silent! wa'
+	group = group,
+	pattern = '*',
+	command = 'silent! wa'
 })
 
 
 -- Status bar setup
 require('lualine').setup {
-    options = {
-        icons_enabled = true,
-        theme = 'wombat',
-        component_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
-        disabled_filetypes = {
-            statusline = {},
-            winbar = {},
-        },
-        ignore_focus = {},
-        always_divide_middle = true,
-        globalstatus = false,
-        refresh = {
-            statusline = 1000,
-            tabline = 1000,
-            winbar = 1000,
-        }
-    },
-    sections = {
-        lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff', 'diagnostics' },
-        lualine_c = {
-            {
-                'filename',
-                path = 1,
-            },
-        },
-        lualine_x = {},
-        lualine_y = { 'progress' },
-        lualine_z = { 'location' }
-    },
-    inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = {},
-        lualine_x = { 'location', 'encoding', 'fileformat', 'filetype' },
-        lualine_y = {},
-        lualine_z = {}
-    },
-    tabline = {},
-    winbar = {},
-    inactive_winbar = {},
-    extensions = {}
+	options = {
+		icons_enabled = true,
+		theme = 'wombat',
+		component_separators = { left = '', right = '' },
+		section_separators = { left = '', right = '' },
+		disabled_filetypes = {
+			statusline = {},
+			winbar = {},
+		},
+		ignore_focus = {},
+		always_divide_middle = true,
+		globalstatus = false,
+		refresh = {
+			statusline = 1000,
+			tabline = 1000,
+			winbar = 1000,
+		}
+	},
+	sections = {
+		lualine_a = { 'mode' },
+		lualine_b = { 'branch', 'diff', 'diagnostics' },
+		lualine_c = {
+			{
+				'filename',
+				path = 1,
+			},
+		},
+		lualine_x = {},
+		lualine_y = { 'progress' },
+		lualine_z = { 'location' }
+	},
+	inactive_sections = {
+		lualine_a = {},
+		lualine_b = {},
+		lualine_c = {},
+		lualine_x = { 'location', 'encoding', 'fileformat', 'filetype' },
+		lualine_y = {},
+		lualine_z = {}
+	},
+	tabline = {},
+	winbar = {},
+	inactive_winbar = {},
+	extensions = {}
 }
 
 -- In case grep is used in the command line, ensuring it is set to ripgrep
@@ -272,47 +272,54 @@ vim.opt.grepprg = 'rg -n $*'
 vim.opt.grepformat = '%f:%l:%m,%f:%l%m,%f %l%m'
 
 -- Telescope Setup
+local actions = require('telescope.actions')
 local teleBuiltin = require 'telescope.builtin'
 require('telescope').setup {
-    defaults = {
-        -- todo figure out how to make this fuzzy refine thing work
-        -- mappings = {
-        --     i = { ['<C-s>'] = 'to_fuzzy_refine' },
-        -- },
-        find_command = { 'rg', '--files', '--hidden', '--glob', '!.git/*' },
-        vimgrep_arguments = {
-            'rg',
-            '--color=never',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--smart-case',
-            '--hidden',         -- Add this line to include hidden files
-            '--glob', '!.git/*' -- Optionally exclude .git directory
-        },
-        file_ignore_patterns = {
-            "node_modules",
-            "%.jpg",
-            "%.png",
-            "%.git\\", -- Windows
-            "%.git/",  -- other
-        },
-        layout_strategy = 'flex',
-        layout_config = {
-            flex = {
-                flip_columns = 120 -- Adjust this value based on your preference
-            },
-            width = 0.95,          -- Percentage of the screen width
-            height = 0.95,         -- Percentage of the screen height
-            preview_cutoff = 120,  -- When to start showing the preview pane
-        }
-    },
-    pickers = {
-        find_files = {
-            hidden = true
-        }
-    }
+	defaults = {
+		-- this mapping appears to be required if you are using custom pickers
+		mappings = {
+			i = {
+				["<C-c>"] = actions.close, -- Map Ctrl+C to close action
+			},
+		},
+		-- todo figure out how to make this fuzzy refine thing work
+		-- mappings = {
+		--     i = { ['<C-s>'] = 'to_fuzzy_refine' },
+		-- },
+		find_command = { 'rg', '--files', '--hidden', '--glob', '!.git/*' },
+		vimgrep_arguments = {
+			'rg',
+			'--color=never',
+			'--no-heading',
+			'--with-filename',
+			'--line-number',
+			'--column',
+			'--smart-case',
+			'--hidden', -- Add this line to include hidden files
+			'--glob', '!.git/*' -- Optionally exclude .git directory
+		},
+		file_ignore_patterns = {
+			"node_modules",
+			"%.jpg",
+			"%.png",
+			"%.git\\", -- Windows
+			"%.git/", -- other
+		},
+		layout_strategy = 'flex',
+		layout_config = {
+			flex = {
+				flip_columns = 120 -- Adjust this value based on your preference
+			},
+			width = 0.95, -- Percentage of the screen width
+			height = 0.95, -- Percentage of the screen height
+			preview_cutoff = 120, -- When to start showing the preview pane
+		}
+	},
+	pickers = {
+		find_files = {
+			hidden = true
+		}
+	}
 }
 
 -- Enable Telescope extensions if they are installed
@@ -321,42 +328,42 @@ pcall(require('telescope').load_extension, 'ui-select')
 
 -- Shortcut for searching your Neovim configuration files
 vim.keymap.set('n', '<leader>sn', function()
-    teleBuiltin.find_files { cwd = vim.fn.stdpath 'config' }
+	teleBuiltin.find_files { cwd = vim.fn.stdpath 'config' }
 end, { desc = '[S]earch [N]eovim files' })
 
 -- Treesitter setup
 require('nvim-treesitter.configs').setup {
-    ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query" }, -- Install parsers for Go and Python only
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
-    incremental_selection = {
-        enable = true,
-        init_selection = shortcut_init_selection,
-        node_incremental = shortcut_node_incremental,
-        node_decremental = shortcut_node_decremental
-    },
-    indent = { enable = true } -- Enable indentation
+	ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query" }, -- Install parsers for Go and Python only
+	highlight = {
+		enable = true,
+		additional_vim_regex_highlighting = false,
+	},
+	incremental_selection = {
+		enable = true,
+		init_selection = shortcut_init_selection,
+		node_incremental = shortcut_node_incremental,
+		node_decremental = shortcut_node_decremental
+	},
+	indent = { enable = true } -- Enable indentation
 }
 
 
 --- Firenvim
 vim.g.firenvim_config = {
-    localSettings = {
-        ['https://www.evernote.com/'] = {
-            selector = "en-note",
-            takeover = "always"
-        }
-    }
+	localSettings = {
+		['https://www.evernote.com/'] = {
+			selector = "en-note",
+			takeover = "always"
+		}
+	}
 }
 
 
 -- Define the 'Help' command that opens the help menu in a vertical split on the right
 vim.api.nvim_create_user_command(
-    'Help',                        -- Command name
-    'rightbelow vert help <args>', -- Execute 'rightbelow vert help' with additional arguments
-    { nargs = '+' }                -- This command requires at least one argument
+	'Help',                     -- Command name
+	'rightbelow vert help <args>', -- Execute 'rightbelow vert help' with additional arguments
+	{ nargs = '+' }             -- This command requires at least one argument
 )
 
 -- Map <Leader>h to the 'Help' command
@@ -364,12 +371,12 @@ vim.api.nvim_set_keymap('n', '<Leader>h', ':Help ', { noremap = true, silent = t
 
 -- Create a custom command 'Make' that saves the buffer and runs 'make'
 vim.api.nvim_create_user_command(
-    'M', -- Command name
-    function()
-        jeremiah.utils.SaveAll()
-        vim.cmd('make')                   -- Run make
-    end,
-    { desc = "Save buffer and run make" } -- Description for the command
+	'M', -- Command name
+	function()
+		jeremiah.utils.SaveAll()
+		vim.cmd('make')                -- Run make
+	end,
+	{ desc = "Save buffer and run make" } -- Description for the command
 )
 
 -- Remap <Enter> in terminal mode to exit to normal mode
@@ -382,7 +389,7 @@ vim.api.nvim_set_keymap('n', '<S-Enter>', 'i<CR>', { noremap = true, silent = tr
 -- Set insert mode to default when opening a new terminal
 vim.api.nvim_create_augroup('TerminalAutocmd', { clear = true })
 vim.api.nvim_create_autocmd('TermOpen', {
-    group = 'TerminalAutocmd',
-    pattern = '*',
-    command = 'startinsert',
+	group = 'TerminalAutocmd',
+	pattern = '*',
+	command = 'startinsert',
 })
