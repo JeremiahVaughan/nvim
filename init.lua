@@ -386,6 +386,13 @@ vim.api.nvim_set_keymap('t', '<Enter>', [[<C-\><C-n>]], { noremap = true, silent
 vim.api.nvim_set_keymap('t', '<S-Enter>', '<Enter>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<S-Enter>', 'i<CR>', { noremap = true, silent = true })
 
+-- Remap to enable pasting from registers to terminal
+vim.keymap.set('t', '<c-r>', function()
+	local next_char_code = vim.fn.getchar()
+	local next_char = vim.fn.nr2char(next_char_code)
+	return '<C-\\><C-N>"' .. next_char .. 'pi'
+end, { expr = true })
+
 -- Set insert mode to default when opening a new terminal
 vim.api.nvim_create_augroup('TerminalAutocmd', { clear = true })
 vim.api.nvim_create_autocmd('TermOpen', {
