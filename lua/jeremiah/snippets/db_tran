@@ -5,19 +5,19 @@ if err != nil {
 }
 
 err = func() error {
-    _, err = tx.Exec(ctx, "_QUERY_HERE_")
+    _, err = tx.Exec(ctx, `_QUERY_HERE_`)
     if err != nil {
-        return fmt.Errorf("error, when executing query to create init table. Error: %v", err)
+        return fmt.Errorf("error, when executing query to _do_something_. Error: %v", err)
     }
 
-    _, err = tx.Exec(ctx, "comment on table init is 'This table is for tracking which schema migration scripts have been applied already'")
+    _, err = tx.Exec(ctx,  `_QUERY_HERE_`)
     if err != nil {
-        return fmt.Errorf("error, when attempting to add a comment to the init table. Error: %v", err)
+        return fmt.Errorf("error, when executing query to _do_something_. Error: %v", err)
     }
 
-    _, err = tx.Exec(ctx, "_QUERY_HERE_")
+    _, err = tx.Exec(ctx, `_QUERY_HERE_`)
     if err != nil {
-        return fmt.Errorf("error, when attempting to create a unique index for the init table. Error: %v", err)
+        return fmt.Errorf("error, when executing query to _do_something_. Error: %v", err)
     }
     return nil
 }()
