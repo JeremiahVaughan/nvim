@@ -23,23 +23,21 @@
     - `nvim-qt`
 10. You will see an install error, its ok, it just means something needs to be installed before it can be used so just need to install
 11. Restart nvim
-12. Install firenvim
-    - `https://github.com/glacambre/firenvim?tab=readme-ov-file` 
-13. Run this to ensure everything is working properly
+12. Run this to ensure everything is working properly
     - `:checkhealth`
-14. Install LazyGit
+13. Install LazyGit
     - `https://github.com/jesseduffield/lazygit`
-15. Install Delta-diff for better diff indicators for LazyGit
-16. Install jq
+14. Install Delta-diff for better diff indicators for LazyGit
+15. Install jq
     - `https://jqlang.github.io/jq/download/`
     - `https://github.com/dandavison/delta`
-18. Install LazyDocker
+17. Install LazyDocker
     - `https://github.com/jesseduffield/lazydocker`
-19. Install k9s
+18. Install k9s
     - `https://k9scli.io/topics/install`
-20. Install bat (currently using this for my snippets generator)
+19. Install bat (currently using this for my snippets generator)
     - `https://github.com/sharkdp/bat?tab=readme-ov-file#installation`
-21. Ensure the latest version of curl is installed, because leetcode.nvim requires it.
+20. Ensure the latest version of curl is installed, because leetcode.nvim requires it.
     - `https://curl.se/windows/`
     - Ensure the bin folder is on the path and before all other paths (system too) to ensure that the new version of curl is found before the old one is.
 
