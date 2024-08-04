@@ -38,7 +38,7 @@ vim.api.nvim_set_keymap('!', '<Esc>', '<Nop>', { noremap = true, silent = true }
 -- Insert mode
 -- vim.api.nvim_set_keymap('i', '<CR>', '<Esc>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<CR>', 'echom "enter is pressed"', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<S-CR>', 'echom "shift + enter is pressed"', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<S-CR>', '<CR>', { noremap = true, silent = true })
 -- Visual Mode
 --vim.api.nvim_set_keymap('v', '<CR>', '<Esc>', { noremap = true, silent = true })
 ---- Replace mode
