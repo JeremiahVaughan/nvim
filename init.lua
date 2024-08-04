@@ -47,7 +47,7 @@ vim.api.nvim_set_keymap('!', '<CR>', '<Esc>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('t', '<Enter>', [[<C-\><C-n>]], { noremap = true, silent = true })
 
 ---- Remap <S-Enter> in terminal mode to act as the default <Enter>
---vim.api.nvim_set_keymap('t', '<S-Enter>', '<Enter>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<S-Enter>', '<Enter>', { noremap = true, silent = true })
 --vim.api.nvim_set_keymap('n', '<S-Enter>', 'i<CR>', { noremap = true, silent = true })
 
 -- Easy exit terminal mode
