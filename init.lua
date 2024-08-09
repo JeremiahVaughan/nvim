@@ -400,11 +400,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
 })
 
 
-if (os.getenv('SSH_TTY') == nil)
-then
-	vim.opt.clipboard:append("unnamedplus")
-else
-	vim.opt.clipboard:append("unnamedplus")
+if (os.getenv('SSH_TTY') ~= nil) then
 	vim.g.clipboard = {
 		name = 'OSC 52',
 		copy = {
