@@ -407,14 +407,14 @@ vim.api.nvim_create_autocmd('TermOpen', {
 -- 	end
 -- end
 
-function my_paste(reg)
-	return function(lines)
-		-- Retrieve the content of the system clipboard
-		local content = vim.fn.getreg(reg)
-		-- Return it split by newlines for pasting
-		return vim.split(content, '\n')
-	end
-end
+-- function my_paste(reg)
+-- 	return function(lines)
+-- 		-- Retrieve the content of the system clipboard
+-- 		local content = vim.fn.getreg(reg)
+-- 		-- Return it split by newlines for pasting
+-- 		return vim.split(content, '\n')
+-- 	end
+-- end
 
 if (os.getenv('SSH_TTY') == nil)
 then
@@ -428,8 +428,8 @@ else
 			['*'] = require('vim.ui.clipboard.osc52').copy('*'),
 		},
 		paste = {
-			["+"] = my_paste("+"),
-			["*"] = my_paste("*"),
+			["+"] = require('vim.ui.clipboard.osc52').paste('+'),
+			["*"] = require('vim.ui.clipboard.osc52').paste('*'),
 		},
 	}
 end
