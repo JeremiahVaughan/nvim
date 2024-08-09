@@ -399,22 +399,6 @@ vim.api.nvim_create_autocmd('TermOpen', {
 	command = 'startinsert',
 })
 
--- -- Clipboard setup so clipboard works well with SSH sessions
--- function my_paste(reg)
--- 	return function(lines)
--- 		local content = vim.fn.getreg('"')
--- 		return vim.split(content, '\n')
--- 	end
--- end
-
--- function my_paste(reg)
--- 	return function(lines)
--- 		-- Retrieve the content of the system clipboard
--- 		local content = vim.fn.getreg(reg)
--- 		-- Return it split by newlines for pasting
--- 		return vim.split(content, '\n')
--- 	end
--- end
 
 if (os.getenv('SSH_TTY') == nil)
 then
