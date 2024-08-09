@@ -29,13 +29,13 @@ for rows.Next() {
         &r._SOME_PROPERTY_,
     )
     if err != nil {
-        return nil, fmt.Errorf("error, when scanning database rows: %v", err)
+        return nil, fmt.Errorf("error, when scanning database rows. Error: %v", err)
     }
     result = append(result, r)
 }
 
 err = rows.Err()
 if err != nil {
-    return nil, fmt.Errorf("error, when iterating through database rows: %v", err)
+    return nil, fmt.Errorf("error, when iterating through database rows. Error: %v", err)
 }
 return result, nil

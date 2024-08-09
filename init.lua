@@ -37,10 +37,18 @@ vim.api.nvim_set_keymap('v', '<Esc>', '<Nop>', { noremap = true, silent = true }
 vim.api.nvim_set_keymap('!', '<Esc>', '<Nop>', { noremap = true, silent = true })
 -- Insert mode
 vim.api.nvim_set_keymap('i', '<CR>', '<Esc>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<S-CR>', '<CR>', { noremap = true, silent = true })
 -- Visual Mode
 vim.api.nvim_set_keymap('v', '<CR>', '<Esc>', { noremap = true, silent = true })
 -- Replace mode
 vim.api.nvim_set_keymap('!', '<CR>', '<Esc>', { noremap = true, silent = true })
+
+-- Remap <Enter> in terminal mode to exit to normal mode
+vim.api.nvim_set_keymap('t', '<Enter>', [[<C-\><C-n>]], { noremap = true, silent = true })
+
+-- Remap <S-Enter> in terminal mode to act as the default <Enter>
+vim.api.nvim_set_keymap('t', '<S-Enter>', '<Enter>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<S-Enter>', 'i<CR>', { noremap = true, silent = true })
 
 -- Easy exit terminal mode
 -- todo problem with pressing escape twice is that I sometimes actually want to press it a few times quickly in the program itself like when navigating in k9s
@@ -86,10 +94,6 @@ vim.api.nvim_set_keymap('i', '<Backspace>', '<Nop>', { noremap = true, silent = 
 -- Disable <Backspace> in Command-Line mode
 vim.api.nvim_set_keymap('c', '<Backspace>', '<Nop>', { noremap = true, silent = true })
 
--- startup and go strait to telescope find files
--- vim.cmd [[
---   autocmd VimEnter * silent! lua require('telescope.builtin').find_files()
--- ]]
 
 vim.g.have_nerd_font = true
 vim.opt.showmode = false -- mode is already in the status line
@@ -379,12 +383,6 @@ vim.api.nvim_create_user_command(
 	{ desc = "Save buffer and run make" } -- Description for the command
 )
 
--- Remap <Enter> in terminal mode to exit to normal mode
-vim.api.nvim_set_keymap('t', '<Enter>', [[<C-\><C-n>]], { noremap = true, silent = true })
-
--- Remap <S-Enter> in terminal mode to act as the default <Enter>
-vim.api.nvim_set_keymap('t', '<S-Enter>', '<Enter>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<S-Enter>', 'i<CR>', { noremap = true, silent = true })
 
 -- Remap to enable pasting from registers to terminal
 vim.keymap.set('t', '<c-r>', function()
