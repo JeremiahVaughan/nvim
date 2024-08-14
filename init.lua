@@ -399,8 +399,8 @@ vim.api.nvim_create_autocmd('TermOpen', {
 	command = 'startinsert',
 })
 
-
-if (os.getenv('SSH_TTY') ~= nil) then
+local ProbablyGitBash = os.getenv('TERM') == 'xterm'
+if (os.getenv('SSH_TTY') ~= nil and not ProbablyGitBash) then
 	vim.g.clipboard = {
 		name = 'OSC 52',
 		copy = {
