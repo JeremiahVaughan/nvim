@@ -41,6 +41,18 @@
     - `https://curl.se/windows/`
     - Ensure the bin folder is on the path and before all other paths (system too) to ensure that the new version of curl is found before the old one is.
 
+21. For copy paste to work on remote ssh sessions
+    - Mac: `use Iterm2`
+    - Windows: 
+        - Reference: https://stackoverflow.com/a/60119075
+        - Use Git Bash
+        - Install X-server: `choco install vcxsrv`
+        - Start X-server as it must be running for copy paste to work
+        - Ensure Xclip is installed on remote node
+        - Add `export DISPLAY=localhost:0.0` to the .zshrc and .bashrc files on the remote node
+        - Make sure that `/etc/ssh/sshd.config` on the remote node has line `X11Forwarding` yes
+        - Always ssh with the -Y flag. Example: `ssh -Y <server_address>`
+
 Note:
 - nvim-qt is available on mac too: https://github.com/equalsraf/neovim-qt
 - .ideavimrc is also saved in this directory for convenience. Move this to the HOME directory and restart Jetbrains for it to take effect.
