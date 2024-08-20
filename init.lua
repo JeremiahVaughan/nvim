@@ -50,6 +50,10 @@ vim.api.nvim_set_keymap('t', '<Enter>', [[<C-\><C-n>]], { noremap = true, silent
 vim.api.nvim_set_keymap('t', '<S-Enter>', '<Enter>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<S-Enter>', 'i<CR>', { noremap = true, silent = true })
 
+-- -- DB goodness
+-- vim.api.nvim_set_keymap('n', '<leader>db', ':lua require("dbee").toggle()<CR>', { noremap = true, silent = true })
+
+
 -- Easy exit terminal mode
 -- todo problem with pressing escape twice is that I sometimes actually want to press it a few times quickly in the program itself like when navigating in k9s
 -- vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
