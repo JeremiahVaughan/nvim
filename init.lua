@@ -50,9 +50,6 @@ vim.api.nvim_set_keymap('t', '<Enter>', [[<C-\><C-n>]], { noremap = true, silent
 vim.api.nvim_set_keymap('t', '<S-Enter>', '<Enter>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<S-Enter>', 'i<CR>', { noremap = true, silent = true })
 
--- -- DB goodness
--- vim.api.nvim_set_keymap('n', '<leader>db', ':lua require("dbee").toggle()<CR>', { noremap = true, silent = true })
-
 
 -- Easy exit terminal mode
 -- todo problem with pressing escape twice is that I sometimes actually want to press it a few times quickly in the program itself like when navigating in k9s
@@ -279,6 +276,45 @@ require('lualine').setup {
 -- In case grep is used in the command line, ensuring it is set to ripgrep
 vim.opt.grepprg = 'rg -n $*'
 vim.opt.grepformat = '%f:%l:%m,%f:%l%m,%f %l%m'
+
+local harpoon = require("harpoon")
+
+-- REQUIRED
+harpoon:setup()
+-- REQUIRED
+
+vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+
+
+-- basic telescope configuration
+-- local conf = require("telescope.config").values
+-- local function toggle_telescope(harpoon_files)
+-- 	local file_paths = {}
+-- 	for _, item in ipairs(harpoon_files.items) do
+-- 		table.insert(file_paths, item.value)
+-- 	end
+
+-- 	require("telescope.pickers").new({}, {
+-- 		prompt_title = "Harpoon",
+-- 		finder = require("telescope.finders").new_table({
+-- 			results = file_paths,
+-- 		}),
+-- 		previewer = conf.file_previewer({}),
+-- 		sorter = conf.generic_sorter({}),
+-- 	}):find()
+-- end
+
+-- vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
 
 -- Telescope Setup
 local actions = require('telescope.actions')
