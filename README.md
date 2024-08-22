@@ -43,15 +43,11 @@
 
 21. For copy paste to work on remote ssh sessions
     - Mac: `use Iterm2`
-    - Windows: 
-        - Reference: https://stackoverflow.com/a/60119075
-        - Use Git Bash
-        - Install X-server: `choco install vcxsrv`
-        - Start X-server as it must be running for copy paste to work
-        - Ensure Xclip is installed on remote node
-        - Add `export DISPLAY=localhost:0.0` to the .zshrc and .bashrc files on the remote node
-        - Make sure that `/etc/ssh/sshd.config` on `/etc/ssh/sshd_config` on the remote node has line `X11Forwarding` yes
-        - Always ssh with the -Y flag. Example: `ssh -Y <server_address>`
+    - Mac other:
+        - copy the file `.alacritty.toml` in the root of this project to `$HOME/.alacritty.toml`
+    - Windows:
+        - copy the file `.alacritty.toml` in the root of this project to `%APPDATA%\alacritty\alacritty.toml`
+
 
 Note:
 - nvim-qt is available on mac too: https://github.com/equalsraf/neovim-qt
