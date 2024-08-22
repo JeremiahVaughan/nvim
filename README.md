@@ -50,7 +50,7 @@
         - Start X-server as it must be running for copy paste to work
         - Ensure Xclip is installed on remote node
         - Add `export DISPLAY=localhost:0.0` to the .zshrc and .bashrc files on the remote node
-        - Make sure that `/etc/ssh/sshd.config` on the remote node has line `X11Forwarding` yes
+        - Make sure that `/etc/ssh/sshd.config` on `/etc/ssh/sshd_config` on the remote node has line `X11Forwarding` yes
         - Always ssh with the -Y flag. Example: `ssh -Y <server_address>`
 
 Note:
