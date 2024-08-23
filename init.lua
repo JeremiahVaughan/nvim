@@ -185,6 +185,7 @@ vim.o.incsearch = true -- Shows the match while typing
 vim.o.backup = false
 vim.o.undodir = os.getenv("HOME") .. "/.vim/undodir" ]]
 vim.o.undofile = true
+vim.g.undotree_SplitWidth = 60
 
 -- make auto save to swap file more frequent
 vim.o.updatetime = 250
