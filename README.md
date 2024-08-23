@@ -45,8 +45,12 @@
     - Mac: `use Iterm2`
     - Mac other:
         - copy the file `.alacritty.toml` in the root of this project to `$HOME/.alacritty.toml`
+            or
+        - copy the file `.wezterm.lua` in the root of this project to `$HOME/.wezterm.lua`
     - Windows:
         - copy the file `.alacritty.toml` in the root of this project to `%APPDATA%\alacritty\alacritty.toml`
+            or
+        - copy the file `.wezterm.lua` in the root of this project to `$HOME/.wezterm.lua`
 
 
 Note:
