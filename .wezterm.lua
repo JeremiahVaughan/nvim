@@ -13,5 +13,6 @@ local config = wezterm.config_builder()
 config.keys = {
 	{ key = "\r", mods = "SHIFT", action = wezterm.action.SendKey { key = '\r', mods = 'SHIFT' } }
 }
+config.font_size = 13
 -- and finally, return the configuration to wezterm
 return config
