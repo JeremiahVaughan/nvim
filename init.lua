@@ -456,6 +456,6 @@ if (os.getenv('SSH_TTY') ~= nil) then
 	}
 end
 
-if (os.getenv('SSH_TTY') == nil) then
-	vim.o.shell = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
-end
+-- if (os.getenv('SSH_TTY') == nil) then
+-- 	vim.o.shell = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+-- end
