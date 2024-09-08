@@ -13,8 +13,8 @@ local config = wezterm.config_builder()
 config.keys = {
 	{ key = "\r", mods = "SHIFT", action = wezterm.action.SendKey { key = '\r', mods = 'SHIFT' } }
 }
-config.font_size = 13
+config.font_size = 15
 config.hide_tab_bar_if_only_one_tab = true
-config.default_prog = { "powershell", "-NoLogo"}
+config.default_prog = { "powershell", "-NoLogo" }
 -- and finally, return the configuration to wezterm
 return config
