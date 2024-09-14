@@ -9,7 +9,7 @@ for key, value := range someMap {
         defer wg.Done() // Decrement the wait group counter when done
         item, e := someMethod(k, v)
         if e != nil {
-            errChan <- e
+            errChan <- fmt.Errorf("error when someMethod for someParentMethod() of key: %s. Error: %v", k, err)
             return
         }
         results.Store(k, item)
