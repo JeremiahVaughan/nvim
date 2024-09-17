@@ -35,5 +35,5 @@ go func() {
 }()
 
 if errChanError := <-errChan; errChanError != nil {
-    return fmt.Errorf("error, when attempting to fetch data. Error: %v", errChanError)
+    return fmt.Errorf("error, when attempting to perform async actions. Error: %v", errChanError)
 }
