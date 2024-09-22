@@ -13,7 +13,26 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
-	"mfussenegger/nvim-dap",
+	{
+		"leoluz/nvim-dap-go",
+		dependencies = {
+			-- delv must be installed (see README.md)
+			"mfussenegger/nvim-dap",
+		},
+	},
+	{
+		"rcarriga/nvim-dap-ui",
+		dependencies = {
+			"mfussenegger/nvim-dap",
+			"nvim-neotest/nvim-nio"
+		},
+	},
+	{
+		"theHamsta/nvim-dap-virtual-text",
+		dependencies = {
+			"mfussenegger/nvim-dap",
+		},
+	},
 	{
 		"jackMort/ChatGPT.nvim",
 		event = "VeryLazy",

@@ -14,11 +14,11 @@ local next_error = '<F8>'
 local previous_error = '<F7>'
 local open_reference_window = '<C-w>r'
 local close_reference_window = '<C-w>q'
-local find_files_keymap = '<leader>ff' -- Leader followed by 'ff' triggers finding files
-local grep_files_keymap = '<leader>g'  -- grep through files to find files by text
-local grep_string_keymap = '<leader>fs'
-local search_buffers_keymap = '<leader>b'
-local search_registers_keymap = '<leader>y'
+local find_files_keymap = '<leader>sf' -- Leader followed by 'ff' triggers finding files
+local grep_files_keymap = '<leader>sg' -- grep through files to find files by text
+local grep_string_keymap = '<leader>ss'
+local search_buffers_keymap = '<leader>sb'
+local search_registers_keymap = '<leader>sr'
 local shortcut_init_selection = "gnn"
 local shortcut_node_incremental = "grn"
 local shortcut_node_decremental = "grm"
@@ -377,6 +377,11 @@ vim.keymap.set('n', '<leader>sn', function()
 	teleBuiltin.find_files { cwd = vim.fn.stdpath 'config' }
 end, { desc = '[S]earch [N]eovim files' })
 
+-- Finding templates
+vim.keymap.set('n', '<leader>st', function()
+	teleBuiltin.find_files { cwd = vim.fn.stdpath('config') .. '/lua/jeremiah/templates' }
+end, { desc = '[S]earch [T]emplate files' })
+
 -- Treesitter setup
 require('nvim-treesitter.configs').setup {
 	ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query" }, -- Install parsers for Go and Python only
@@ -465,13 +470,70 @@ vim.api.nvim_set_keymap('n', '<leader>c', ':ChatGPT<CR>', { noremap = true, sile
 
 -- Debugger stuff
 local dap = require('dap')
-dap.configurations.go = {
-	-- {
-	--   type = "go",  -- Use the 'go' adapter (requires 'delve' support)
-	--   name = "Debug main.go",  -- Name for your configuration
-	--   request = "launch",  -- Request type: 'launch' or 'attach'
-	--   program = "${file}",  -- Path to the current file being debugged
+require('dapui').setup()
+require('dap-go').setup {
+	-- Additional dap configurations can be added.
+	-- dap_configurations accepts a list of tables where each entry
+	-- represents a dap configuration. For more details do:
+	-- :help dap-configuration
+	-- dap_configurations = {
+	-- 	{
+	-- 		-- Must be "go" or it will be ignored by the plugin
+	-- 		type = "go",
+	-- 		name = "Attach remote",
+	-- 		request = "launch",
+	-- 		env = {      -- Set environment variables here
+	-- 			TEST_MODE = "false", -- unit tests run by default
+	-- 		},
+	-- 	},
 	-- },
+	-- delve configurations
+	delve = {
+		-- the path to the executable dlv which will be used for debugging.
+		-- by default, this is the "dlv" executable on your PATH.
+		path = "dlv",
+		-- time to wait for delve to initialize the debug session.
+		-- default to 20 seconds
+		initialize_timeout_sec = 20,
+		-- a string that defines the port to start delve debugger.
+		-- default to string "${port}" which instructs nvim-dap
+		-- to start the process in a random available port.
+		-- if you set a port in your debug configuration, its value will be
+		-- assigned dynamically.
+		port = "${port}",
+		-- additional args to pass to dlv
+		args = {},
+		-- the build flags that are passed to delve.
+		-- defaults to empty string, but can be used to provide flags
+		-- such as "-tags=unit" to make sure the test suite is
+		-- compiled during debugging, for example.
+		-- passing build flags using args is ineffective, as those are
+		-- ignored by delve in dap mode.
+		-- avaliable ui interactive function to prompt for arguments get_arguments
+		build_flags = {},
+		-- whether the dlv process to be created detached or not. there is
+		-- an issue on Windows where this needs to be set to false
+		-- otherwise the dlv server creation will fail.
+		-- avaliable ui interactive function to prompt for build flags: get_build_flags
+		detached = vim.fn.has("win32") == 0,
+		-- the current working directory to run dlv from, if other than
+		-- the current working directory.
+		cwd = nil,
+	},
+	-- options related to running closest test
+	tests = {
+		-- enables verbosity when running the test.
+		verbose = false,
+	},
+}
+
+dap.configurations.go = {
+	-- 	-- {
+	-- 	--   type = "go",  -- Use the 'go' adapter (requires 'delve' support)
+	-- 	--   name = "Debug main.go",  -- Name for your configuration
+	-- 	--   request = "launch",  -- Request type: 'launch' or 'attach'
+	-- 	--   program = "${file}",  -- Path to the current file being debugged
+	-- 	-- },
 	{
 		type = "go",
 		name = "Debug package",
@@ -481,50 +543,74 @@ dap.configurations.go = {
 		},
 		program = "${workspaceFolder}", -- Debug the whole package/project
 	},
-	-- {
-	--   type = "go",
-	--   name = "Attach to running process",
-	--   request = "attach",
-	--   processId = require'dap.utils'.pick_process,  -- Attach to a running process by ID
-	-- },
+	-- 	-- {
+	-- 	--   type = "go",
+	-- 	--   name = "Attach to running process",
+	-- 	--   request = "attach",
+	-- 	--   processId = require'dap.utils'.pick_process,  -- Attach to a running process by ID
+	-- 	-- },
 }
 
+
 -- Set the adapter for Go
-dap.adapters.go = function(callback, config)
-	local handle
-	local pid_or_err
-	local port = 38697
-	handle, pid_or_err =
-		vim.loop.spawn(
-			"dlv",
-			{
-				args = { "dap", "-l", "127.0.0.1:" .. port },
-				detached = true,
-			},
-			function(code)
-				handle:close()
-				print("Delve exited with exit code: " .. code)
-			end
-		)
-	-- Wait for delve to start
-	vim.defer_fn(
-		function()
-			callback({ type = "server", host = "127.0.0.1", port = port })
-		end,
-		100
-	)
-end
+-- dap.adapters.go = function(callback, config)
+-- 	local handle
+-- 	local pid_or_err
+-- 	local port = 38697
+-- 	handle, pid_or_err =
+-- 		vim.uv.spawn(
+-- 			"dlv",
+-- 			{
+-- 				args = { "dap", "-l", "127.0.0.1:" .. port },
+-- 				detached = true,
+-- 			},
+-- 			function(code)
+-- 				handle:close()
+-- 				print("Delve exited with exit code: " .. code)
+-- 			end
+-- 		)
+-- 	-- Wait for delve to start
+-- 	vim.defer_fn(
+-- 		function()
+-- 			callback({ type = "server", host = "127.0.0.1", port = port })
+-- 		end,
+-- 		100
+-- 	)
+-- end
 
 
-vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
-vim.fn.sign_define('DapStopped', { text = '⭐️', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapStopped', { text = '🟢', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpointCondition', { text = '🟡', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpointRejected', { text = '🚫', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapLogPoint', { text = '🪵', texthl = '', linehl = '', numhl = '' })
 
-vim.api.nvim_set_keymap('n', '<F5>', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<F10>', ':lua require("dap").step_over()<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<F11>', ':lua require("dap").step_into()<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<F12>', ':lua require("dap").step_out()<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<Leader>b', ':lua require("dap").toggle_breakpoint()<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<Leader>B', ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<Leader>lp', ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<Leader>dr', ':lua require("dap").repl.open()<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<Leader>dl', ':lua require("dap").run_last()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>du", ":lua require('dapui').toggle()<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>db", ":DapToggleBreakpoint<CR>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>dl', ":lua require'dap'.set_breakpoint(nil, nil, 'Log message Hit!')<CR>",
+	{ noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>dB',
+	':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>dt', ':lua require("dap-go").debug_test()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>dc", ":DapContinue<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>ds", ":DapStepOver<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>di", ":DapStepInto<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>do", ":DapStepOut<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>dr", ":lua require('dapui').open({reset = true})<CR>", { noremap = true })
+
+-- vim.api.nvim_set_keymap('n', '<Leader>r', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>S', ':lua require("dap").step_over()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>I', ':lua require("dap").step_into()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>O', ':lua require("dap").step_out()<CR>', { noremap = true, silent = true })
+-- -- Regular break point and toggle other break points
+-- vim.api.nvim_set_keymap('n', '<Leader>b', ':lua require("dap").toggle_breakpoint()<CR>',
+-- 	{ noremap = true, silent = true })
+-- -- Coniditional break point
+-- -- Log point message
+-- vim.api.nvim_set_keymap('n', '<Leader>lp',
+-- -- Read inspect variable values
+-- -- vim.api.nvim_set_keymap('n', '<Leader>R', ':lua require("dap").repl.open()<CR>', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<Leader>R', function() require('dap').repl.open() end)
+
+
+-- vim.api.nvim_set_keymap('n', '<Leader>rt', ':lua require("dap").run_last()<CR>', { noremap = true, silent = true })
