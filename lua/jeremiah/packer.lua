@@ -13,6 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
+	"mfussenegger/nvim-dap",
 	{
 		"jackMort/ChatGPT.nvim",
 		event = "VeryLazy",

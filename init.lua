@@ -461,3 +461,70 @@ end
 -- end
 
 vim.api.nvim_set_keymap('n', '<leader>c', ':ChatGPT<CR>', { noremap = true, silent = true })
+
+
+-- Debugger stuff
+local dap = require('dap')
+dap.configurations.go = {
+	-- {
+	--   type = "go",  -- Use the 'go' adapter (requires 'delve' support)
+	--   name = "Debug main.go",  -- Name for your configuration
+	--   request = "launch",  -- Request type: 'launch' or 'attach'
+	--   program = "${file}",  -- Path to the current file being debugged
+	-- },
+	{
+		type = "go",
+		name = "Debug package",
+		request = "launch",
+		env = {                   -- Set environment variables here
+			TEST_MODE = "false",  -- unit tests run by default
+		},
+		program = "${workspaceFolder}", -- Debug the whole package/project
+	},
+	-- {
+	--   type = "go",
+	--   name = "Attach to running process",
+	--   request = "attach",
+	--   processId = require'dap.utils'.pick_process,  -- Attach to a running process by ID
+	-- },
+}
+
+-- Set the adapter for Go
+dap.adapters.go = function(callback, config)
+	local handle
+	local pid_or_err
+	local port = 38697
+	handle, pid_or_err =
+		vim.loop.spawn(
+			"dlv",
+			{
+				args = { "dap", "-l", "127.0.0.1:" .. port },
+				detached = true,
+			},
+			function(code)
+				handle:close()
+				print("Delve exited with exit code: " .. code)
+			end
+		)
+	-- Wait for delve to start
+	vim.defer_fn(
+		function()
+			callback({ type = "server", host = "127.0.0.1", port = port })
+		end,
+		100
+	)
+end
+
+
+vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapStopped', { text = '⭐️', texthl = '', linehl = '', numhl = '' })
+
+vim.api.nvim_set_keymap('n', '<F5>', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<F10>', ':lua require("dap").step_over()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<F11>', ':lua require("dap").step_into()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<F12>', ':lua require("dap").step_out()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>b', ':lua require("dap").toggle_breakpoint()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>B', ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>lp', ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>dr', ':lua require("dap").repl.open()<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>dl', ':lua require("dap").run_last()<CR>', { noremap = true, silent = true })

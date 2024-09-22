@@ -53,6 +53,8 @@
         - copy the file `.wezterm.lua` in the root of this project to `$HOME/.wezterm.lua`
 22. Set your open API key
     - export OPENAI_API_KEY=<key here>
+23. Install delve for debugging
+    - `go install github.com/go-delve/delve/cmd/dlv@latest`
 
 
 Note:
