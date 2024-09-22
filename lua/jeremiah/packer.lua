@@ -13,6 +13,76 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
+	{
+		"jackMort/ChatGPT.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("chatgpt").setup({
+				-- this config assumes you have OPENAI_API_KEY environment variable set
+				show_line_numbers = true,
+				chat = {
+					welcome_message = "",
+				},
+				popup_window = {
+					border = {
+						highlight = "Normal",
+						style = "rounded",
+						text = {
+							top = "",
+						},
+					},
+				},
+				popup_input = {
+					prompt = "  ",
+					border = {
+						highlight = "Normal",
+						style = "rounded",
+						text = {
+							top_align = "center",
+							top = "",
+						},
+					},
+					win_options = {
+						winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+					},
+					submit = "<C-Enter>",
+					submit_n = "<Enter>",
+					max_visible_lines = 20,
+				},
+				popup_layout = {
+					default = "center",
+					center = {
+						width = "100%",
+						height = "100%",
+					},
+					right = {
+						width = "30%",
+						width_settings_open = "50%",
+					},
+				},
+				openai_params = {
+					-- NOTE: model can be a function returning the model name
+					-- this is useful if you want to change the model on the fly
+					-- using commands
+					-- Example:
+					-- model = function()
+					--     if some_condition() then
+					--         return "gpt-4-1106-preview"
+					--     else
+					--         return "gpt-3.5-turbo"
+					--     end
+					-- end,
+					max_tokens = 4095,
+					model = "gpt-4o-mini",
+				}
+			})
+		end,
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim"
+		}
+	},
 	{ -- Used for keeping only one instance of Nvim, noticable when opening a file within lazygit with 'e'
 		"willothy/flatten.nvim",
 		config = true,

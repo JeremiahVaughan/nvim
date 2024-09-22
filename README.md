@@ -51,6 +51,8 @@
         - copy the file `.alacritty.toml` in the root of this project to `%APPDATA%\alacritty\alacritty.toml`
             or
         - copy the file `.wezterm.lua` in the root of this project to `$HOME/.wezterm.lua`
+22. Set your open API key
+    - export OPENAI_API_KEY=<key here>
 
 
 Note:

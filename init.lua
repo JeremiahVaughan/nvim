@@ -153,8 +153,8 @@ vim.cmd [[
     highlight cssUnitDecorators guifg=#679342
     highlight cssValueLength guifg=#ae81ff
     highlight cssValueNumber guifg=#ae81ff
-    highlight CursorLine cterm=NONE ctermbg=236 ctermfg=NONE guibg=#414141
-    highlight Normal guibg=#2c2c2c
+    highlight CursorLine cterm=NONE ctermbg=236 ctermfg=NONE guibg=#2a3359
+    highlight Normal guibg=#1d233d
     highlight Pmenu guifg=#FFFFFF guibg=#707070
     highlight PmenuSel guifg=#000000 guibg=#909090
     highlight sassAmpersand guifg=#C5BE69 gui=bold
@@ -459,3 +459,5 @@ end
 -- if (os.getenv('SSH_TTY') == nil) then
 -- 	vim.o.shell = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
 -- end
+
+vim.api.nvim_set_keymap('n', '<leader>c', ':ChatGPT<CR>', { noremap = true, silent = true })
