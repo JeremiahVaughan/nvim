@@ -384,7 +384,7 @@ end, { desc = '[S]earch [T]emplate files' })
 
 -- Treesitter setup
 require('nvim-treesitter.configs').setup {
-	ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query" }, -- Install parsers for Go and Python only
+	ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query", "http" }, -- Install parsers for Go and Python only
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = false,
@@ -418,7 +418,7 @@ vim.api.nvim_create_user_command(
 )
 
 -- Map <Leader>h to the 'Help' command
-vim.api.nvim_set_keymap('n', '<Leader>h', ':Help ', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>h', ':Help ', { noremap = true, silent = true })
 
 -- Create a custom command 'Make' that saves the buffer and runs 'make'
 vim.api.nvim_create_user_command(
@@ -614,3 +614,7 @@ vim.api.nvim_set_keymap("n", "<Leader>dr", ":lua require('dapui').open({reset = 
 
 
 -- vim.api.nvim_set_keymap('n', '<Leader>rt', ':lua require("dap").run_last()<CR>', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<Leader>hr', ':Rest run<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>hl', ':Rest last<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>hc', ':Rest cookies<CR>', { noremap = true, silent = true })

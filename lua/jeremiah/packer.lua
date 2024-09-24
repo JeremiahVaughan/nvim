@@ -14,6 +14,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{
+		"rest-nvim/rest.nvim",
+	},
+	{
 		"leoluz/nvim-dap-go",
 		dependencies = {
 			-- delv must be installed (see README.md)
