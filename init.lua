@@ -527,6 +527,32 @@ require('dap-go').setup {
 	},
 }
 
+local function load_env_vars(file_path)
+	local env_vars = {}
+	local file = io.open(file_path, "r")
+
+	if not file then
+		print("Could not open env file: " .. file_path)
+		return env_vars
+	end
+
+	for line in file:lines() do
+		-- Trim leading and trailing whitespace
+		line = line:match("^%s*(.-)%s*$")
+
+		-- Split the line into key and value
+		local delimiter_pos = line:find("=")
+		if delimiter_pos then
+			local key = line:sub(1, delimiter_pos - 1)
+			local value = line:sub(delimiter_pos + 1)
+			env_vars[key] = value
+		end
+	end
+
+	file:close()
+	return env_vars
+end
+
 dap.configurations.go = {
 	-- 	-- {
 	-- 	--   type = "go",  -- Use the 'go' adapter (requires 'delve' support)
@@ -538,9 +564,7 @@ dap.configurations.go = {
 		type = "go",
 		name = "Debug package",
 		request = "launch",
-		env = {                   -- Set environment variables here
-			TEST_MODE = "false",  -- unit tests run by default
-		},
+		env = load_env_vars(vim.fn.getcwd() .. "/.env.local"),
 		program = "${workspaceFolder}", -- Debug the whole package/project
 	},
 	-- 	-- {
@@ -597,6 +621,7 @@ vim.api.nvim_set_keymap("n", "<Leader>ds", ":DapStepOver<CR>", { noremap = true 
 vim.api.nvim_set_keymap("n", "<Leader>di", ":DapStepInto<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>do", ":DapStepOut<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>dr", ":lua require('dapui').open({reset = true})<CR>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>dq', ':DapTerminate<CR>', { noremap = true, silent = true })
 
 -- vim.api.nvim_set_keymap('n', '<Leader>r', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<Leader>S', ':lua require("dap").step_over()<CR>', { noremap = true, silent = true })
