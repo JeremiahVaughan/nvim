@@ -75,7 +75,7 @@ require("lazy").setup({
 				popup_layout = {
 					default = "center",
 					center = {
-						width = "100%",
+						width = "30%",
 						height = "100%",
 					},
 					right = {
