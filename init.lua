@@ -175,7 +175,11 @@ vim.o.relativenumber = true -- Shows relative line numbers to your cursor so I c
 vim.o.tabstop = 4           -- Number of spaces a tab counts for
 vim.o.shiftwidth = 4        -- Size of an indent
 
-vim.o.expandtab = false     -- using tab chars because they are required in makefiles
+vim.o.expandtab = true
+vim.o.autoindent = true
+vim.o.smartindent = true
+
+-- vim.o.expandtab = false     -- using tab chars because they are required in makefiles
 
 
 vim.o.hlsearch = true  -- Highlight search results
@@ -395,18 +399,9 @@ require('nvim-treesitter.configs').setup {
 		node_incremental = shortcut_node_incremental,
 		node_decremental = shortcut_node_decremental
 	},
-	indent = { enable = true } -- Enable indentation
-}
-
-
---- Firenvim
-vim.g.firenvim_config = {
-	localSettings = {
-		['https://www.evernote.com/'] = {
-			selector = "en-note",
-			takeover = "always"
-		}
-	}
+	-- this was causing some strange behavor where the indent of a new line was not being respected.
+	-- It was always placing my cursor at the beginning of the line regardless of indents of the current line.
+	-- indent = { enable = true } -- Enable indentation
 }
 
 

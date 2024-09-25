@@ -59,7 +59,7 @@ require("lazy").setup({
 						select_session = "<Space>",
 						rename_session = "r",
 						delete_session = "d",
-						draft_message = "<Leader>r",
+						draft_message = "<C-z>",
 						edit_message = "e",
 						delete_message = "d",
 						toggle_settings = "<C-o>",
