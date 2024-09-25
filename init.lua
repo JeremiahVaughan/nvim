@@ -484,6 +484,13 @@ require('dap-go').setup {
 	-- 		},
 	-- 	},
 	-- },
+	-- dap_configurations = {
+	-- 	type = "go",
+	-- 	name = "Debug package",
+	-- 	request = "launch",
+	-- 	env = load_env_vars(vim.fn.getcwd() .. "/.env.local"),
+	-- 	program = "${workspaceFolder}", -- Debug the whole package/project
+	-- },
 	-- delve configurations
 	delve = {
 		-- the path to the executable dlv which will be used for debugging.
@@ -524,30 +531,28 @@ require('dap-go').setup {
 	},
 }
 
+-- -- These are nice but I am going to try and just use the popups since this UI takes up so much room and isn't easy to navigate with
 -- open and close UI automatically when debugging starts
-dap.listeners.after.event_initialized["dapui_config"] = function()
-	dapui.open()
-end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-	dapui.close()
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-	dapui.close()
-end
+-- dap.listeners.after.event_initialized["dapui_config"] = function()
+-- 	dapui.open()
+-- end
+-- dap.listeners.before.event_terminated["dapui_config"] = function()
+-- 	dapui.close()
+-- end
+-- dap.listeners.before.event_exited["dapui_config"] = function()
+-- 	dapui.close()
+-- end
 
 local function load_env_vars(file_path)
 	local env_vars = {}
 	local file = io.open(file_path, "r")
-
 	if not file then
 		print("Could not open env file: " .. file_path)
 		return env_vars
 	end
-
 	for line in file:lines() do
 		-- Trim leading and trailing whitespace
 		line = line:match("^%s*(.-)%s*$")
-
 		-- Split the line into key and value
 		local delimiter_pos = line:find("=")
 		if delimiter_pos then
@@ -556,7 +561,6 @@ local function load_env_vars(file_path)
 			env_vars[key] = value
 		end
 	end
-
 	file:close()
 	return env_vars
 end
@@ -584,62 +588,42 @@ dap.configurations.go = {
 }
 
 
--- Set the adapter for Go
--- dap.adapters.go = function(callback, config)
--- 	local handle
--- 	local pid_or_err
--- 	local port = 38697
--- 	handle, pid_or_err =
--- 		vim.uv.spawn(
--- 			"dlv",
--- 			{
--- 				args = { "dap", "-l", "127.0.0.1:" .. port },
--- 				detached = true,
--- 			},
--- 			function(code)
--- 				handle:close()
--- 				print("Delve exited with exit code: " .. code)
--- 			end
--- 		)
--- 	-- Wait for delve to start
--- 	vim.defer_fn(
--- 		function()
--- 			callback({ type = "server", host = "127.0.0.1", port = port })
--- 		end,
--- 		100
--- 	)
--- end
-
-
 vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapStopped', { text = '🟢', texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapBreakpointCondition', { text = '🟡', texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapBreakpointRejected', { text = '🚫', texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapLogPoint', { text = '🪵', texthl = '', linehl = '', numhl = '' })
 
-vim.api.nvim_set_keymap("n", "<Leader>du", ":lua require('dapui').toggle()<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<Leader>db", ":DapToggleBreakpoint<CR>", { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>dl', ":lua require'dap'.set_breakpoint(nil, nil, 'Log message Hit!')<CR>",
+vim.api.nvim_set_keymap("n", "<Leader>du", ":lua require('dapui').toggle()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>db", ":DapToggleBreakpoint<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>dv", ":lua require('dapui').float_element('scopes', {})<CR>",
 	{ noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>dw", ":lua require('dapui').float_element('watches', {})<CR>",
+	{ noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>ds", ":lua require('dapui').float_element('stacks', {})<CR>",
+	{ noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>dl", ":lua require('dapui').float_element('repl', {})<CR>",
+	{ noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>dp", ":lua require('dapui').float_element('breakpoints', {})<CR>",
+	{ noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>de", ":lua require('dapui').eval()<CR>",
+	{ noremap = true, silent = true })
+-- this one isn't working for some reason
+-- vim.api.nvim_set_keymap("v", "<Leader>de", ":lua require('dapui').eval()<CR>",
+-- 	{ noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>dl', ":lua require'dap'.set_breakpoint(nil, nil, 'Log message Hit!')<CR>",
+-- 	{ noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>dB',
 	':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>dt', ':lua require("dap-go").debug_test()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<Leader>dc", ":DapContinue<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<Leader>ds", ":DapStepOver<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<Leader>di", ":DapStepInto<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<Leader>do", ":DapStepOut<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<Leader>dr", ":lua require('dapui').open({reset = true})<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>dc", ":DapContinue<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>dj", ":DapStepOver<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>di", ":DapStepInto<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>do", ":DapStepOut<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>dr", ":lua require('dapui').open({reset = true})<CR>",
+	{ noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>dq', ':DapTerminate<CR>', { noremap = true, silent = true })
 
--- vim.api.nvim_set_keymap('n', '<Leader>r', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<Leader>S', ':lua require("dap").step_over()<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<Leader>I', ':lua require("dap").step_into()<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<Leader>O', ':lua require("dap").step_out()<CR>', { noremap = true, silent = true })
--- -- Regular break point and toggle other break points
--- vim.api.nvim_set_keymap('n', '<Leader>b', ':lua require("dap").toggle_breakpoint()<CR>',
--- 	{ noremap = true, silent = true })
--- -- Coniditional break point
--- -- Log point message
 -- vim.api.nvim_set_keymap('n', '<Leader>lp',
 -- -- Read inspect variable values
 -- -- vim.api.nvim_set_keymap('n', '<Leader>R', ':lua require("dap").repl.open()<CR>', { noremap = true, silent = true })
