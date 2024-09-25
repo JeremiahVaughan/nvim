@@ -175,11 +175,11 @@ vim.o.relativenumber = true -- Shows relative line numbers to your cursor so I c
 vim.o.tabstop = 4           -- Number of spaces a tab counts for
 vim.o.shiftwidth = 4        -- Size of an indent
 
-vim.o.expandtab = true
 vim.o.autoindent = true
 vim.o.smartindent = true
 
--- vim.o.expandtab = false     -- using tab chars because they are required in makefiles
+-- vim.o.expandtab = true
+vim.o.expandtab = false -- using tab chars because they are required in makefiles, and I also like how the placeholder char forms a line, so I can see scope much easier
 
 
 vim.o.hlsearch = true  -- Highlight search results
@@ -215,6 +215,7 @@ vim.api.nvim_set_keymap('n', grep_files_keymap, ':Telescope live_grep<CR>', { no
 vim.api.nvim_set_keymap('n', grep_string_keymap, ':Telescope grep_string<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', search_buffers_keymap, ':Telescope buffers<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', search_registers_keymap, ':Telescope registers<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>sk', ':Telescope keymaps<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', open_reference_window, ':copen<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', close_reference_window, ':cclose<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', next_error, ':cnext<CR>', { noremap = true, silent = true })
@@ -464,8 +465,8 @@ vim.api.nvim_set_keymap('n', '<leader>c', ':ChatGPT<CR>', { noremap = true, sile
 
 
 -- Debugger stuff
-local dap = require('dap')
-require('dapui').setup()
+local dap, dapui = require('dap'), require('dapui')
+dapui.setup()
 require('nvim-dap-virtual-text').setup()
 require('dap-go').setup {
 	-- Additional dap configurations can be added.
@@ -522,6 +523,17 @@ require('dap-go').setup {
 		verbose = false,
 	},
 }
+
+-- open and close UI automatically when debugging starts
+dap.listeners.after.event_initialized["dapui_config"] = function()
+	dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+	dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+	dapui.close()
+end
 
 local function load_env_vars(file_path)
 	local env_vars = {}
