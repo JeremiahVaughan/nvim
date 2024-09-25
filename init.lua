@@ -466,6 +466,7 @@ vim.api.nvim_set_keymap('n', '<leader>c', ':ChatGPT<CR>', { noremap = true, sile
 -- Debugger stuff
 local dap = require('dap')
 require('dapui').setup()
+require('nvim-dap-virtual-text').setup()
 require('dap-go').setup {
 	-- Additional dap configurations can be added.
 	-- dap_configurations accepts a list of tables where each entry
