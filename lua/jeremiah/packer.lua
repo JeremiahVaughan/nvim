@@ -97,9 +97,9 @@ require("lazy").setup({
 					max_visible_lines = 20,
 				},
 				popup_layout = {
-					default = "center",
+					default = "right",
 					center = {
-						width = "30%",
+						width = "40%",
 						height = "100%",
 					},
 					right = {

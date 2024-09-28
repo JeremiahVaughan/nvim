@@ -614,6 +614,7 @@ vim.api.nvim_set_keymap("n", "<Leader>de", ":lua require('dapui').eval()<CR>",
 -- 	{ noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>dl', ":lua require'dap'.set_breakpoint(nil, nil, 'Log message Hit!')<CR>",
 -- 	{ noremap = true, silent = true })
+
 vim.api.nvim_set_keymap('n', '<Leader>dB',
 	':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>dt', ':lua require("dap-go").debug_test()<CR>', { noremap = true, silent = true })
@@ -621,7 +622,8 @@ vim.api.nvim_set_keymap("n", "<Leader>dc", ":DapContinue<CR>", { noremap = true,
 vim.api.nvim_set_keymap("n", "<Leader>dj", ":DapStepOver<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>di", ":DapStepInto<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>do", ":DapStepOut<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<Leader>dr", ":lua require('dapui').open({reset = true})<CR>",
+vim.api.nvim_set_keymap('n', '<Leader>dr', ":lua require('dap').restart()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>dR", ":lua require('dapui').open({reset = true})<CR>",
 	{ noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>dq', ':DapTerminate<CR>', { noremap = true, silent = true })
 
