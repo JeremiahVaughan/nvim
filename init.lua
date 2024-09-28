@@ -466,10 +466,10 @@ vim.api.nvim_set_keymap('n', '<leader>c', ':ChatGPT<CR>', { noremap = true, sile
 
 
 -- Debugger stuff
-local dap, dapui = require('dap'), require('dapui')
+local dap, dapui, dapGo = require('dap'), require('dapui'), require('dap-go')
 dapui.setup()
 require('nvim-dap-virtual-text').setup()
-require('dap-go').setup {
+dapGo.setup {
 	-- Additional dap configurations can be added.
 	-- dap_configurations accepts a list of tables where each entry
 	-- represents a dap configuration. For more details do:
@@ -617,12 +617,24 @@ vim.api.nvim_set_keymap("n", "<Leader>de", ":lua require('dapui').eval()<CR>",
 
 vim.api.nvim_set_keymap('n', '<Leader>dB',
 	':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>dt', ':lua require("dap-go").debug_test()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<Leader>dc", ":DapContinue<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>dj", ":DapStepOver<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>di", ":DapStepInto<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>do", ":DapStepOut<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>dr', ":lua require('dap').restart()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<Leader>dc", function()
+	jeremiah.utils.SaveAll()
+	vim.notify("debug continue", vim.log.levels.INFO, nil)
+	dap.continue()
+end)
+vim.keymap.set("n", "<Leader>dr", function()
+	jeremiah.utils.SaveAll()
+	vim.notify("restarting last debug session", vim.log.levels.INFO, nil)
+	dap.restart()
+end)
+vim.keymap.set("n", "<Leader>dt", function()
+	jeremiah.utils.SaveAll()
+	dapGo.debug_test()
+end)
+-- vim.api.nvim_set_keymap('n', '<Leader>dt', ':lua require("dap-go").debug_test()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>dR", ":lua require('dapui').open({reset = true})<CR>",
 	{ noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>dq', ':DapTerminate<CR>', { noremap = true, silent = true })
