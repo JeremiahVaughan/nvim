@@ -22,7 +22,7 @@ local search_registers_keymap = '<leader>sr'
 local shortcut_init_selection = "gnn"
 local shortcut_node_incremental = "grn"
 local shortcut_node_decremental = "grm"
-local toggle_trouble = "<leader>tt"
+local toggle_trouble = "<leader>et"
 
 -- Built in Comment/Uncomment --> normal mode gcgc --> visual mode gc
 
