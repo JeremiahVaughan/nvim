@@ -355,7 +355,7 @@ require('telescope').setup {
 			"%.png",
 			"%.git\\", -- Windows
 			"%.git/", -- other
-			"__debug_bin%", -- debug binary
+			"debug", -- debug bin
 		},
 		layout_strategy = 'flex',
 		layout_config = {
@@ -465,6 +465,28 @@ end
 vim.api.nvim_set_keymap('n', '<leader>c', ':ChatGPT<CR>', { noremap = true, silent = true })
 
 
+local function load_env_vars(file_path)
+	local env_vars = {}
+	local file = io.open(file_path, "r")
+	if not file then
+		print("Could not open env file: " .. file_path)
+		return env_vars
+	end
+	for line in file:lines() do
+		-- Trim leading and trailing whitespace
+		line = line:match("^%s*(.-)%s*$")
+		-- Split the line into key and value
+		local delimiter_pos = line:find("=")
+		if delimiter_pos then
+			local key = line:sub(1, delimiter_pos - 1)
+			local value = line:sub(delimiter_pos + 1)
+			env_vars[key] = value
+		end
+	end
+	file:close()
+	return env_vars
+end
+
 -- Debugger stuff
 local dap, dapui, dapGo = require('dap'), require('dapui'), require('dap-go')
 dapui.setup()
@@ -485,6 +507,33 @@ dapGo.setup {
 	-- 		},
 	-- 	},
 	-- },
+	dap_configurations = {
+		-- 	-- {
+		-- 	--   type = "go",  -- Use the 'go' adapter (requires 'delve' support)
+		-- 	--   name = "Debug main.go",  -- Name for your configuration
+		-- 	--   request = "launch",  -- Request type: 'launch' or 'attach'
+		-- 	--   program = "${file}",  -- Path to the current file being debugged
+		-- 	-- },
+		-- {
+		-- 	type = "go",
+		-- 	name = "Debug package",
+		-- 	request = "launch",
+		-- 	env = load_env_vars(vim.fn.getcwd() .. "/.env.local"),
+		-- 	program = "${workspaceFolder}", -- Debug the whole package/project
+		-- },
+		-- {
+		-- 	type = "go",
+		-- 	name = "attach go",
+		-- 	request = "attach",
+		-- 	mode = "remote",
+		-- },
+		-- {
+		-- 	type = "go",
+		-- 	name = "Attach to running process",
+		-- 	request = "attach",
+		-- 	processId = require 'dap.utils'.pick_process, -- Attach to a running process by ID
+		-- },
+	},
 	-- dap_configurations = {
 	-- 	type = "go",
 	-- 	name = "Debug package",
@@ -515,7 +564,7 @@ dapGo.setup {
 		-- passing build flags using args is ineffective, as those are
 		-- ignored by delve in dap mode.
 		-- avaliable ui interactive function to prompt for arguments get_arguments
-		build_flags = {},
+		build_flags = { "--output=./debug" },
 		-- whether the dlv process to be created detached or not. there is
 		-- an issue on Windows where this needs to be set to false
 		-- otherwise the dlv server creation will fail.
@@ -544,48 +593,21 @@ dapGo.setup {
 -- 	dapui.close()
 -- end
 
-local function load_env_vars(file_path)
-	local env_vars = {}
-	local file = io.open(file_path, "r")
-	if not file then
-		print("Could not open env file: " .. file_path)
-		return env_vars
-	end
-	for line in file:lines() do
-		-- Trim leading and trailing whitespace
-		line = line:match("^%s*(.-)%s*$")
-		-- Split the line into key and value
-		local delimiter_pos = line:find("=")
-		if delimiter_pos then
-			local key = line:sub(1, delimiter_pos - 1)
-			local value = line:sub(delimiter_pos + 1)
-			env_vars[key] = value
-		end
-	end
-	file:close()
-	return env_vars
-end
-
 dap.configurations.go = {
-	-- 	-- {
-	-- 	--   type = "go",  -- Use the 'go' adapter (requires 'delve' support)
-	-- 	--   name = "Debug main.go",  -- Name for your configuration
-	-- 	--   request = "launch",  -- Request type: 'launch' or 'attach'
-	-- 	--   program = "${file}",  -- Path to the current file being debugged
-	-- 	-- },
 	{
 		type = "go",
-		name = "Debug package",
+		name = "launch",
 		request = "launch",
 		env = load_env_vars(vim.fn.getcwd() .. "/.env.local"),
 		program = "${workspaceFolder}", -- Debug the whole package/project
 	},
-	-- 	-- {
-	-- 	--   type = "go",
-	-- 	--   name = "Attach to running process",
-	-- 	--   request = "attach",
-	-- 	--   processId = require'dap.utils'.pick_process,  -- Attach to a running process by ID
-	-- 	-- },
+	{
+		type = "go",
+		name = "attach",
+		request = "attach",
+		mode = "remote",
+		port = "9080",
+	},
 }
 
 
@@ -616,14 +638,24 @@ vim.api.nvim_set_keymap("n", "<Leader>de", ":lua require('dapui').eval()<CR>",
 -- 	{ noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<Leader>dB',
-	':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
+	':lua require("dapGo").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>dj", ":DapStepOver<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>di", ":DapStepInto<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>do", ":DapStepOut<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<Leader>dc", function()
-	jeremiah.utils.SaveAll()
-	vim.notify("debug continue", vim.log.levels.INFO, nil)
+	-- jeremiah.utils.SaveAll()
+	-- vim.notify("debug continue", vim.log.levels.INFO, nil)
 	dap.continue()
+end)
+vim.keymap.set("n", "<Leader>dsl", function()
+	jeremiah.utils.SaveAll()
+	vim.notify("debug start launch", vim.log.levels.INFO, nil)
+	dap.run(dap.configurations.go[1])
+end)
+vim.keymap.set("n", "<Leader>dsa", function()
+	jeremiah.utils.SaveAll()
+	vim.notify("debug start attach", vim.log.levels.INFO, nil)
+	dap.run(dap.configurations.go[2])
 end)
 vim.keymap.set("n", "<Leader>dr", function()
 	jeremiah.utils.SaveAll()
