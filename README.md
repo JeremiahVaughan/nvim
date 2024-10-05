@@ -55,6 +55,13 @@
     - export OPENAI_API_KEY=<key here>
 23. Install delve for debugging
     - `go install github.com/go-delve/delve/cmd/dlv@latest`
+24. The rest.nvim plugin requires these to be installed
+    - Specific C compiler
+        - `sudo apt update && sudo apt install gcc -y`
+    - Dev Version of Lua
+        - `sudo apt install liblua5.1-0-dev`
+    - Lua Rocks
+        - `https://luarocks.org`
 
 
 Note:
