@@ -27,21 +27,21 @@
     - `:checkhealth`
 13. Install LazyGit
     - `https://github.com/jesseduffield/lazygit`
-14. Install Delta-diff for better diff indicators for LazyGit
-15. Install jq
+14. Install LazyDocker
+    - `https://github.com/jesseduffield/lazydocker`
+15. Install Delta-diff for better diff indicators for LazyGit
+16. Install jq
     - `https://jqlang.github.io/jq/download/`
     - `https://github.com/dandavison/delta`
-17. Install LazyDocker
-    - `https://github.com/jesseduffield/lazydocker`
-18. Install k9s
+17. Install k9s
     - `https://k9scli.io/topics/install`
-19. Install bat (currently using this for my snippets generator)
+18. Install bat (currently using this for my snippets generator)
     - `https://github.com/sharkdp/bat?tab=readme-ov-file#installation`
-20. Ensure the latest version of curl is installed, because leetcode.nvim requires it.
+19. Ensure the latest version of curl is installed, because leetcode.nvim requires it.
     - `https://curl.se/windows/`
     - Ensure the bin folder is on the path and before all other paths (system too) to ensure that the new version of curl is found before the old one is.
 
-21. For copy paste to work on remote ssh sessions
+20. For copy paste to work on remote ssh sessions
     - Mac: `use Iterm2`
     - Mac other:
         - copy the file `.alacritty.toml` in the root of this project to `$HOME/.alacritty.toml`
@@ -51,9 +51,9 @@
         - copy the file `.alacritty.toml` in the root of this project to `%APPDATA%\alacritty\alacritty.toml`
             or
         - copy the file `.wezterm.lua` in the root of this project to `$HOME/.wezterm.lua`
-22. Set your open API key
+21. Set your open API key
     - export OPENAI_API_KEY=<key here>
-23. Install delve for debugging
+22. Install delve for debugging
     - `go install github.com/go-delve/delve/cmd/dlv@latest`
 24. The rest.nvim plugin requires these to be installed
     - All of this:
