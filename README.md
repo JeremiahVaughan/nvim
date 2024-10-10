@@ -72,6 +72,9 @@
     - Or this:
         - hererocks:
             - `https://pypi.org/project/hererocks/`
+24. If you plan on using terragrunt, enable provider cache so you disk doesn't bloat:
+    - `export TERRAGRUNT_PROVIDER_CACHE=1`
+    - Ref: `https://terragrunt.gruntwork.io/docs/features/provider-cache/`
 
 
 Note:
