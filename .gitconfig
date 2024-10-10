@@ -1,17 +1,28 @@
+[page]
+	diff = delta
+	show = delta
+	log = delta
+	blame = delta
+	reflog = delta
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 [user]
-	name = Jeremiah Vaughan
-	email = 46267375+JeremiahVaughan@users.noreply.github.com
+	email = jeremiah.t.vaughan@gmail.com
+	name = JeremiahVaughan
 [core]
     pager = delta
+[init]
+	defaultBranch = master
 
 [interactive]
     diffFilter = delta --color-only
-
+[pull]
+	rebase = true
+[core]
+	editor = nvim
 [delta]
     navigate = true    # use n and N to move between diff sections
 
