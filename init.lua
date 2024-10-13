@@ -652,6 +652,7 @@ vim.keymap.set("n", "<Leader>dsl", function()
 	vim.notify("debug start launch", vim.log.levels.INFO, nil)
 	dap.run(dap.configurations.go[1])
 end)
+-- TODO I think this function is getting triggered twice somehow
 vim.keymap.set("n", "<Leader>dsa", function()
 	jeremiah.utils.SaveAll()
 	vim.notify("debug start attach", vim.log.levels.INFO, nil)
