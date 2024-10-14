@@ -51,11 +51,9 @@
         - copy the file `.alacritty.toml` in the root of this project to `%APPDATA%\alacritty\alacritty.toml`
             or
         - copy the file `.wezterm.lua` in the root of this project to `$HOME/.wezterm.lua`
-21. Set your open API key
-    - export OPENAI_API_KEY=<key here>
-22. Install delve for debugging
+21. Install delve for debugging
     - `go install github.com/go-delve/delve/cmd/dlv@latest`
-24. The rest.nvim plugin requires these to be installed
+22. The rest.nvim plugin requires these to be installed
     - All of this:
         - Specific C compiler
             - `sudo apt update && sudo apt install gcc -y`
@@ -72,11 +70,15 @@
     - Or this:
         - hererocks:
             - `https://pypi.org/project/hererocks/`
-24. If you plan on using terragrunt, enable provider cache so you disk doesn't bloat:
+23. If you plan on using terragrunt, enable provider cache so you disk doesn't bloat:
     - `export TERRAGRUNT_PROVIDER_CACHE=1`
     - Ref: `https://terragrunt.gruntwork.io/docs/features/provider-cache/`
-25. Install starship:
+24. Install starship:
     - From: https://starship.rs
+25. Set your open API key
+    - export OPENAI_API_KEY=<key here>
+26. Install simple-chat-gpt:
+    `go install github.com/JeremiahVaughan/simple-chat-gpt@v1.1.1`
 
 
 Note:

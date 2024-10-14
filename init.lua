@@ -462,7 +462,6 @@ end
 -- 	vim.o.shell = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
 -- end
 
-vim.api.nvim_set_keymap('n', '<leader>c', ':ChatGPT<CR>', { noremap = true, silent = true })
 
 
 local function load_env_vars(file_path)
