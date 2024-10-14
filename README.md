@@ -75,6 +75,12 @@
     - Ref: `https://terragrunt.gruntwork.io/docs/features/provider-cache/`
 24. Install starship:
     - From: https://starship.rs
+    - Windows:
+        - Set execution policy:
+        `ExecutionPolicy RemoteSigned -scope CurrentUser`
+        - Add this file to this location:
+            - File: Microsoft.PowerShell_profile.ps1
+            - Location: $profile
 25. Set your open API key
     - export OPENAI_API_KEY=<key here>
 26. Install simple-chat-gpt:
