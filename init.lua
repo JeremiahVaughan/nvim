@@ -563,7 +563,7 @@ dapGo.setup {
 		-- passing build flags using args is ineffective, as those are
 		-- ignored by delve in dap mode.
 		-- avaliable ui interactive function to prompt for arguments get_arguments
-		build_flags = { "--output=./debug" },
+		-- build_flags = { "--output=./debug" },
 		-- whether the dlv process to be created detached or not. there is
 		-- an issue on Windows where this needs to be set to false
 		-- otherwise the dlv server creation will fail.
