@@ -84,7 +84,7 @@
 25. Set your open API key
     - export OPENAI_API_KEY=<key here>
 26. Install simple-chat-gpt:
-    `go install github.com/JeremiahVaughan/simple-chat-gpt@v1.1.1`
+    `go install github.com/JeremiahVaughan/simple-chat-gpt@v1.1.2`
 
 
 Note:
