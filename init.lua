@@ -637,7 +637,7 @@ vim.api.nvim_set_keymap("n", "<Leader>de", ":lua require('dapui').eval()<CR>",
 -- 	{ noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<Leader>dB',
-	':lua require("dapGo").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
+	':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>dj", ":DapStepOver<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>di", ":DapStepInto<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>do", ":DapStepOut<CR>", { noremap = true, silent = true })
