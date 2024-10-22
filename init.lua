@@ -71,11 +71,11 @@ vim.cmd('command! M write | make')
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
-	desc = 'Highlight when yanking (copying) text',
-	group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+    desc = 'Highlight when yanking (copying) text',
+    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })
 
 -- Keybinds to make split navigation easier.
@@ -226,57 +226,57 @@ vim.api.nvim_set_keymap('n', undo_tree, ':UndotreeToggle<CR>', { noremap = true,
 -- Auto-save function when Neovim loses focus or files are changed
 local group = vim.api.nvim_create_augroup('Autosave', { clear = true })
 vim.api.nvim_create_autocmd({ "FocusLost", "WinLeave" }, {
-	group = group,
-	pattern = '*',
-	command = 'silent! wa'
+    group = group,
+    pattern = '*',
+    command = 'silent! wa'
 })
 
 
 -- Status bar setup
 require('lualine').setup {
-	options = {
-		icons_enabled = true,
-		theme = 'wombat',
-		component_separators = { left = '', right = '' },
-		section_separators = { left = '', right = '' },
-		disabled_filetypes = {
-			statusline = {},
-			winbar = {},
-		},
-		ignore_focus = {},
-		always_divide_middle = true,
-		globalstatus = false,
-		refresh = {
-			statusline = 1000,
-			tabline = 1000,
-			winbar = 1000,
-		}
-	},
-	sections = {
-		lualine_a = { 'mode' },
-		lualine_b = { 'branch', 'diff', 'diagnostics' },
-		lualine_c = {
-			{
-				'filename',
-				path = 1,
-			},
-		},
-		lualine_x = {},
-		lualine_y = { 'progress' },
-		lualine_z = { 'location' }
-	},
-	inactive_sections = {
-		lualine_a = {},
-		lualine_b = {},
-		lualine_c = {},
-		lualine_x = { 'location', 'encoding', 'fileformat', 'filetype' },
-		lualine_y = {},
-		lualine_z = {}
-	},
-	tabline = {},
-	winbar = {},
-	inactive_winbar = {},
-	extensions = {}
+    options = {
+        icons_enabled = true,
+        theme = 'wombat',
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        disabled_filetypes = {
+            statusline = {},
+            winbar = {},
+        },
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = false,
+        refresh = {
+            statusline = 1000,
+            tabline = 1000,
+            winbar = 1000,
+        }
+    },
+    sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = {
+            {
+                'filename',
+                path = 1,
+            },
+        },
+        lualine_x = {},
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = { 'location', 'encoding', 'fileformat', 'filetype' },
+        lualine_y = {},
+        lualine_z = {}
+    },
+    tabline = {},
+    winbar = {},
+    inactive_winbar = {},
+    extensions = {}
 }
 
 -- In case grep is used in the command line, ensuring it is set to ripgrep
@@ -326,52 +326,52 @@ vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 local actions = require('telescope.actions')
 local teleBuiltin = require 'telescope.builtin'
 require('telescope').setup {
-	defaults = {
-		-- this mapping appears to be required if you are using custom pickers
-		mappings = {
-			i = {
-				["<C-c>"] = actions.close, -- Map Ctrl+C to close action
-			},
-		},
-		-- todo figure out how to make this fuzzy refine thing work
-		-- mappings = {
-		--     i = { ['<C-s>'] = 'to_fuzzy_refine' },
-		-- },
-		find_command = { 'rg', '--files', '--hidden', '--glob', '!.git/*' },
-		vimgrep_arguments = {
-			'rg',
-			'--color=never',
-			'--no-heading',
-			'--with-filename',
-			'--line-number',
-			'--column',
-			'--smart-case',
-			'--hidden', -- Add this line to include hidden files
-			'--glob', '!.git/*' -- Optionally exclude .git directory
-		},
-		file_ignore_patterns = {
-			"node_modules",
-			"%.jpg",
-			"%.png",
-			"%.git\\", -- Windows
-			"%.git/", -- other
-			"debug", -- debug bin
-		},
-		layout_strategy = 'flex',
-		layout_config = {
-			flex = {
-				flip_columns = 120 -- Adjust this value based on your preference
-			},
-			width = 0.95, -- Percentage of the screen width
-			height = 0.95, -- Percentage of the screen height
-			preview_cutoff = 120, -- When to start showing the preview pane
-		}
-	},
-	pickers = {
-		find_files = {
-			hidden = true
-		}
-	}
+    defaults = {
+        -- this mapping appears to be required if you are using custom pickers
+        mappings = {
+            i = {
+                ["<C-c>"] = actions.close, -- Map Ctrl+C to close action
+            },
+        },
+        -- todo figure out how to make this fuzzy refine thing work
+        -- mappings = {
+        --     i = { ['<C-s>'] = 'to_fuzzy_refine' },
+        -- },
+        find_command = { 'rg', '--files', '--hidden', '--glob', '!.git/*' },
+        vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--hidden', -- Add this line to include hidden files
+            '--glob', '!.git/*' -- Optionally exclude .git directory
+        },
+        file_ignore_patterns = {
+            "node_modules",
+            "%.jpg",
+            "%.png",
+            "%.git\\", -- Windows
+            "%.git/", -- other
+            "debug", -- debug bin
+        },
+        layout_strategy = 'flex',
+        layout_config = {
+            flex = {
+                flip_columns = 120 -- Adjust this value based on your preference
+            },
+            width = 0.95, -- Percentage of the screen width
+            height = 0.95, -- Percentage of the screen height
+            preview_cutoff = 120, -- When to start showing the preview pane
+        }
+    },
+    pickers = {
+        find_files = {
+            hidden = true
+        }
+    }
 }
 
 -- Enable Telescope extensions if they are installed
@@ -380,38 +380,38 @@ pcall(require('telescope').load_extension, 'ui-select')
 
 -- Shortcut for searching your Neovim configuration files
 vim.keymap.set('n', '<leader>sn', function()
-	teleBuiltin.find_files { cwd = vim.fn.stdpath 'config' }
+    teleBuiltin.find_files { cwd = vim.fn.stdpath 'config' }
 end, { desc = '[S]earch [N]eovim files' })
 
 -- Finding templates
 vim.keymap.set('n', '<leader>st', function()
-	teleBuiltin.find_files { cwd = vim.fn.stdpath('config') .. '/lua/jeremiah/templates' }
+    teleBuiltin.find_files { cwd = vim.fn.stdpath('config') .. '/lua/jeremiah/templates' }
 end, { desc = '[S]earch [T]emplate files' })
 
 -- Treesitter setup
 require('nvim-treesitter.configs').setup {
-	ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query", "http" }, -- Install parsers for Go and Python only
-	highlight = {
-		enable = true,
-		additional_vim_regex_highlighting = false,
-	},
-	incremental_selection = {
-		enable = true,
-		init_selection = shortcut_init_selection,
-		node_incremental = shortcut_node_incremental,
-		node_decremental = shortcut_node_decremental
-	},
-	-- this was causing some strange behavor where the indent of a new line was not being respected.
-	-- It was always placing my cursor at the beginning of the line regardless of indents of the current line.
-	-- indent = { enable = true } -- Enable indentation
+    ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query", "http" }, -- Install parsers for Go and Python only
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    },
+    incremental_selection = {
+        enable = true,
+        init_selection = shortcut_init_selection,
+        node_incremental = shortcut_node_incremental,
+        node_decremental = shortcut_node_decremental
+    },
+    -- this was causing some strange behavor where the indent of a new line was not being respected.
+    -- It was always placing my cursor at the beginning of the line regardless of indents of the current line.
+    -- indent = { enable = true } -- Enable indentation
 }
 
 
 -- Define the 'Help' command that opens the help menu in a vertical split on the right
 vim.api.nvim_create_user_command(
-	'Help',                     -- Command name
-	'rightbelow vert help <args>', -- Execute 'rightbelow vert help' with additional arguments
-	{ nargs = '+' }             -- This command requires at least one argument
+    'Help',                     -- Command name
+    'rightbelow vert help <args>', -- Execute 'rightbelow vert help' with additional arguments
+    { nargs = '+' }             -- This command requires at least one argument
 )
 
 -- Map <Leader>h to the 'Help' command
@@ -419,43 +419,43 @@ vim.api.nvim_create_user_command(
 
 -- Create a custom command 'Make' that saves the buffer and runs 'make'
 vim.api.nvim_create_user_command(
-	'M', -- Command name
-	function()
-		jeremiah.utils.SaveAll()
-		vim.cmd('make')                -- Run make
-	end,
-	{ desc = "Save buffer and run make" } -- Description for the command
+    'M', -- Command name
+    function()
+        jeremiah.utils.SaveAll()
+        vim.cmd('make')                -- Run make
+    end,
+    { desc = "Save buffer and run make" } -- Description for the command
 )
 
 
 -- Remap to enable pasting from registers to terminal
 vim.keymap.set('t', '<c-r>', function()
-	local next_char_code = vim.fn.getchar()
-	local next_char = vim.fn.nr2char(next_char_code)
-	return '<C-\\><C-N>"' .. next_char .. 'pi'
+    local next_char_code = vim.fn.getchar()
+    local next_char = vim.fn.nr2char(next_char_code)
+    return '<C-\\><C-N>"' .. next_char .. 'pi'
 end, { expr = true })
 
 -- Set insert mode to default when opening a new terminal
 vim.api.nvim_create_augroup('TerminalAutocmd', { clear = true })
 vim.api.nvim_create_autocmd('TermOpen', {
-	group = 'TerminalAutocmd',
-	pattern = '*',
-	command = 'startinsert',
+    group = 'TerminalAutocmd',
+    pattern = '*',
+    command = 'startinsert',
 })
 
 -- Use alacritty or iterm2
 if (os.getenv('SSH_TTY') ~= nil) then
-	vim.g.clipboard = {
-		name = 'OSC 52',
-		copy = {
-			['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-			['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-		},
-		paste = {
-			["+"] = require('vim.ui.clipboard.osc52').paste('+'),
-			["*"] = require('vim.ui.clipboard.osc52').paste('*'),
-		},
-	}
+    vim.g.clipboard = {
+        name = 'OSC 52',
+        copy = {
+            ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+            ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+        },
+        paste = {
+            ["+"] = require('vim.ui.clipboard.osc52').paste('+'),
+            ["*"] = require('vim.ui.clipboard.osc52').paste('*'),
+        },
+    }
 end
 
 -- if (os.getenv('SSH_TTY') == nil) then
@@ -465,25 +465,25 @@ end
 
 
 local function load_env_vars(file_path)
-	local env_vars = {}
-	local file = io.open(file_path, "r")
-	if not file then
-		print("Could not open env file: " .. file_path)
-		return env_vars
-	end
-	for line in file:lines() do
-		-- Trim leading and trailing whitespace
-		line = line:match("^%s*(.-)%s*$")
-		-- Split the line into key and value
-		local delimiter_pos = line:find("=")
-		if delimiter_pos then
-			local key = line:sub(1, delimiter_pos - 1)
-			local value = line:sub(delimiter_pos + 1)
-			env_vars[key] = value
-		end
-	end
-	file:close()
-	return env_vars
+    local env_vars = {}
+    local file = io.open(file_path, "r")
+    if not file then
+        print("Could not open env file: " .. file_path)
+        return env_vars
+    end
+    for line in file:lines() do
+        -- Trim leading and trailing whitespace
+        line = line:match("^%s*(.-)%s*$")
+        -- Split the line into key and value
+        local delimiter_pos = line:find("=")
+        if delimiter_pos then
+            local key = line:sub(1, delimiter_pos - 1)
+            local value = line:sub(delimiter_pos + 1)
+            env_vars[key] = value
+        end
+    end
+    file:close()
+    return env_vars
 end
 
 -- Debugger stuff
@@ -491,93 +491,93 @@ local dap, dapui, dapGo = require('dap'), require('dapui'), require('dap-go')
 dapui.setup()
 require('nvim-dap-virtual-text').setup()
 dapGo.setup {
-	-- Additional dap configurations can be added.
-	-- dap_configurations accepts a list of tables where each entry
-	-- represents a dap configuration. For more details do:
-	-- :help dap-configuration
-	-- dap_configurations = {
-	-- 	{
-	-- 		-- Must be "go" or it will be ignored by the plugin
-	-- 		type = "go",
-	-- 		name = "Attach remote",
-	-- 		request = "launch",
-	-- 		env = {      -- Set environment variables here
-	-- 			TEST_MODE = "false", -- unit tests run by default
-	-- 		},
-	-- 	},
-	-- },
-	dap_configurations = {
-		-- 	-- {
-		-- 	--   type = "go",  -- Use the 'go' adapter (requires 'delve' support)
-		-- 	--   name = "Debug main.go",  -- Name for your configuration
-		-- 	--   request = "launch",  -- Request type: 'launch' or 'attach'
-		-- 	--   program = "${file}",  -- Path to the current file being debugged
-		-- 	-- },
-		-- {
-		-- 	type = "go",
-		-- 	name = "Debug package",
-		-- 	request = "launch",
-		-- 	env = load_env_vars(vim.fn.getcwd() .. "/.env.local"),
-		-- 	program = "${workspaceFolder}", -- Debug the whole package/project
-		-- },
-		-- {
-		-- 	type = "go",
-		-- 	name = "attach go",
-		-- 	request = "attach",
-		-- 	mode = "remote",
-		-- },
-		-- {
-		-- 	type = "go",
-		-- 	name = "Attach to running process",
-		-- 	request = "attach",
-		-- 	processId = require 'dap.utils'.pick_process, -- Attach to a running process by ID
-		-- },
-	},
-	-- dap_configurations = {
-	-- 	type = "go",
-	-- 	name = "Debug package",
-	-- 	request = "launch",
-	-- 	env = load_env_vars(vim.fn.getcwd() .. "/.env.local"),
-	-- 	program = "${workspaceFolder}", -- Debug the whole package/project
-	-- },
-	-- delve configurations
-	delve = {
-		-- the path to the executable dlv which will be used for debugging.
-		-- by default, this is the "dlv" executable on your PATH.
-		path = "dlv",
-		-- time to wait for delve to initialize the debug session.
-		-- default to 20 seconds
-		initialize_timeout_sec = 20,
-		-- a string that defines the port to start delve debugger.
-		-- default to string "${port}" which instructs nvim-dap
-		-- to start the process in a random available port.
-		-- if you set a port in your debug configuration, its value will be
-		-- assigned dynamically.
-		port = "${port}",
-		-- additional args to pass to dlv
-		args = {},
-		-- the build flags that are passed to delve.
-		-- defaults to empty string, but can be used to provide flags
-		-- such as "-tags=unit" to make sure the test suite is
-		-- compiled during debugging, for example.
-		-- passing build flags using args is ineffective, as those are
-		-- ignored by delve in dap mode.
-		-- avaliable ui interactive function to prompt for arguments get_arguments
-		-- build_flags = { "--output=./debug" },
-		-- whether the dlv process to be created detached or not. there is
-		-- an issue on Windows where this needs to be set to false
-		-- otherwise the dlv server creation will fail.
-		-- avaliable ui interactive function to prompt for build flags: get_build_flags
-		detached = vim.fn.has("win32") == 0,
-		-- the current working directory to run dlv from, if other than
-		-- the current working directory.
-		cwd = nil,
-	},
-	-- options related to running closest test
-	tests = {
-		-- enables verbosity when running the test.
-		verbose = false,
-	},
+    -- Additional dap configurations can be added.
+    -- dap_configurations accepts a list of tables where each entry
+    -- represents a dap configuration. For more details do:
+    -- :help dap-configuration
+    -- dap_configurations = {
+    -- 	{
+    -- 		-- Must be "go" or it will be ignored by the plugin
+    -- 		type = "go",
+    -- 		name = "Attach remote",
+    -- 		request = "launch",
+    -- 		env = {      -- Set environment variables here
+    -- 			TEST_MODE = "false", -- unit tests run by default
+    -- 		},
+    -- 	},
+    -- },
+    dap_configurations = {
+        -- 	-- {
+        -- 	--   type = "go",  -- Use the 'go' adapter (requires 'delve' support)
+        -- 	--   name = "Debug main.go",  -- Name for your configuration
+        -- 	--   request = "launch",  -- Request type: 'launch' or 'attach'
+        -- 	--   program = "${file}",  -- Path to the current file being debugged
+        -- 	-- },
+        -- {
+        -- 	type = "go",
+        -- 	name = "Debug package",
+        -- 	request = "launch",
+        -- 	env = load_env_vars(vim.fn.getcwd() .. "/.env.local"),
+        -- 	program = "${workspaceFolder}", -- Debug the whole package/project
+        -- },
+        -- {
+        -- 	type = "go",
+        -- 	name = "attach go",
+        -- 	request = "attach",
+        -- 	mode = "remote",
+        -- },
+        -- {
+        -- 	type = "go",
+        -- 	name = "Attach to running process",
+        -- 	request = "attach",
+        -- 	processId = require 'dap.utils'.pick_process, -- Attach to a running process by ID
+        -- },
+    },
+    -- dap_configurations = {
+    -- 	type = "go",
+    -- 	name = "Debug package",
+    -- 	request = "launch",
+    -- 	env = load_env_vars(vim.fn.getcwd() .. "/.env.local"),
+    -- 	program = "${workspaceFolder}", -- Debug the whole package/project
+    -- },
+    -- delve configurations
+    delve = {
+        -- the path to the executable dlv which will be used for debugging.
+        -- by default, this is the "dlv" executable on your PATH.
+        path = "dlv",
+        -- time to wait for delve to initialize the debug session.
+        -- default to 20 seconds
+        initialize_timeout_sec = 20,
+        -- a string that defines the port to start delve debugger.
+        -- default to string "${port}" which instructs nvim-dap
+        -- to start the process in a random available port.
+        -- if you set a port in your debug configuration, its value will be
+        -- assigned dynamically.
+        port = "${port}",
+        -- additional args to pass to dlv
+        args = {},
+        -- the build flags that are passed to delve.
+        -- defaults to empty string, but can be used to provide flags
+        -- such as "-tags=unit" to make sure the test suite is
+        -- compiled during debugging, for example.
+        -- passing build flags using args is ineffective, as those are
+        -- ignored by delve in dap mode.
+        -- avaliable ui interactive function to prompt for arguments get_arguments
+        -- build_flags = { "--output=./debug" },
+        -- whether the dlv process to be created detached or not. there is
+        -- an issue on Windows where this needs to be set to false
+        -- otherwise the dlv server creation will fail.
+        -- avaliable ui interactive function to prompt for build flags: get_build_flags
+        detached = vim.fn.has("win32") == 0,
+        -- the current working directory to run dlv from, if other than
+        -- the current working directory.
+        cwd = nil,
+    },
+    -- options related to running closest test
+    tests = {
+        -- enables verbosity when running the test.
+        verbose = false,
+    },
 }
 
 -- -- These are nice but I am going to try and just use the popups since this UI takes up so much room and isn't easy to navigate with
@@ -593,20 +593,20 @@ dapGo.setup {
 -- end
 
 dap.configurations.go = {
-	{
-		type = "go",
-		name = "launch",
-		request = "launch",
-		env = load_env_vars(vim.fn.getcwd() .. "/.env.local"),
-		program = "${workspaceFolder}", -- Debug the whole package/project
-	},
-	{
-		type = "go",
-		name = "attach",
-		request = "attach",
-		mode = "remote",
-		port = "9080",
-	},
+    {
+        type = "go",
+        name = "launch",
+        request = "launch",
+        env = load_env_vars(vim.fn.getcwd() .. "/.env.local"),
+        program = "${workspaceFolder}", -- Debug the whole package/project
+    },
+    {
+        type = "go",
+        name = "attach",
+        request = "attach",
+        mode = "remote",
+        port = "9080",
+    },
 }
 
 
@@ -619,17 +619,17 @@ vim.fn.sign_define('DapLogPoint', { text = '🪵', texthl = '', linehl = '', num
 vim.api.nvim_set_keymap("n", "<Leader>du", ":lua require('dapui').toggle()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>db", ":DapToggleBreakpoint<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>dv", ":lua require('dapui').float_element('scopes', {})<CR>",
-	{ noremap = true, silent = true })
+    { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>dw", ":lua require('dapui').float_element('watches', {})<CR>",
-	{ noremap = true, silent = true })
+    { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>ds", ":lua require('dapui').float_element('stacks', {})<CR>",
-	{ noremap = true, silent = true })
+    { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>dl", ":lua require('dapui').float_element('repl', {})<CR>",
-	{ noremap = true, silent = true })
+    { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>dp", ":lua require('dapui').float_element('breakpoints', {})<CR>",
-	{ noremap = true, silent = true })
+    { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>de", ":lua require('dapui').eval()<CR>",
-	{ noremap = true, silent = true })
+    { noremap = true, silent = true })
 -- this one isn't working for some reason
 -- vim.api.nvim_set_keymap("v", "<Leader>de", ":lua require('dapui').eval()<CR>",
 -- 	{ noremap = true, silent = true })
@@ -637,38 +637,38 @@ vim.api.nvim_set_keymap("n", "<Leader>de", ":lua require('dapui').eval()<CR>",
 -- 	{ noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<Leader>dB',
-	':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
+    ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>dj", ":DapStepOver<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>di", ":DapStepInto<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>do", ":DapStepOut<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<Leader>dc", function()
-	-- jeremiah.utils.SaveAll()
-	-- vim.notify("debug continue", vim.log.levels.INFO, nil)
-	dap.continue()
+    -- jeremiah.utils.SaveAll()
+    -- vim.notify("debug continue", vim.log.levels.INFO, nil)
+    dap.continue()
 end)
 vim.keymap.set("n", "<Leader>dsl", function()
-	jeremiah.utils.SaveAll()
-	vim.notify("debug start launch", vim.log.levels.INFO, nil)
-	dap.run(dap.configurations.go[1])
+    jeremiah.utils.SaveAll()
+    vim.notify("debug start launch", vim.log.levels.INFO, nil)
+    dap.run(dap.configurations.go[1])
 end)
 -- TODO I think this function is getting triggered twice somehow
 vim.keymap.set("n", "<Leader>dsa", function()
-	jeremiah.utils.SaveAll()
-	vim.notify("debug start attach", vim.log.levels.INFO, nil)
-	dap.run(dap.configurations.go[2])
+    jeremiah.utils.SaveAll()
+    vim.notify("debug start attach", vim.log.levels.INFO, nil)
+    dap.run(dap.configurations.go[2])
 end)
 vim.keymap.set("n", "<Leader>dr", function()
-	jeremiah.utils.SaveAll()
-	vim.notify("restarting last debug session", vim.log.levels.INFO, nil)
-	dap.restart()
+    jeremiah.utils.SaveAll()
+    vim.notify("restarting last debug session", vim.log.levels.INFO, nil)
+    dap.restart()
 end)
 vim.keymap.set("n", "<Leader>dt", function()
-	jeremiah.utils.SaveAll()
-	dapGo.debug_test()
+    jeremiah.utils.SaveAll()
+    dapGo.debug_test()
 end)
 -- vim.api.nvim_set_keymap('n', '<Leader>dt', ':lua require("dap-go").debug_test()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>dR", ":lua require('dapui').open({reset = true})<CR>",
-	{ noremap = true, silent = true })
+    { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>dq', ':DapTerminate<CR>', { noremap = true, silent = true })
 
 -- vim.api.nvim_set_keymap('n', '<Leader>lp',
@@ -686,3 +686,6 @@ vim.api.nvim_set_keymap('n', '<Leader>hc', ':Rest cookies<CR>', { noremap = true
 
 -- Clear current pattern
 vim.api.nvim_set_keymap('n', '<leader>/', ':nohlsearch<CR>', { noremap = true, silent = true })
+
+-- no mouse
+vim.o.mouse = ""
