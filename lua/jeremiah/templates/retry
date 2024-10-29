@@ -1,5 +1,6 @@
-func RequestWithRetry(client *http.Client, request *http.Request, retryLimit int, retryBackoff time.Duration) (*http.Response, error) {
+func RequestWithRetry(client *http.Client, request *http.Request, retryLimit int, retryBackoffInSeconds int) (*http.Response, error) {
 	var response *http.Response
+    retryBackoff := time.Duration(retryBackoffInSeconds) * time.Second
 	var err error
 	for i := 0; i < retryLimit; i++ {
 		response, err = func(client *http.Client, request *http.Request) (*http.Response, error) {
@@ -28,7 +29,7 @@ func RequestWithRetry(client *http.Client, request *http.Request, retryLimit int
 			if response != nil {
 				err = fmt.Errorf("%v. Response code: %d", err, response.StatusCode)
 			}
-			log.Printf("error, request failed, retrying in %d seconds", retryBackoff)
+			log.Printf("error, request failed, retrying in %d seconds", retryBackoffInSeconds)
 			time.Sleep(retryBackoff)
 		} else {
 			break
