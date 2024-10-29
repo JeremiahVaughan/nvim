@@ -29,7 +29,7 @@ func RequestWithRetry(client *http.Client, request *http.Request, retryLimit int
 				err = fmt.Errorf("%v. Response code: %d", err, response.StatusCode)
 			}
 			log.Printf("error, request failed, retrying in %d seconds", retryBackoff)
-			time.Sleep(time.Second * retryBackoff)
+			time.Sleep(retryBackoff)
 		} else {
 			break
 		}
