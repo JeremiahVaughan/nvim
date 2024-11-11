@@ -354,17 +354,17 @@ require('telescope').setup {
             "%.jpg",
             "%.png",
             "%.git\\", -- Windows
-            "%.git/", -- other
-            "debug", -- debug bin
+            "%.git/",  -- other
+            "debug",   -- debug bin
         },
         layout_strategy = 'flex',
         layout_config = {
             flex = {
                 flip_columns = 120 -- Adjust this value based on your preference
             },
-            width = 0.95, -- Percentage of the screen width
-            height = 0.95, -- Percentage of the screen height
-            preview_cutoff = 120, -- When to start showing the preview pane
+            width = 0.95,          -- Percentage of the screen width
+            height = 0.95,         -- Percentage of the screen height
+            preview_cutoff = 120,  -- When to start showing the preview pane
         }
     },
     pickers = {
@@ -409,9 +409,9 @@ require('nvim-treesitter.configs').setup {
 
 -- Define the 'Help' command that opens the help menu in a vertical split on the right
 vim.api.nvim_create_user_command(
-    'Help',                     -- Command name
+    'Help',                        -- Command name
     'rightbelow vert help <args>', -- Execute 'rightbelow vert help' with additional arguments
-    { nargs = '+' }             -- This command requires at least one argument
+    { nargs = '+' }                -- This command requires at least one argument
 )
 
 -- Map <Leader>h to the 'Help' command
@@ -422,7 +422,7 @@ vim.api.nvim_create_user_command(
     'M', -- Command name
     function()
         jeremiah.utils.SaveAll()
-        vim.cmd('make')                -- Run make
+        vim.cmd('make')                   -- Run make
     end,
     { desc = "Save buffer and run make" } -- Description for the command
 )
@@ -679,9 +679,10 @@ vim.api.nvim_set_keymap('n', '<leader>dq', ':DapTerminate<CR>', { noremap = true
 
 -- vim.api.nvim_set_keymap('n', '<Leader>rt', ':lua require("dap").run_last()<CR>', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<Leader>hr', ':Rest run<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>hl', ':Rest last<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>hc', ':Rest cookies<CR>', { noremap = true, silent = true })
+-- todo implement your own
+-- vim.api.nvim_set_keymap('n', '<Leader>hr', ':Rest run<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>hl', ':Rest last<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>hc', ':Rest cookies<CR>', { noremap = true, silent = true })
 
 
 -- Clear current pattern
@@ -689,3 +690,5 @@ vim.api.nvim_set_keymap('n', '<leader>/', ':nohlsearch<CR>', { noremap = true, s
 
 -- no mouse
 vim.o.mouse = ""
+-- oil
+require("oil").setup()
