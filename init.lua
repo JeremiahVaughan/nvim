@@ -346,7 +346,7 @@ require('telescope').setup {
             '--line-number',
             '--column',
             '--smart-case',
-            '--hidden', -- Add this line to include hidden files
+            '--hidden',         -- Add this line to include hidden files
             '--glob', '!.git/*' -- Optionally exclude .git directory
         },
         file_ignore_patterns = {
@@ -691,4 +691,13 @@ vim.api.nvim_set_keymap('n', '<leader>/', ':nohlsearch<CR>', { noremap = true, s
 -- no mouse
 vim.o.mouse = ""
 -- oil
-require("oil").setup()
+require("oil").setup({
+    view_options = {
+        -- Show files and directories that start with "."
+        show_hidden = true,
+        is_hidden_file = function(name, bufnr)
+            local m = name:match("^%.")
+            return m ~= nil
+        end,
+    },
+})
