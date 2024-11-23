@@ -1,0 +1,4 @@
+{
+  "keyMappings": "map :bd removeTab\nmap <c-d> scrollPageDown\nmap <c-u> scrollPageUp\nmap sb Vomnibar.activateTabSelection\nmap sf Vomnibar.activateInNewTab\nmap <c-6> visitPreviousTab",
+  "settingsVersion": "2.1.2"
+}
