@@ -84,9 +84,11 @@
 25. Set your open API key
     - export OPENAI_API_KEY=<key here>
 26. Install simple-chat-gpt:
-    `go install github.com/JeremiahVaughan/simple-chat-gpt@v1.1.2`
-27. Restore Vimium from backup
-28. Move karabiner or auto hotkey config into the correct directory
+    `go install github.com/JeremiahVaughan/simple-chat-gpt@latest`
+27. Install git-tool:
+    `go install github.com/JeremiahVaughan/git-tool@latest`
+28. Restore Vimium from backup
+29. Move karabiner or auto hotkey config into the correct directory
 
 
 Note:
