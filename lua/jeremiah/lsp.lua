@@ -126,6 +126,14 @@ cmp.setup({
 })
 
 
+cmp.setup.filetype({ 'sql' }, {
+    sources = {
+        { name = 'vim-dadbod-completion' },
+        { name = 'buffer' },
+    },
+})
+
+
 -- Configure Pyright for Python
 -- lspconfig.pyright.setup({
 --     on_attach = on_attach

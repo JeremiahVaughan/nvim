@@ -693,11 +693,10 @@ vim.o.mouse = ""
 -- oil
 require("oil").setup({
     view_options = {
-        -- Show files and directories that start with "."
         show_hidden = true,
-        is_hidden_file = function(name, bufnr)
-            local m = name:match("^%.")
-            return m ~= nil
-        end,
     },
+    keymaps = {
+        ["<C-h>"] = false,
+    },
+    columns = { "icon" },
 })

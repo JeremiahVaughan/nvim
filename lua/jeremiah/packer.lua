@@ -18,6 +18,13 @@ require("lazy").setup({
     -- 	"rest-nvim/rest.nvim",
     -- },
     {
+        'tpope/vim-dadbod',
+        dependencies = {
+            { 'kristijanhusak/vim-dadbod-completion' },
+            { 'kristijanhusak/vim-dadbod-ui' },
+        },
+    },
+    {
         'stevearc/oil.nvim',
         ---@module 'oil'
         ---@type oil.SetupOpts
