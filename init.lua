@@ -2,27 +2,10 @@
 -- Book mark: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L701
 --
 -- if you don't specify the leader remaps first then any keybinds mapped before this remap will use the default leader key
-local leader_keymap = " "
-local maplocalleader = "\\"           -- Local Leader key is set to '\'
-vim.g.mapleader = leader_keymap       -- Setting space as the leader key
-vim.g.maplocalleader = maplocalleader -- Same for `maplocalleader`
+vim.g.mapleader = " "       -- Setting space as the leader key
+vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
 
 require("jeremiah")
-
-local undo_tree = '<leader>ut'
-local next_error = '<F8>'
-local previous_error = '<F7>'
-local open_reference_window = '<C-w>r'
-local close_reference_window = '<C-w>q'
-local find_files_keymap = '<leader>sf' -- Leader followed by 'ff' triggers finding files
-local grep_files_keymap = '<leader>sg' -- grep through files to find files by text
-local grep_string_keymap = '<leader>ss'
-local search_buffers_keymap = '<leader>sb'
-local search_registers_keymap = '<leader>sr'
-local shortcut_init_selection = "gnn"
-local shortcut_node_incremental = "grn"
-local shortcut_node_decremental = "grm"
-local toggle_trouble = "<leader>et"
 
 -- Built in Comment/Uncomment --> normal mode gcgc --> visual mode gc
 
@@ -88,7 +71,7 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 
-vim.api.nvim_set_keymap('n', toggle_trouble, ':TroubleToggle<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', "<leader>et", ':TroubleToggle<CR>', { noremap = true, silent = true })
 -- Disabling backspace so I use control + h instead since its closer
 -- Disable <Backspace> in Normal mode
 vim.api.nvim_set_keymap('i', '<Backspace>', '<Nop>', { noremap = true, silent = true })
@@ -210,17 +193,17 @@ vim.cmd('syntax enable') -- Enables syntax highlighting
 -- Use system clipboard by default todo trying this out disabled to see if I like it better
 -- vim.opt.clipboard = "unnamedplus"
 
-vim.api.nvim_set_keymap('n', find_files_keymap, ':Telescope find_files<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', grep_files_keymap, ':Telescope live_grep<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', grep_string_keymap, ':Telescope grep_string<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', search_buffers_keymap, ':Telescope buffers<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', search_registers_keymap, ':Telescope registers<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sf', ':Telescope find_files<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sg', ':Telescope live_grep<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ss', ':Telescope grep_string<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sb', ':Telescope buffers<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sr', ':Telescope registers<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>sk', ':Telescope keymaps<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', open_reference_window, ':copen<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', close_reference_window, ':cclose<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', next_error, ':cnext<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', previous_error, ':cprev<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', undo_tree, ':UndotreeToggle<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-w>r', ':copen<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-w>q', ':cclose<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<F8>', ':cnext<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<F7>', ':cprev<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ut', ':UndotreeToggle<CR>', { noremap = true, silent = true })
 
 -- todo this hasn't worked a couple of times, so thinking of just not trusting it and ensuring I always save myself
 -- Auto-save function when Neovim loses focus or files are changed
@@ -397,9 +380,9 @@ require('nvim-treesitter.configs').setup {
     },
     incremental_selection = {
         enable = true,
-        init_selection = shortcut_init_selection,
-        node_incremental = shortcut_node_incremental,
-        node_decremental = shortcut_node_decremental
+        init_selection = "gnn",
+        node_incremental = "grn",
+        node_decremental = "grm"
     },
     -- this was causing some strange behavor where the indent of a new line was not being respected.
     -- It was always placing my cursor at the beginning of the line regardless of indents of the current line.
@@ -443,7 +426,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
     command = 'startinsert',
 })
 
--- Use alacritty or iterm2
+-- Use wezterm
 if (os.getenv('SSH_TTY') ~= nil) then
     vim.g.clipboard = {
         name = 'OSC 52',
