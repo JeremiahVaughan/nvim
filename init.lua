@@ -79,6 +79,8 @@ vim.api.nvim_set_keymap('i', '<Backspace>', '<Nop>', { noremap = true, silent = 
 vim.api.nvim_set_keymap('c', '<Backspace>', '<Nop>', { noremap = true, silent = true })
 
 
+
+
 vim.g.have_nerd_font = true
 vim.opt.showmode = false -- mode is already in the status line
 
@@ -473,7 +475,7 @@ end
 -- Debugger stuff
 local dap, dapui, dapGo = require('dap'), require('dapui'), require('dap-go')
 dapui.setup()
-require('nvim-dap-virtual-text').setup()
+require('nvim-dap-virtual-text').setup({})
 dapGo.setup {
     -- Additional dap configurations can be added.
     -- dap_configurations accepts a list of tables where each entry
