@@ -153,41 +153,41 @@ vim.opt.list = true
 vim.opt.listchars = { tab = '» ', nbsp = '␣' }
 
 
-vim.o.number = true         -- Line numbers
-vim.o.relativenumber = true -- Shows relative line numbers to your cursor so I can jump up or down easier
-vim.o.tabstop = 4           -- Number of spaces a tab counts for
-vim.o.shiftwidth = 4        -- Size of an indent
+vim.opt.number = true         -- Line numbers
+vim.opt.relativenumber = true -- Shows relative line numbers to your cursor so I can jump up or down easier
+vim.opt.tabstop = 4           -- Number of spaces a tab counts for
+vim.opt.shiftwidth = 4        -- Size of an indent
 
-vim.o.autoindent = true
-vim.o.smartindent = true
+vim.opt.autoindent = true
+vim.opt.smartindent = true
 
-vim.o.expandtab = true
--- vim.o.expandtab = false -- using tab chars because they are required in makefiles, and I also like how the placeholder char forms a line, so I can see scope much easier
+vim.opt.expandtab = true
+-- vim.opt.expandtab = false -- using tab chars because they are required in makefiles, and I also like how the placeholder char forms a line, so I can see scope much easier
 
 
-vim.o.hlsearch = true  -- Highlight search results
-vim.o.incsearch = true -- Shows the match while typing
+vim.opt.hlsearch = true  -- Highlight search results
+vim.opt.incsearch = true -- Shows the match while typing
 
---[[ vim.o.swapfile = false
-vim.o.backup = false
-vim.o.undodir = os.getenv("HOME") .. "/.vim/undodir" ]]
-vim.o.undofile = true
+--[[ vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir" ]]
+vim.opt.undofile = true
 vim.g.undotree_SplitWidth = 60
 
 -- make auto save to swap file more frequent
-vim.o.updatetime = 250
-vim.o.signcolumn = 'yes'
+vim.opt.updatetime = 250
+vim.opt.signcolumn = 'yes'
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
 vim.opt.inccommand = 'split'
 
-vim.o.timeoutlen = 500
+vim.opt.timeoutlen = 500
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.o.infercase = true
-vim.o.wrap = false
+vim.opt.infercase = true
+vim.opt.wrap = false
 vim.cmd('syntax enable') -- Enables syntax highlighting
 
 -- Use system clipboard by default todo trying this out disabled to see if I like it better
@@ -199,6 +199,7 @@ vim.api.nvim_set_keymap('n', '<leader>ss', ':Telescope grep_string<CR>', { norem
 vim.api.nvim_set_keymap('n', '<leader>sb', ':Telescope buffers<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sr', ':Telescope registers<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>sk', ':Telescope keymaps<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>sd', ':Telescope diagnostics<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-w>r', ':copen<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-w>q', ':cclose<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<F8>', ':cnext<CR>', { noremap = true, silent = true })
@@ -442,7 +443,7 @@ if (os.getenv('SSH_TTY') ~= nil) then
 end
 
 -- if (os.getenv('SSH_TTY') == nil) then
--- 	vim.o.shell = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+-- 	vim.opt.shell = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
 -- end
 
 
@@ -672,7 +673,7 @@ vim.api.nvim_set_keymap('n', '<leader>dq', ':DapTerminate<CR>', { noremap = true
 vim.api.nvim_set_keymap('n', '<leader>/', ':nohlsearch<CR>', { noremap = true, silent = true })
 
 -- no mouse
-vim.o.mouse = ""
+vim.opt.mouse = ""
 -- oil
 require("oil").setup({
     view_options = {

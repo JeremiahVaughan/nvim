@@ -98,20 +98,10 @@ require("lazy").setup({
             },
         },
     },
-    {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
-        dependencies = {
-            --- Uncomment the two plugins below if you want to manage the language servers from neovim
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' },
+    { 'williamboman/mason.nvim' },
+    { 'williamboman/mason-lspconfig.nvim' },
 
-            { 'neovim/nvim-lspconfig' },
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'L3MON4D3/LuaSnip' },
-        }
-    },
+    { 'neovim/nvim-lspconfig' },
     'tpope/vim-commentary',
     {
         'nvim-telescope/telescope.nvim',
@@ -147,7 +137,24 @@ require("lazy").setup({
     'mbbill/undotree',
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    'neovim/nvim-lspconfig',
+    {
+        'neovim/nvim-lspconfig',
+        dependencies = {
+            {
+                -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
+                -- used for completion, annotations and signatures of Neovim apis
+                "folke/lazydev.nvim",
+                ft = "lua",
+                opts = {
+                    library = {
+                        -- Load luvit types when the `vim.uv` word is found
+                        { path = "luvit-meta/library", words = { "vim%.uv" } },
+                    },
+                },
+            },
+            { "Bilal2453/luvit-meta", lazy = true },
+        }
+    },
     -- auto-completion stuff
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
