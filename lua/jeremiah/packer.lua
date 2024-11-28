@@ -137,7 +137,8 @@ require("lazy").setup({
         }
     },
     {
-        'nvim-treesitter/nvim-treesitter',
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
     },
     'nvim-treesitter/playground',
     'mbbill/undotree',

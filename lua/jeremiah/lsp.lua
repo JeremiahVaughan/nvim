@@ -74,24 +74,56 @@ local project_type = vim.fn.getenv("NVIM_PROJECT_TYPE")
 -- 3. server
 -- 4. leetcode
 
-local ensure_installed = {}
+local ensure_installed_lsp = {}
+local ensure_installed_treesitter = {}
 
 if project_type == "work" then
-    ensure_installed = { "gopls", "lua_ls", "pyright", "tsserver", "eslint" }
+    ensure_installed_lsp = { "gopls", "lua_ls", "pyright", "tsserver", "eslint" }
+    ensure_installed_treesitter = { "markdown", "markdown_inline", "go", "python", "lua", "typescript", "tsx",
+        "javascript", "vim", "vimdoc",
+        "query", "http" }
 elseif project_type == "server" then
     -- no lsps
+    -- no parsers
 elseif project_type == "leetcode" then
     -- no lsps
+    ensure_installed_treesitter = { "go" }
 else
     -- personal and default
-    ensure_installed = { "gopls", "lua_ls" }
+    ensure_installed_lsp = { "gopls", "lua_ls" }
+    ensure_installed_treesitter = { "markdown", "markdown_inline", "go", "lua", "javascript", "vim", "vimdoc", "query",
+        "http" }
 end
+
+-- Treesitter setup
+require('nvim-treesitter.configs').setup({
+    modules = {},
+    auto_install = true,
+    sync_install = false,
+    ignore_install = {},
+    ensure_installed = ensure_installed_treesitter,
+    highlight = {
+        enable = true,
+        disable = {},
+        additional_vim_regex_highlighting = false,
+    },
+    incremental_selection = {
+        enable = true,
+        init_selection = "gnn",
+        node_incremental = "grn",
+        node_decremental = "grm"
+    },
+    -- this was causing some strange behavor where the indent of a new line was not being respected.
+    -- It was always placing my cursor at the beginning of the line regardless of indents of the current line.
+    -- indent = { enable = true } -- Enable indentation
+})
+
 
 
 -- Mason setup
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = ensure_installed,
+    ensure_installed = ensure_installed_lsp,
     automatic_installation = true,
     handlers = {
         -- lsp_zero.default_setup,
@@ -134,7 +166,7 @@ local function setup_server(server_name)
     })
 end
 
-for _, server in ipairs(ensure_installed) do
+for _, server in ipairs(ensure_installed_lsp) do
     setup_server(server)
 end
 

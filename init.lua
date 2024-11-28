@@ -374,25 +374,6 @@ vim.keymap.set('n', '<leader>st', function()
     teleBuiltin.find_files { cwd = vim.fn.stdpath('config') .. '/lua/jeremiah/templates' }
 end, { desc = '[S]earch [T]emplate files' })
 
--- Treesitter setup
-require('nvim-treesitter.configs').setup {
-    ensure_installed = { "go", "python", "lua", "typescript", "tsx", "javascript", "vim", "vimdoc", "query", "http" }, -- Install parsers for Go and Python only
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
-    incremental_selection = {
-        enable = true,
-        init_selection = "gnn",
-        node_incremental = "grn",
-        node_decremental = "grm"
-    },
-    -- this was causing some strange behavor where the indent of a new line was not being respected.
-    -- It was always placing my cursor at the beginning of the line regardless of indents of the current line.
-    -- indent = { enable = true } -- Enable indentation
-}
-
-
 -- Define the 'Help' command that opens the help menu in a vertical split on the right
 vim.api.nvim_create_user_command(
     'Help',                        -- Command name
