@@ -176,6 +176,8 @@ vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir" ]]
 vim.opt.undofile = true
 vim.g.undotree_SplitWidth = 60
 
+vim.opt.splitright = true -- Open vertical splits to the right
+
 -- make auto save to swap file more frequent
 vim.opt.updatetime = 250
 vim.opt.signcolumn = 'yes'

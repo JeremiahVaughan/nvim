@@ -19,10 +19,8 @@ require("lazy").setup({
         enabled = false,
         hererocks = false,
     },
-    -- todo implement your own
-    -- {
-    -- 	"rest-nvim/rest.nvim",
-    -- },
+    -- https://kulala.mwco.app/docs/getting-started
+    { 'mistweaverco/kulala.nvim',         opts = {} },
     {
         'tpope/vim-dadbod',
         dependencies = {
