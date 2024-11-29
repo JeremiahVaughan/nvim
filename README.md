@@ -96,6 +96,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - Unix: `brew install htop`
     - Windows: `choco install ntop.portable`
 32. Install Flameshot and bind screen shot and snip to control+x
+33. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
     
 
 
