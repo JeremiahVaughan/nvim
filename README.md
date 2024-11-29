@@ -89,6 +89,9 @@
     `go install github.com/JeremiahVaughan/git-tool@latest`
 28. Restore Vimium from backup
 29. Move karabiner or auto hotkey config into the correct directory
+30. Install htop for monitoring resources (its like top but much easier to read)
+    - Unix: `brew install htop`
+    - Windows: `choco install ntop.portable`
 
 
 Note:
