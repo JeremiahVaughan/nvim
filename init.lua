@@ -648,11 +648,12 @@ vim.api.nvim_set_keymap('n', '<leader>dq', ':DapTerminate<CR>', { noremap = true
 
 -- vim.api.nvim_set_keymap('n', '<Leader>rt', ':lua require("dap").run_last()<CR>', { noremap = true, silent = true })
 
--- todo implement your own
--- vim.api.nvim_set_keymap('n', '<Leader>hr', ':Rest run<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<Leader>hl', ':Rest last<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<Leader>hc', ':Rest cookies<CR>', { noremap = true, silent = true })
-
+-- local kulala = require('kulala')
+vim.api.nvim_set_keymap('n', '<Leader>hg', "<CMD>lua require('kulala').run()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>hr', "<CMD>lua require('kulala').replay()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>hc', "<CMD>lua require('kulala').copy()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>hs', "<CMD>lua require('kulala').scratchpad()<CR>",
+    { noremap = true, silent = true })
 
 -- Clear current pattern
 vim.api.nvim_set_keymap('n', '<leader>/', ':nohlsearch<CR>', { noremap = true, silent = true })
