@@ -97,6 +97,8 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - Windows: `choco install ntop.portable`
 32. Install Flameshot and bind screen shot and snip to control+x
 33. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
+34. Install http lsp:
+    - `go install github.com/JeremiahVaughan/http-lsp@latest`
     
 
 
