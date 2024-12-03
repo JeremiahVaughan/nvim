@@ -29,7 +29,7 @@ firefoxWindow := " ahk_exe " . "firefox.exe" ;
 ^s:: {
     Send("^4") ; Send Control + 4
 }
-Ctrl & w:: {
+^w:: {
     Send("^{Backspace}")
 }
 Enter:: {
@@ -41,13 +41,13 @@ Shift & Enter:: {
 
 evernoteWindow := " ahk_exe " . "Evernote.exe" ;
 #HotIf WinActive(evernoteWindow)
-Ctrl & w:: {
+^w:: {
     Send("^{Backspace}")
 }
 
 discordWindow := " ahk_exe " . "Discord.exe" ;
 #HotIf WinActive(discordWindow)
-Ctrl & w:: {
+^w:: {
     Send("^{Backspace}")
 }
 
