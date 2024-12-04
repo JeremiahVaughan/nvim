@@ -1,13 +1,37 @@
 #SingleInstance
 chromeWindow := " ahk_exe " . "chrome.exe" ;
+wezTermWindow := " ahk_exe " . "wezterm-gui.exe" ;
+#t:: {
+    if WinExist(wezTermWindow)
+        if WinActive(wezTermWindow)
+            OpenChrome()
+        else
+            WinActivate
+    else
+        if WinActive(wezTermWindow)
+            OpenChrome()
+        else
+            Run "wezterm-gui.exe"
+}
 #b:: {
+    if WinExist(chromeWindow)
+        if WinActive(chromeWindow)
+            OpenWezterm()
+        else
+            WinActivate
+    else
+        if WinActive(chromeWindow)
+            OpenWezterm()
+        else
+            Run "chrome.exe"
+}
+OpenChrome() {
     if WinExist(chromeWindow)
         WinActivate
     else
         Run "chrome.exe"
 }
-#t:: {
-    wezTermWindow := " ahk_exe " . "wezterm-gui.exe" ;
+OpenWezterm() {
     if WinExist(wezTermWindow)
         WinActivate
     else
