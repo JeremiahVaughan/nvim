@@ -99,6 +99,10 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 33. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
 34. Install http lsp:
     - `go install github.com/JeremiahVaughan/http-lsp@latest`
+35. Emplace hot-key remaps files
+    - Windows create short cut: 
+        - Shortcut location: `C:\Users\jv1143\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
+        - Shortcut target: `C:\Users\jv1143\AppData\Local\nvim\ahk\key_remaps.ahk`
     
 
 
