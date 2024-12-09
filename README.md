@@ -84,6 +84,8 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - Unix: `brew install htop`
     - Windows: `choco install ntop.portable`
 33. Install Flameshot and bind screen shot and snip to control+x
+    - Screenshot setup reference: https://github.com/flameshot-org/flameshot/issues/3712#issuecomment-2380547929
+    - 
 34. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
 35. Install http lsp:
     - `go install github.com/JeremiahVaughan/http-lsp@latest`
@@ -92,6 +94,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
         - Shortcut location: `C:\Users\jv1143\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
         - Shortcut target: `C:\Users\jv1143\AppData\Local\nvim\ahk\key_remaps.ahk`
 37. Emplace .gitconfig file at ~/
+
     
 
 
