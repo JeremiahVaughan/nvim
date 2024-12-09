@@ -212,7 +212,7 @@
                                 "to": [
                                     {
                                         "key_code": "delete_or_backspace",
-                                        "modifiers": ["control"]
+                                        "modifiers": ["option"]
                                     }
                                 ],
                                 "type": "basic"
