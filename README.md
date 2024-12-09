@@ -7,8 +7,8 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
         `git clone https://github.com/JeremiahVaughan/nvim-struggle ~/.config/nvim`
     - Mac:
         `~/.config/nvim`
-2. Install nvim-qt:
-    - https://github.com/equalsraf/neovim-qt
+2. Install nvim
+    - `brew install nvim`
 3. Install ripgrep for fuzzy search
     - https://github.com/BurntSushi/ripgrep#installation
 4. Install make for :make command to work
@@ -35,16 +35,17 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 16. Install Delta-diff for better diff indicators for LazyGit
 17. Install jq
     - `https://jqlang.github.io/jq/download/`
+18. Install delta
     - `https://github.com/dandavison/delta`
-18. Install k9s
+19. Install k9s
     - `https://k9scli.io/topics/install`
-19. Install bat (currently using this for my snippets generator)
+20. Install bat (currently using this for my snippets generator)
     - `https://github.com/sharkdp/bat?tab=readme-ov-file#installation`
-20. Ensure the latest version of curl is installed, because leetcode.nvim requires it.
+21. Ensure the latest version of curl is installed, because leetcode.nvim requires it.
     - `https://curl.se/windows/`
     - Ensure the bin folder is on the path and before all other paths (system too) to ensure that the new version of curl is found before the old one is.
 
-21. For copy paste to work on remote ssh sessions
+22. For copy paste to work on remote ssh sessions
     - Mac: `use Iterm2`
     - Mac other:
         - copy the file `.alacritty.toml` in the root of this project to `$HOME/.alacritty.toml`
@@ -54,29 +55,16 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
         - copy the file `.alacritty.toml` in the root of this project to `%APPDATA%\alacritty\alacritty.toml`
             or
         - copy the file `.wezterm.lua` in the root of this project to `$HOME/.wezterm.lua`
-22. Install delve for debugging
+23. Install delve for debugging
     - `go install github.com/go-delve/delve/cmd/dlv@latest`
-23. The rest.nvim plugin requires these to be installed
+24. The rest.nvim plugin requires these to be installed
     - All of this:
         - Specific C compiler
             - `sudo apt update && sudo apt install gcc -y`
-        - Dev Version of Lua
-            - Linux:
-                - `sudo apt install liblua5.1-0-dev`
-            - Windows:
-                - `choco install lua`
-        - Lua Rocks
-            - `https://luarocks.org`
-            - Windows:
-                - Binary download:
-                    - `https://luarocks.github.io/luarocks/releases/`
-    - Or this:
-        - hererocks:
-            - `https://pypi.org/project/hererocks/`
-24. If you plan on using terragrunt, enable provider cache so you disk doesn't bloat:
+25. If you plan on using terragrunt, enable provider cache so you disk doesn't bloat:
     - `export TERRAGRUNT_PROVIDER_CACHE=1`
     - Ref: `https://terragrunt.gruntwork.io/docs/features/provider-cache/`
-25. Install starship:
+26. Install starship:
     - From: https://starship.rs
     - Windows:
         - Set execution policy:
@@ -84,25 +72,26 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
         - Add this file to this location:
             - File: Microsoft.PowerShell_profile.ps1
             - Location: $profile
-26. Set your open API key
+27. Set your open API key
     - export OPENAI_API_KEY=<key here>
-27. Install simple-chat-gpt:
+28. Install simple-chat-gpt:
     `go install github.com/JeremiahVaughan/simple-chat-gpt@latest`
-28. Install git-tool:
+29. Install git-tool:
     `go install github.com/JeremiahVaughan/git-tool@latest`
-29. Restore Vimium from backup
-30. Move karabiner or auto hotkey config into the correct directory
-31. Install htop for monitoring resources (its like top but much easier to read)
+30. Restore Vimium from backup
+31. Move karabiner or auto hotkey config into the correct directory
+32. Install htop for monitoring resources (its like top but much easier to read)
     - Unix: `brew install htop`
     - Windows: `choco install ntop.portable`
-32. Install Flameshot and bind screen shot and snip to control+x
-33. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
-34. Install http lsp:
+33. Install Flameshot and bind screen shot and snip to control+x
+34. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
+35. Install http lsp:
     - `go install github.com/JeremiahVaughan/http-lsp@latest`
-35. Emplace hot-key remaps files
+36. Emplace hot-key remaps files
     - Windows create short cut: 
         - Shortcut location: `C:\Users\jv1143\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
         - Shortcut target: `C:\Users\jv1143\AppData\Local\nvim\ahk\key_remaps.ahk`
+37. Emplace .gitconfig file at ~/
     
 
 
