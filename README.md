@@ -85,7 +85,9 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - Windows: `choco install ntop.portable`
 33. Install Flameshot and bind screen shot and snip to control+x
     - Screenshot setup reference: https://github.com/flameshot-org/flameshot/issues/3712#issuecomment-2380547929
-    - 
+    - Shortcut name: Screen Shot
+    - Shortcut value: /home/piegarden/.config/nvim/screenshot.sh
+    - Shortcut key map: ctrl+x
 34. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
 35. Install http lsp:
     - `go install github.com/JeremiahVaughan/http-lsp@latest`
