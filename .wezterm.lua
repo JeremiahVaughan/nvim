@@ -11,10 +11,16 @@ local config = wezterm.config_builder()
 
 -- allow shift+enter to be sent to nvim
 config.keys = {
-	{ key = "\r", mods = "SHIFT", action = wezterm.action.SendKey { key = '\r', mods = 'SHIFT' } }
+    { key = "\r", mods = "SHIFT", action = wezterm.action.SendKey { key = '\r', mods = 'SHIFT' } }
 }
 config.font_size = 15
 config.hide_tab_bar_if_only_one_tab = true
-config.default_prog = { "powershell", "-NoLogo" }
+
+if wezterm.target_triple:find("windows") then
+    config.default_prog = { "powershell", "-NoLogo" }
+else
+    config.default_prog = { "/usr/bin/zsh" }
+end
+
 -- and finally, return the configuration to wezterm
 return config
