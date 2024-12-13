@@ -75,3 +75,9 @@ discordWindow := " ahk_exe " . "Discord.exe" ;
     Send("^{Backspace}")
 }
 
+chatGptWindow := " ahk_exe " . "ChatGPT.exe" ;
+#HotIf WinActive(chatGptWindow)
+^w:: {
+    Send("^{Backspace}")
+}
+
