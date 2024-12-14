@@ -19,8 +19,9 @@ require("lazy").setup({
         enabled = false,
         hererocks = false,
     },
+    { 'kmonad/kmonad-vim' },
     -- https://kulala.mwco.app/docs/getting-started
-    { 'mistweaverco/kulala.nvim',         opts = {} },
+    { 'mistweaverco/kulala.nvim', opts = {} },
     {
         'tpope/vim-dadbod',
         dependencies = {

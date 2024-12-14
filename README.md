@@ -96,6 +96,10 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
         - Shortcut location: `C:\Users\jv1143\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
         - Shortcut target: `C:\Users\jv1143\AppData\Local\nvim\ahk\key_remaps.ahk`
 37. Emplace .gitconfig file at ~/
+38. Ubuntu assessibility options:
+    - Turn off those slow animations
+    - Opt in for large text
+39. Follow kmonad README.md at ./kmonad/README.md
 
     
 
