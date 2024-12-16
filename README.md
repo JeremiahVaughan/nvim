@@ -67,11 +67,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 26. Install starship:
     - From: https://starship.rs
     - Windows:
-        - Set execution policy:
-        `ExecutionPolicy RemoteSigned -scope CurrentUser`
-        - Add this file to this location:
-            - File: Microsoft.PowerShell_profile.ps1
-            - Location: $profile
+        - Add ./starship/Microsoft.PowerShell_profile.ps1 to the $profile location ($profile is meant to be run in powershell):
 27. Set your open API key
     - export OPENAI_API_KEY=<key here>
 28. Install simple-chat-gpt:
