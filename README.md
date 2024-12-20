@@ -96,6 +96,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - Turn off those slow animations
     - Opt in for large text
 39. Follow kmonad README.md at ./kmonad/README.md
+40. Install psql for dadbod plugin
 
     
 
