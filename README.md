@@ -100,6 +100,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - Windows:
         - `choco install psql`
         - `https://dev.mysql.com/downloads/installer/`
+            - Ensure you have the correct version of mysql client installed for the corresponding server, otherwise you will get a password auth error of all things
 
     
 
