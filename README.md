@@ -102,6 +102,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
         - `https://dev.mysql.com/downloads/installer/`
             - Ensure you have the correct version of mysql client installed for the corresponding server, otherwise you will get a password auth error of all things
 41. Install One Password TUI
+    - Install one password CLI: `https://developer.1password.com/docs/cli/get-started/#install`
     - `go install github.com/JeremiahVaughan/one-password-tui@latest`
 
     
