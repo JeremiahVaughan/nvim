@@ -13,7 +13,7 @@ local config = wezterm.config_builder()
 config.keys = {
     { key = "\r", mods = "SHIFT", action = wezterm.action.SendKey { key = '\r', mods = 'SHIFT' } }
 }
-config.font_size = 15
+config.font_size = 20
 config.hide_tab_bar_if_only_one_tab = true
 
 if wezterm.target_triple:find("windows") then
