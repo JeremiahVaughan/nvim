@@ -22,5 +22,11 @@ else
     config.default_prog = { "/usr/bin/zsh" }
 end
 
--- and finally, return the configuration to wezterm
+local mux = wezterm.mux
+
+wezterm.on("gui-startup", function()
+    local tab, pane, window = mux.spawn_window {}
+    window:gui_window():maximize()
+end)
+
 return config
