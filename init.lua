@@ -89,6 +89,17 @@ vim.api.nvim_set_hl(0, 'LineNrAbove', { fg = '#75aaff' })
 vim.api.nvim_set_hl(0, 'LineNrBelow', { fg = '#008518' })
 vim.opt.cursorline = true
 vim.opt.termguicolors = true -- without this option set to true, alacritty does not show color when nvim is ran over ssh
+local ccc = require("ccc")
+vim.api.nvim_set_keymap('i', '<C-c>', '<Plug>(ccc-insert)', { noremap = false, silent = true })
+vim.api.nvim_set_keymap('v', '<C-s>', '<Plug>(ccc-select-color)', { noremap = false, silent = true })
+ccc.setup({
+    -- Your preferred settings
+    -- Example: enable highlighter
+    highlighter = {
+        auto_enable = true,
+        lsp = true,
+    },
+})
 vim.cmd [[
     highlight link TermCursor Cursor
     highlight TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
