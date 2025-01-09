@@ -1,5 +1,5 @@
 var wg sync.WaitGroup
-errChan := make(chan error, 1)
+errChan := make(chan error)
 var results sync.Map
 
 //	loop example:
