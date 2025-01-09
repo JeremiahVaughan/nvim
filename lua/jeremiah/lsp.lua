@@ -78,7 +78,7 @@ local ensure_installed_lsp = {}
 local ensure_installed_treesitter = {}
 
 if project_type == "work" then
-    ensure_installed_lsp = { "gopls", "lua_ls", "pyright", "tsserver", "eslint" }
+    ensure_installed_lsp = { "gopls", "lua_ls", "pyright", "ts_ls", "eslint" }
     ensure_installed_treesitter = { "markdown", "markdown_inline", "go", "python", "lua", "typescript", "tsx",
         "javascript", "vim", "vimdoc",
         "query", "http" }
