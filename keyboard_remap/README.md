@@ -21,7 +21,7 @@ sudo systemctl status my_kmonad
 Install https://github.com/jtroo/kanata. I just grabbed the kanata.exe binary from releases.
 
 With Task Scheduler you going to want to provide something like this:
-     `C:\Users\jv1143\kanata.exe --cfg C:\Users\jv1143\AppData\Local\nvim\keyboard_remap\keyboard_windows.kbd`
+     `C:\Users\jv1143\AppData\Roaming\local\bin\kanata.exe --cfg C:\Users\jv1143\AppData\Local\nvim\keyboard_remap\keyboard_windows.kbd`
 Open Task Scheduler:
     Press Win + R, type taskschd.msc, and hit Enter.
 
@@ -45,9 +45,6 @@ Actions Tab:
     In the "Program/script" field, browse to the path of kmonad.exe.
     In the "Add arguments (optional)" field, enter the relative or full path to your config.kbd file, e.g., .\path\to\config.kbd.
     Click OK.
-
-Conditions Tab:
-    Uncheck "Start the task only if the computer is on AC power" if you're on a laptop and want it to run on battery.
 
 Settings Tab:
     Check Allow task to be run on demand.
