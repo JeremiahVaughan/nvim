@@ -1,0 +1,36 @@
+Use Task Scheduler
+
+Open Task Scheduler:
+    Press Win + R, type taskschd.msc, and hit Enter.
+
+Create a New Task:
+    Click on Create Task in the right-hand Actions pane.
+
+General Tab:
+    Give your task a name, e.g., Kmonad Startup.
+    Check Run with highest privileges.
+    Set the "Configure for" dropdown to your Windows version.
+
+Triggers Tab:
+    Click New.
+    Set the trigger to At log on.
+    Choose "Any user" or specify your user account.
+    Click OK.
+
+Actions Tab:
+    Click New.
+    For "Action", choose Start a program.
+    In the "Program/script" field, browse to the path of kmonad.exe.
+    In the "Add arguments (optional)" field, enter the relative or full path to your config.kbd file, e.g., .\path\to\config.kbd.
+    Click OK.
+
+Conditions Tab:
+    Uncheck "Start the task only if the computer is on AC power" if you're on a laptop and want it to run on battery.
+
+Settings Tab:
+    Check Allow task to be run on demand.
+    Optionally, enable "If the task fails, restart every..." to ensure the command runs reliably.
+
+Save and Test:
+    Click OK to save the task.
+    Right-click the task and select Run to test it.
