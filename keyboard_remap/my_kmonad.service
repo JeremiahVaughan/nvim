@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=kmonad /home/piegarden/.config/nvim/kmonad/keyboard.kbd
+ExecStart=kmonad /home/piegarden/.config/nvim/keyboard_remap/keyboard.kbd
 Restart=always
 User=root
 Group=root
