@@ -214,6 +214,8 @@ vim.api.nvim_set_keymap('n', '<leader>ss', ':Telescope grep_string<CR>', { norem
 vim.api.nvim_set_keymap('n', '<leader>sb', ':Telescope buffers<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sr', ':Telescope registers<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sc', ':Telescope command_history<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sqf', ':Telescope quickfix<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sqh', ':Telescope quickfixhistory<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sp', ':Telescope search_history<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>sk', ':Telescope keymaps<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>sd', ':Telescope diagnostics<CR>', { noremap = true, silent = true })
