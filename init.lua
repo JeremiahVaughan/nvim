@@ -693,5 +693,5 @@ vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 vim.keymap.set("n", "<space>-", require("oil").toggle_float)
 
 if vim.fn.has("win64") == 0 then
-    vim.o.shell = "/usr/bin/zsh"
+    vim.o.shell = "zsh"
 end

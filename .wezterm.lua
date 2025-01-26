@@ -19,7 +19,7 @@ config.hide_tab_bar_if_only_one_tab = true
 if wezterm.target_triple:find("windows") then
     config.default_prog = { "powershell", "-NoLogo" }
 else
-    config.default_prog = { "/usr/bin/zsh" }
+    config.default_prog = { "zsh" }
 end
 
 local mux = wezterm.mux
