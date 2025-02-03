@@ -318,6 +318,16 @@ Init code:
         log.Fatalf("error, when ui_util.NewTemplateLoader() for main(). Error: %v", err)
     }
     ```
+Set the tl as a global var for convient access:
+```
+var tl *ui_util.TemplateLoader
+```
+Ensure you are handeling /hotreload with the provided function: ui_util.HandleHotReload
+```
+endpoints := map[string]http.HandlerFunc{
+    "/hotreload":   tl.HandleHotReload,
+}
+```
 3. UI code:
 ```
     {{ if .LocalMode }}
