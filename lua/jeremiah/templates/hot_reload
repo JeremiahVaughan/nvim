@@ -63,7 +63,7 @@ func NewTemplateLoader(
 					log.Fatalf("error, when creating new watcher. Error: %v", err)
 				}
 				defer watcher.Close()
-				err = watcher.Add(templatesDir)
+				err = watcher.Add(td)
 				if err != nil {
 					log.Fatalf("error, when adding templates directory to be watched. Error: %v", err)
 				}
