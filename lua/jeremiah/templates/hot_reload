@@ -53,7 +53,7 @@ func NewTemplateLoader(
 	tl.templatesOverridesDir = fmt.Sprintf("%s/%s", executableDir, tl.templatesOverridesDirName)
 	err = tl.parseTemplates()
 	if err != nil {
-		log.Fatalf("error, when parseTemplates() for main(). Error: %v", err)
+		return nil, fmt.Errorf("error, when parseTemplates() for main(). Error: %v", err)
 	}
 	if localMode {
 		for _, templatesDir := range []string{tl.templatesBaseDir, tl.templatesOverridesDir} {
@@ -174,7 +174,8 @@ func (tl *TemplateLoader) HandleHotReload(w http.ResponseWriter, r *http.Request
 					err2 = fmt.Errorf("error, when parseDevTemplates() for handleHotreload(). Error: %v", err2)
 					// http.Error(w, err2.Error(), http.StatusInternalServerError) // not returning the error because in golang you can't set the status code more than once in a single call.
 					// And this is a long running call so it is likely to happen more than once
-					log.Fatal(err2.Error())
+					log.Printf(err2.Error()) // do not crash the program, as errors are expected during development
+                    return
 				}
 				evt := fmt.Sprintf(
 					"id:%X\nretry:%d\ndata:%s\n\n",
