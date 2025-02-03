@@ -57,7 +57,7 @@ func NewTemplateLoader(
 	}
 	if localMode {
 		for _, templatesDir := range []string{tl.templatesBaseDir, tl.templatesOverridesDir} {
-			go func() {
+			go func(td string) {
 				watcher, err := fsnotify.NewWatcher()
 				if err != nil {
 					log.Fatalf("error, when creating new watcher. Error: %v", err)
@@ -71,7 +71,7 @@ func NewTemplateLoader(
 				if err2 != nil {
 					log.Fatalf("error, when watchFiles() for main(). Error: %v", err2)
 				}
-			}()
+			}(templatesDir)
 		}
 	}
 	return &tl, nil
