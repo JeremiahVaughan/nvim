@@ -150,7 +150,7 @@ func (tl *TemplateLoader) HandleHotReload(w http.ResponseWriter, r *http.Request
 		}
 	}()
 
-	SendHeaders(w)
+	SendSseHeaders(w)
 	i := 0
 	retrySleep := 250 * time.Millisecond
 	// wait till all file operations have settled, this ensures the
@@ -280,7 +280,7 @@ func (tl *TemplateLoader) parseBaseTemplates() (*template.Template, error) {
 	return baseTemplate, nil
 }
 
-func SendHeaders(w http.ResponseWriter) {
+func SendSseHeaders(w http.ResponseWriter) {
 	w.Header().Set("Cache-Control", "no-cache")
 	w.Header().Set("Content-Type", "text/event-stream")
 	w.Header().Set("Connection", "Keep-Alive")
