@@ -3,11 +3,11 @@ func RequestWithRetry(client *http.Client, request *http.Request, retryLimit int
     retryBackoff := time.Duration(retryBackoffInSeconds) * time.Second
 	var err error
 	for i := 0; i < retryLimit; i++ {
-		response, err = func(client *http.Client, request *http.Request) (*http.Response, error) {
-			response, err = client.Do(request)
+		response, err = func(client *http.Client, r *http.Request) (*http.Response, error) {
+			response, err = client.Do(r)
 			if response != nil && (response.StatusCode < 200 || response.StatusCode > 299) {
 				if response.StatusCode == http.StatusNotFound {
-					log.Printf("recieved a 404 when attempting url: %s", request.URL)
+					log.Printf("recieved a 404 when attempting url: %s", r.URL)
 				}
 				var rb []byte
 				rb, err = io.ReadAll(response.Body)
