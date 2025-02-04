@@ -1,0 +1,130 @@
+func StartDailyBackup(ctx context.Context, dbFileLocation string) error {
+	location, err := time.LoadLocation("America/Chicago") // familiar timezone for an easier schedule
+	if err != nil {
+		return fmt.Errorf("error, invalid location provided. Error: %v", err)
+	}
+	ticker := time.NewTicker(time.Hour)
+
+	defer ticker.Stop()
+	for {
+		select {
+		case <-ctx.Done():
+			return nil
+		case <-ticker.C:
+			currentTime := time.Now()
+			localTime := currentTime.In(location)
+			h, _, _ := localTime.Clock()
+			if h == 20 { // 8 pm 
+				err := backupDatabase(ctx, dbFileLocation)
+				if err != nil {
+					return fmt.Errorf("error, when backupDatabase() for StartDailyBackup(). Error: %v", err)
+				}
+			}
+		}
+	}
+}
+
+func backupDatabase(ctx context.Context, dbFileLocation string) error {
+	log.Printf("starting database backup")
+	err := databaseManager.Backup("main", dbFileLocation)
+	if err != nil {
+		return fmt.Errorf("error, when backing up the database. Error", err)
+	}
+	fileBytes, err := os.ReadFile(dbFileLocation)
+	if err != nil {
+		return fmt.Errorf("error, when reading database backup file. Error: %v", err)
+	}
+	uReq := UploadToBucketRequest{
+		bucketName: EnvironmentStateBucketName,
+		fileName:   "database_backup",
+		data:       fileBytes,
+	}
+	err = uploadToBucket(
+		ctx,
+		uReq,
+	)
+	if err != nil {
+		return fmt.Errorf("error, when uploadToBucket() for backupDatabase(). Error: %v", err)
+	}
+	log.Printf("database backup complete")
+	return nil
+}
+
+type UploadToBucketRequest struct {
+	bucketName string
+	fileName   string
+	data       []byte
+}
+
+// uploadToBucket assuming GCP for example
+func uploadToBucket(
+	ctx context.Context,
+	req UploadToBucketRequest,
+) error {
+	client, err := storage.NewClient(ctx)
+	if err != nil {
+		return fmt.Errorf("error, failed to create GCP storage client. Error: %v", err)
+	}
+	bucket := client.Bucket(req.bucketName)
+	object := bucket.Object(req.fileName)
+	customTime := time.Now()
+	writer := object.NewWriter(ctx)
+	writer.CustomTime = customTime
+	reader := bytes.NewReader(req.data)
+	if _, err = io.Copy(writer, reader); err != nil {
+		return fmt.Errorf("error, failed to upload %s to GCP bucket: %s. Error: %v", req.fileName, req.bucketName, err)
+	}
+	if err = writer.Close(); err != nil {
+		return fmt.Errorf("error, failed to close file writer. Error: %v", err)
+	}
+	return nil
+}
+
+// downloadFromBucket assuming GCP for example
+func downloadFromBucket(
+	ctx context.Context,
+	bucketName,
+	objectName string,
+	generation int64,
+) (bucketStuff []byte, err error) {
+	var closeErr error
+	// todo look into reusing the storage client
+	client, err := storage.NewClient(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("error, when attempting to create new GCP storage client. Error: %v", err)
+	}
+	defer func(client *storage.Client) {
+		closeErr = client.Close()
+		if closeErr != nil {
+			err = fmt.Errorf("error, when attempting to close the GCP storage client. Error: %w", closeErr)
+			return
+		}
+	}(client)
+
+	bucket := client.Bucket(bucketName)
+	var object *storage.ObjectHandle
+	if generation == 0 {
+		object = bucket.Object(objectName)
+	} else {
+		object = bucket.Object(objectName).Generation(generation)
+	}
+
+	rc, err := object.NewReader(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("error, when attempting to create new reader from gcp bucket object. Error: %w", err)
+	}
+
+	defer func(rc *storage.Reader) {
+		closeErr = rc.Close()
+		if closeErr != nil {
+			err = fmt.Errorf("error, when attempting to close object reader. Error: %w", closeErr)
+			return
+		}
+	}(rc)
+
+	data, err := io.ReadAll(rc)
+	if err != nil {
+		return nil, fmt.Errorf("error, when attempting to read from object reader. Error: %v", err)
+	}
+	return data, nil
+}
