@@ -350,7 +350,8 @@ require('telescope').setup {
             '--column',
             '--smart-case',
             '--hidden',         -- Add this line to include hidden files
-            '--glob', '!.git/*' -- Optionally exclude .git directory
+            '--glob',
+            '!.git/*' -- Optionally exclude .git directory
         },
         file_ignore_patterns = {
             "node_modules",

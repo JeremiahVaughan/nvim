@@ -21,7 +21,7 @@ sudo systemctl status my_kmonad
 Install https://github.com/jtroo/kanata. I just grabbed the kanata.exe binary from releases.
 
 With Task Scheduler you going to want to provide something like this:
-     `C:\Users\jv1143\AppData\Roaming\local\bin\kanata.exe --cfg C:\Users\jv1143\AppData\Local\nvim\keyboard_remap\keyboard_windows.kbd`
+     `C:\Users\piega\AppData\Roaming\local\bin\kanata.exe --cfg C:\Users\piega\AppData\Local\nvim\keyboard_remap\keyboard_windows.kbd`
 Open Task Scheduler:
     Press Win + R, type taskschd.msc, and hit Enter.
 
