@@ -24,13 +24,16 @@ func StartDailyBackup(ctx context.Context, dbFileLocation string) error {
 	}
 }
 
-func backupDatabase(ctx context.Context, dbFileLocation string) error {
+
+func backupDatabase(ctx context.Context) error {
 	log.Printf("starting database backup")
-	err := databaseManager.Backup("main", dbFileLocation)
+	backupFile := "/data/database_backup"
+    statement := fmt.Sprintf("VACUUM main INTO '%s'", backupFile)
+	_, err := database.Exec(statement)
 	if err != nil {
-		return fmt.Errorf("error, when backing up the database. Error", err)
+        return fmt.Errorf("error, when backing up the database. Error: %v", err)
 	}
-	fileBytes, err := os.ReadFile(dbFileLocation)
+	fileBytes, err := os.ReadFile(backupFile)
 	if err != nil {
 		return fmt.Errorf("error, when reading database backup file. Error: %v", err)
 	}
@@ -49,6 +52,7 @@ func backupDatabase(ctx context.Context, dbFileLocation string) error {
 	log.Printf("database backup complete")
 	return nil
 }
+
 
 type UploadToBucketRequest struct {
 	bucketName string
