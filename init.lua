@@ -349,9 +349,9 @@ require('telescope').setup {
             '--line-number',
             '--column',
             '--smart-case',
-            '--hidden',         -- Add this line to include hidden files
+            '--hidden', -- Add this line to include hidden files
             '--glob',
-            '!.git/*' -- Optionally exclude .git directory
+            '!.git/*'   -- Optionally exclude .git directory
         },
         file_ignore_patterns = {
             "node_modules",
@@ -696,3 +696,18 @@ vim.keymap.set("n", "<space>-", require("oil").toggle_float)
 if vim.fn.has("win64") == 0 then
     vim.o.shell = "zsh"
 end
+
+vim.api.nvim_create_user_command("CopyAbsolutePath", function()
+    local absolutePath = vim.fn.expand("%:p") -- Get absolute path of the current buffer
+    if absolutePath == "" then
+        print("No file name")
+        return
+    end
+
+
+    -- Copy to the system clipboard (works on most systems)
+    vim.fn.setreg("+", absolutePath) -- Uses `+` register (system clipboard)
+    vim.fn.setreg("*", absolutePath) -- Also supports primary clipboard (Linux/X11)
+
+    print("Copied path: " .. absolutePath)
+end, {})
