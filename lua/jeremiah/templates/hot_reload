@@ -23,24 +23,22 @@ type HtmlTemplate struct {
 }
 
 type TemplateLoader struct {
-	templatesBaseDirName      string // included in every template
-	templatesBaseDir          string
-	templatesOverridesDirName string // only added if each file listed individually in the HtmlTemplate struct
-	templatesOverridesDir     string
+	templatesBaseDir          string // included in every template
+	templatesOverridesDir     string // only added if each file listed individually in the HtmlTemplate struct
 	htmlTemplates             []HtmlTemplate
 	// templateMap a map is required as I want to be able to override specific templates (e.g., swap out a table body)
 	templateMap map[string]*template.Template
 }
 
 func NewTemplateLoader(
-	templatesBaseDirName string,
-	templatesOverridesDirName string,
+	templatesBaseDir string,
+	templatesOverridesDir string,
 	htmlTemplates []HtmlTemplate,
 	localMode bool,
 ) (*TemplateLoader, error) {
 	tl := TemplateLoader{
-		templatesBaseDirName:      templatesBaseDirName,
-		templatesOverridesDirName: templatesOverridesDirName,
+		templatesBaseDir:      templatesBaseDir,
+		templatesOverridesDir: templatesOverridesDir,
 		htmlTemplates:             htmlTemplates,
 		templateMap:               make(map[string]*template.Template),
 	}
@@ -48,10 +46,7 @@ func NewTemplateLoader(
 	if err != nil {
 		return nil, fmt.Errorf("error, when retrieving executable path. Error: %v", err)
 	}
-	executableDir := filepath.Dir(execPath)
-	tl.templatesBaseDir = fmt.Sprintf("%s/%s", executableDir, tl.templatesBaseDirName)
-	tl.templatesOverridesDir = fmt.Sprintf("%s/%s", executableDir, tl.templatesOverridesDirName)
-	err = tl.parseTemplates()
+	err := tl.parseTemplates()
 	if err != nil {
 		return nil, fmt.Errorf("error, when parseTemplates() for main(). Error: %v", err)
 	}
