@@ -208,6 +208,18 @@ vim.cmd('syntax enable') -- Enables syntax highlighting
 -- Use system clipboard by default todo trying this out disabled to see if I like it better
 -- vim.opt.clipboard = "unnamedplus"
 
+
+-- Function to search for the current visually selected text
+local function search_visual_selection()
+    local previous_selection = vim.fn.getreg('"')
+    vim.cmd('normal! "vy')
+    local selected_text = vim.fn.getreg('"')
+    vim.fn.setreg('"', previous_selection)
+    require('telescope.builtin').live_grep({
+        default_text = selected_text,
+    })
+end
+
 vim.api.nvim_set_keymap('n', '<leader>sf', ':Telescope find_files<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sg', ':Telescope live_grep<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>ss', ':Telescope grep_string<CR>', { noremap = true, silent = true })
@@ -219,6 +231,7 @@ vim.api.nvim_set_keymap('n', '<leader>sqh', ':Telescope quickfixhistory<CR>', { 
 vim.api.nvim_set_keymap('n', '<leader>sp', ':Telescope search_history<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>sk', ':Telescope keymaps<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>sd', ':Telescope diagnostics<CR>', { noremap = true, silent = true })
+vim.keymap.set("v", "<leader>s", search_visual_selection)
 vim.api.nvim_set_keymap('n', '<C-w>r', ':copen<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-w>q', ':cclose<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<F8>', ':cnext<CR>', { noremap = true, silent = true })
