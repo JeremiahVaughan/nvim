@@ -8,6 +8,7 @@ Add the ./my_kmonad.service file to:
 ## Reload systemd
 sudo systemctl daemon-reload
 
+
 ## Start the my_kmonad service
 sudo systemctl start my_kmonad
 
