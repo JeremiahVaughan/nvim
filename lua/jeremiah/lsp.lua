@@ -72,7 +72,6 @@
 -- -- 1. personal
 -- -- 2. work
 -- -- 3. server
--- -- 4. leetcode
 
 -- local ensure_installed_lsp = {}
 -- local ensure_installed_treesitter = {}
@@ -85,9 +84,6 @@
 -- elseif project_type == "server" then
 --     -- no lsps
 --     -- no parsers
--- elseif project_type == "leetcode" then
---     -- no lsps
---     ensure_installed_treesitter = { "go" }
 -- else
 --     -- personal and default
 --     ensure_installed_lsp = { "gopls", "lua_ls" }
