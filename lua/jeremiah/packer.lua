@@ -69,46 +69,46 @@ require("lazy").setup({
         lazy = false,
         priority = 1001,
     },
-    { -- Autoformat that is smarter and more effecient than the lsp formatters
-        'stevearc/conform.nvim',
-        lazy = false,
-        keys = {
-            {
-                '<leader>f',
-                function()
-                    require('conform').format { async = true, lsp_fallback = true }
-                end,
-                mode = '',
-                desc = '[F]ormat buffer',
-            },
-        },
-        opts = {
-            notify_on_error = false,
-            format_on_save = function(bufnr)
-                -- Disable "format_on_save lsp_fallback" for languages that don't
-                -- have a well standardized coding style. You can add additional
-                -- languages here or re-enable it for the disabled ones.
-                local disable_filetypes = { c = true, cpp = true }
-                return {
-                    timeout_ms = 500,
-                    lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-                }
-            end,
-            formatters_by_ft = {
-                lua = { 'stylua' },
-                -- Conform can also run multiple formatters sequentially
-                python = { "isort", "black" },
-                --
-                -- You can use a sub-list to tell conform to run *until* a formatter
-                -- is found.
-                javascript = { { "prettierd", "prettier" } },
-            },
-        },
-    },
-    { 'williamboman/mason.nvim' },
-    { 'williamboman/mason-lspconfig.nvim' },
+    --{ -- Autoformat that is smarter and more effecient than the lsp formatters
+    --    'stevearc/conform.nvim',
+    --    lazy = false,
+    --    keys = {
+    --        {
+    --            '<leader>f',
+    --            function()
+    --                require('conform').format { async = true, lsp_fallback = true }
+    --            end,
+    --            mode = '',
+    --            desc = '[F]ormat buffer',
+    --        },
+    --    },
+    --    opts = {
+    --        notify_on_error = false,
+    --        format_on_save = function(bufnr)
+    --            -- Disable "format_on_save lsp_fallback" for languages that don't
+    --            -- have a well standardized coding style. You can add additional
+    --            -- languages here or re-enable it for the disabled ones.
+    --            local disable_filetypes = { c = true, cpp = true }
+    --            return {
+    --                timeout_ms = 500,
+    --                lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+    --            }
+    --        end,
+    --        formatters_by_ft = {
+    --            lua = { 'stylua' },
+    --            -- Conform can also run multiple formatters sequentially
+    --            python = { "isort", "black" },
+    --            --
+    --            -- You can use a sub-list to tell conform to run *until* a formatter
+    --            -- is found.
+    --            javascript = { { "prettierd", "prettier" } },
+    --        },
+    --    },
+    --},
+    -- { 'williamboman/mason.nvim' },
+    -- { 'williamboman/mason-lspconfig.nvim' },
 
-    { 'neovim/nvim-lspconfig' },
+    -- { 'neovim/nvim-lspconfig' },
     'tpope/vim-commentary',
     {
         'nvim-telescope/telescope.nvim',
@@ -143,32 +143,30 @@ require("lazy").setup({
     },
     'nvim-treesitter/playground',
     'mbbill/undotree',
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
-    {
-        'neovim/nvim-lspconfig',
-        dependencies = {
-            {
-                -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-                -- used for completion, annotations and signatures of Neovim apis
-                "folke/lazydev.nvim",
-                ft = "lua",
-                opts = {
-                    library = {
-                        -- Load luvit types when the `vim.uv` word is found
-                        { path = "luvit-meta/library", words = { "vim%.uv" } },
-                    },
-                },
-            },
-            { "Bilal2453/luvit-meta", lazy = true },
-        }
-    },
+    -- {
+    --     'neovim/nvim-lspconfig',
+    --     dependencies = {
+    --         {
+    --             -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
+    --             -- used for completion, annotations and signatures of Neovim apis
+    --             "folke/lazydev.nvim",
+    --             ft = "lua",
+    --             opts = {
+    --                 library = {
+    --                     -- Load luvit types when the `vim.uv` word is found
+    --                     { path = "luvit-meta/library", words = { "vim%.uv" } },
+    --                 },
+    --             },
+    --         },
+    --         { "Bilal2453/luvit-meta", lazy = true },
+    --     }
+    -- },
     -- auto-completion stuff
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'saadparwaiz1/cmp_luasnip',
-    'hrsh7th/cmp-nvim-lsp',
+    -- 'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lua',
     'L3MON4D3/LuaSnip',
     {
