@@ -42,10 +42,6 @@ func NewTemplateLoader(
 		htmlTemplates:             htmlTemplates,
 		templateMap:               make(map[string]*template.Template),
 	}
-	execPath, err := os.Executable()
-	if err != nil {
-		return nil, fmt.Errorf("error, when retrieving executable path. Error: %v", err)
-	}
 	err := tl.parseTemplates()
 	if err != nil {
 		return nil, fmt.Errorf("error, when parseTemplates() for main(). Error: %v", err)
