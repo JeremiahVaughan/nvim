@@ -68,6 +68,20 @@ func NewTemplateLoader(
 	return &tl, nil
 }
 
+func InitStaticFiles(mux http.ServeMux, staticFilesPath string) {
+    mux.Handle(
+        "/static/*",
+        http.StripPrefix(
+            "/static/",
+            http.FileServer(
+                http.Dir(
+                    staticFilesPath,
+                ),
+            ),
+        ),
+    )
+}
+
 func (tl *TemplateLoader) GetTemplateGroup(name string) *template.Template {
 	return tl.templateMap[name]
 }
