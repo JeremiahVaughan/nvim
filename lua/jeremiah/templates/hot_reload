@@ -70,9 +70,9 @@ func NewTemplateLoader(
 
 func InitStaticFiles(mux http.ServeMux, staticFilesPath string) {
     mux.Handle(
-        "/static/*",
+        "/static/",
         http.StripPrefix(
-            "/static/",
+            "/static",
             http.FileServer(
                 http.Dir(
                     staticFilesPath,
