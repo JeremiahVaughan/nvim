@@ -101,6 +101,9 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 41. Install One Password TUI
     - Install one password CLI: `https://developer.1password.com/docs/cli/get-started/#install`
     - `go install github.com/JeremiahVaughan/one-password-tui@latest`
+42. If setting up on Ubuntu:
+    - Enabled "Night Light" -> Settings -> Displays -> Night Light
+    - Setup up finger print reader
 
     
 
