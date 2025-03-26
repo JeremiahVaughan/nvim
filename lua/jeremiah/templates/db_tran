@@ -5,7 +5,7 @@ if err != nil {
 }
 
 err = func() error {
-    _, err2 = tx.Exec(ctx, `_QUERY_HERE_`)
+    _, err2 := tx.Exec(ctx, `_QUERY_HERE_`)
     if err2 != nil {
         return fmt.Errorf("error, when executing query to _do_something_. Error: %v", err2)
     }
