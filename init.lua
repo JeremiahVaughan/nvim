@@ -199,9 +199,9 @@ vim.opt.scrolloff = 10
 vim.opt.inccommand = 'split'
 
 vim.opt.timeoutlen = 500
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.infercase = true
+vim.opt.ignorecase = false
+vim.opt.smartcase = false
+-- vim.opt.infercase = true
 vim.opt.wrap = false
 vim.cmd('syntax enable') -- Enables syntax highlighting
 
