@@ -372,6 +372,7 @@ require('telescope').setup {
             "%.png",
             "%.git\\", -- Windows
             "%.git/",  -- other
+            'grpc',
             "debug",   -- debug bin
         },
         layout_strategy = 'flex',

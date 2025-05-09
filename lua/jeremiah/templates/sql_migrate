@@ -18,7 +18,7 @@ func migrateSchemaChanges(databaseFiles embed.FS) error {
     databaseMigrationDirectory := "schema"
 	err := createInitTable()
 	if err != nil {
-		return fmt.Errorf("error occurred when attempting to create init table: %v", err)
+		return fmt.Errorf("error occurred when attempting to create init table. Error: %v", err)
 	}
 
 	dirEntries, err := fs.ReadDir(databaseFiles, databaseMigrationDirectory)
@@ -39,7 +39,7 @@ func migrateSchemaChanges(databaseFiles embed.FS) error {
 	} else {
 		migrationsCompleted, err = checkForCompletedMigrations()
 		if err != nil {
-			return fmt.Errorf("error has occurred when checking for completed migrations: %v", err)
+			return fmt.Errorf("error has occurred when checking for completed migrations. Error: %v", err)
 		}
 	}
 
@@ -53,13 +53,17 @@ func migrateSchemaChanges(databaseFiles embed.FS) error {
 		}
 		err = recordSuccessfulMigration(fileName)
 		if err != nil {
-			return fmt.Errorf("error has occurred when attempting to record a successful migration: %v", err)
+			return fmt.Errorf("error has occurred when attempting to record a successful migration. Error: %v", err)
 		}
 	}
 	return nil
 }
 
 func createInitTable() error {
+    _, err := database.Exec("PRAGMA journal_mode = WAL")
+	if err != nil {
+		return fmt.Errorf("error, when executing query to turn on WAL mode. Error: %v", err)
+	}
 	_, err := database.Exec(`CREATE TABLE IF NOT EXISTS init
 		(
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -68,7 +72,7 @@ func createInitTable() error {
 		);
 	`)
 	if err != nil {
-		return fmt.Errorf("error, when executing query to create init table: %v", err)
+		return fmt.Errorf("error, when executing query to create init table. Error: %v", err)
 	}
 	return nil
 }
@@ -115,7 +119,7 @@ func recordSuccessfulMigration(fileName string) error {
 		fileName,
 	)
 	if err != nil {
-		return fmt.Errorf("error occurred when attempting to run sql command: %v", err)
+		return fmt.Errorf("error occurred when attempting to run sql command. Error: %v", err)
 	}
 	return nil
 }
@@ -133,7 +137,7 @@ func checkForCompletedMigrations() (results []string, err error) {
 	}()
 
 	if err != nil {
-		return nil, fmt.Errorf("error has occurred when attempting to retrieve pending migrations: %v", err)
+		return nil, fmt.Errorf("error has occurred when attempting to retrieve pending migrations. Error: %v", err)
 	}
 
 	for rows.Next() {
@@ -142,7 +146,7 @@ func checkForCompletedMigrations() (results []string, err error) {
 			&result,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("error has occurred when scanning for pending migrations: %v", err)
+			return nil, fmt.Errorf("error has occurred when scanning for pending migrations. Error: %v", err)
 		}
 		results = append(results, result)
 	}
@@ -153,7 +157,7 @@ func checkForCompletedMigrations() (results []string, err error) {
 func executeSQLFile(filePath string, databaseFiles embed.FS) error {
 	content, err := databaseFiles.ReadFile(filePath)
 	if err != nil {
-		return fmt.Errorf("failed to read SQL file: %w", err)
+		return fmt.Errorf("failed to read SQL file. Error: %w", err)
 	}
 
 	sql := string(content)
