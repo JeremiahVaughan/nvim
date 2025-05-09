@@ -64,7 +64,11 @@ func createInitTable() error {
 	if err != nil {
 		return fmt.Errorf("error, when executing query to turn on WAL mode. Error: %v", err)
 	}
-	_, err := database.Exec(`CREATE TABLE IF NOT EXISTS init
+    _, err = database.Exec("PRAGMA busy_timeout = 5000")
+	if err != nil {
+		return fmt.Errorf("error, setting a busy_timeout to help with write conflicts. Error: %v", err)
+	}
+	_, err = database.Exec(`CREATE TABLE IF NOT EXISTS init
 		(
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			migration_file_name TEXT NOT NULL
