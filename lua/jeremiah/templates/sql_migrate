@@ -1,29 +1,35 @@
-package main
+package database
 
 import (
-	"embed"
-	"fmt"
-	"io/fs"
-	"regexp"
-	"sort"
-	"strconv"
-	"strings"
-
-	_ "github.com/ncruces/go-sqlite3/driver"
-	_ "github.com/ncruces/go-sqlite3/embed"
+    "strconv"
+    "strings"
+    "sort"
+    "fmt"
+    "log"
+    "os"
+    "regexp"
+    "database/sql"
 )
 
-
-func migrateSchemaChanges(databaseFiles embed.FS) error {
-    databaseMigrationDirectory := "schema"
-	err := createInitTable()
+func (c *Client) migrate() error {
+	initExists, err := c.doesInitTableExist()
 	if err != nil {
-		return fmt.Errorf("error occurred when attempting to create init table. Error: %v", err)
+		return fmt.Errorf("error, when checking if database initialization is needed. Error: %v", err)
 	}
 
-	dirEntries, err := fs.ReadDir(databaseFiles, databaseMigrationDirectory)
+	if !initExists {
+		log.Println("database is not initialized, creating init table")
+		err = c.createInitTable()
+		if err != nil {
+			return fmt.Errorf("error, when attempting to create init table. Error: %v", err)
+		}
+		log.Println("database initialization complete")
+	}
+
+	log.Println("checking for migrations")
+	dirEntries, err := os.ReadDir(c.migrationDir)
 	if err != nil {
-		return fmt.Errorf("an error has occurred when attempting to read database directory. Error: %v", err)
+        return fmt.Errorf("error, when attempting to read database directory. Directory: %s. Error: %v", c.migrationDir, err)
 	}
 	var migrationFileCandidateFileNames []string
 	for _, entry := range dirEntries {
@@ -32,58 +38,52 @@ func migrateSchemaChanges(databaseFiles embed.FS) error {
 		}
 	}
 
-	migrationFiles := filterForMigrationFiles(migrationFileCandidateFileNames)
+	migrationFiles := c.filterForMigrationFiles(migrationFileCandidateFileNames)
 	var migrationsCompleted []string
+	noMigrationsToProcessMessage := "no database migration files to process, skipping migrations"
 	if len(migrationFiles) == 0 {
+		log.Println(noMigrationsToProcessMessage)
 		return nil
 	} else {
-		migrationsCompleted, err = checkForCompletedMigrations()
+		migrationsCompleted, err = c.checkForCompletedMigrations()
 		if err != nil {
-			return fmt.Errorf("error has occurred when checking for completed migrations. Error: %v", err)
+			return fmt.Errorf("error, when checking for completed migrations: %v", err)
 		}
 	}
 
-	migrationsNeeded := determineMigrationsNeeded(migrationFiles, migrationsCompleted)
-	migrationsNeededSorted := sortMigrationsNeededFiles(migrationsNeeded)
+	migrationsNeeded := c.determineMigrationsNeeded(migrationFiles, migrationsCompleted)
+	migrationsNeededSorted := c.sortMigrationsNeededFiles(migrationsNeeded)
 	for _, fileName := range migrationsNeededSorted {
-		filePath := fmt.Sprintf("%s/%s", databaseMigrationDirectory, fileName)
-		err = executeSQLFile(filePath, databaseFiles)
+		log.Printf("attempting to perform database migration with %s", fileName)
+
+		filePath := fmt.Sprintf("%s/%s", c.migrationDir, fileName)
+		err = c.executeSQLFile(filePath)
 		if err != nil {
-			return fmt.Errorf("error occurred when executing sql script: Filename: %s. Error: %v", fileName, err)
+			return fmt.Errorf("error, when executing sql script: Filename: %s. Error: %v", fileName, err)
 		}
-		err = recordSuccessfulMigration(fileName)
+		err = c.recordSuccessfulMigration(fileName)
 		if err != nil {
-			return fmt.Errorf("error has occurred when attempting to record a successful migration. Error: %v", err)
+			return fmt.Errorf("error, when attempting to record a successful migration. Error: %v", err)
 		}
 	}
+	log.Println("finished database schema changes")
 	return nil
 }
 
-func createInitTable() error {
-    _, err := database.Exec("PRAGMA journal_mode = WAL")
-	if err != nil {
-		return fmt.Errorf("error, when executing query to turn on WAL mode. Error: %v", err)
-	}
-    _, err = database.Exec("PRAGMA busy_timeout = 5000")
-	if err != nil {
-		return fmt.Errorf("error, setting a busy_timeout to help with write conflicts. Error: %v", err)
-	}
-	_, err = database.Exec(`CREATE TABLE IF NOT EXISTS init
-		(
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			migration_file_name TEXT NOT NULL
-				CONSTRAINT init_migration_file_name_uindex UNIQUE
-		);
-	`)
-	if err != nil {
-		return fmt.Errorf("error, when executing query to create init table. Error: %v", err)
-	}
+func (c *Client) createInitTable() error {
+    _, err := c.conn.Exec(
+        `CREATE TABLE init (                                                   
+           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,                    
+           migration_file_name TEXT NOT NULL UNIQUE                          
+        )`)
+    if err != nil {
+        return fmt.Errorf("error, when executing query to create init table. Error: %v", err)
+    }
 	return nil
 }
 
-func sortMigrationsNeededFiles(needed []string) []string {
+func (c *Client) sortMigrationsNeededFiles(needed []string) []string {
 	re := regexp.MustCompile(`^(\d+)`)
-
 	sort.Slice(needed, func(i, j int) bool {
 		num1, _ := strconv.Atoi(re.FindStringSubmatch(needed[i])[1])
 		num2, _ := strconv.Atoi(re.FindStringSubmatch(needed[j])[1])
@@ -92,7 +92,7 @@ func sortMigrationsNeededFiles(needed []string) []string {
 	return needed
 }
 
-func determineMigrationsNeeded(migrationFiles []string, migrationsCompleted []string) []string {
+func (c *Client) determineMigrationsNeeded(migrationFiles []string, migrationsCompleted []string) []string {
 	var migrationsNeeded []string
 	migrationsCompletedMap := make(map[string]bool)
 	for _, value := range migrationsCompleted {
@@ -106,7 +106,7 @@ func determineMigrationsNeeded(migrationFiles []string, migrationsCompleted []st
 	return migrationsNeeded
 }
 
-func filterForMigrationFiles(candidates []string) []string {
+func (c *Client) filterForMigrationFiles(candidates []string) []string {
 	var migrationFiles []string
 	re := regexp.MustCompile(`^\d+`)
 	for _, fileName := range candidates {
@@ -117,31 +117,34 @@ func filterForMigrationFiles(candidates []string) []string {
 	return migrationFiles
 }
 
-func recordSuccessfulMigration(fileName string) error {
-	_, err := database.Exec(
-		"INSERT INTO init (migration_file_name)\nVALUES (?)",
+func (c *Client) recordSuccessfulMigration(fileName string) error {
+	_, err := c.conn.Exec(
+		`INSERT INTO init (migration_file_name)
+        VALUES (?)`,
 		fileName,
 	)
 	if err != nil {
-		return fmt.Errorf("error occurred when attempting to run sql command. Error: %v", err)
+		return fmt.Errorf("error, when attempting to run sql command. Error: %v", err)
 	}
 	return nil
 }
 
-func checkForCompletedMigrations() (results []string, err error) {
-	rows, err := database.Query(
-		"SELECT migration_file_name\nFROM init",
+func (c *Client) checkForCompletedMigrations() (results []string, err error) {
+	var rows *sql.Rows
+	rows, err = c.conn.Query(
+		`SELECT migration_file_name
+        FROM init`,
 	)
 	defer func() {
 		err = rows.Err()
 		if err != nil {
-			err = fmt.Errorf("error, occurred when reading rows. Error: %v", err)
+			err = fmt.Errorf("error, when reading rows. Error: %v", err)
 		}
 		rows.Close()
 	}()
 
 	if err != nil {
-		return nil, fmt.Errorf("error has occurred when attempting to retrieve pending migrations. Error: %v", err)
+		return nil, fmt.Errorf("error, when attempting to retrieve pending migrations. Error: %v", err)
 	}
 
 	for rows.Next() {
@@ -150,7 +153,7 @@ func checkForCompletedMigrations() (results []string, err error) {
 			&result,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("error has occurred when scanning for pending migrations. Error: %v", err)
+			return nil, fmt.Errorf("error, when scanning for pending migrations. Error: %v", err)
 		}
 		results = append(results, result)
 	}
@@ -158,10 +161,27 @@ func checkForCompletedMigrations() (results []string, err error) {
 	return results, nil
 }
 
-func executeSQLFile(filePath string, databaseFiles embed.FS) error {
-	content, err := databaseFiles.ReadFile(filePath)
+func (c *Client) doesInitTableExist() (bool, error) {
+	var result bool
+	row := c.conn.QueryRow(
+        `SELECT count(*)
+        FROM sqlite_master
+        WHERE type='table' 
+            AND name='init'`,
+	)
+	err := row.Scan(
+		&result,
+	)
 	if err != nil {
-		return fmt.Errorf("failed to read SQL file. Error: %w", err)
+		return false, fmt.Errorf("error, when checking to see if database had been initialized. Error: %v", err)
+	}
+	return result, nil
+}
+
+func (c *Client) executeSQLFile(filePath string) error {
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		return fmt.Errorf("error, failed to read SQL file. Error: %w", err)
 	}
 
 	sql := string(content)
@@ -173,9 +193,9 @@ func executeSQLFile(filePath string, databaseFiles embed.FS) error {
 			continue
 		}
 
-		_, err = database.Exec(query)
+		_, err = c.conn.Exec(query)
 		if err != nil {
-			return fmt.Errorf("error, failed to execute QUERY: %s. ERROR: %v", query, err)
+			return fmt.Errorf("error, failed to execute. Query: %s. Error: %v", query, err)
 		}
 	}
 
