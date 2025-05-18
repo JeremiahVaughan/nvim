@@ -19,6 +19,10 @@ require("lazy").setup({
         enabled = false,
         hererocks = false,
     },
+    {
+        "trixnz/sops.nvim",
+        lazy = false
+    },
     { 'kmonad/kmonad-vim' },
     -- Color Picker
     { 'uga-rosa/ccc.nvim' },
