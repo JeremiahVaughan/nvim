@@ -296,8 +296,7 @@ require('lualine').setup {
 }
 
 -- In case grep is used in the command line, ensuring it is set to ripgrep
-vim.opt.grepprg = 'rg -n $*'
-vim.opt.grepformat = '%f:%l:%m,%f:%l%m,%f %l%m'
+vim.opt.grepprg = 'rg --vimgrep --case-sensitive'
 
 local harpoon = require("harpoon")
 
