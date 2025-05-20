@@ -1,4 +1,5 @@
 require("jeremiah.util")
+require("jeremiah.ripgrep")
 require("jeremiah.globals")
 require("jeremiah.packer")
 require("jeremiah.lsp")
