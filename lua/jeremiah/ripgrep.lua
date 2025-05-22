@@ -19,6 +19,7 @@ vim.api.nvim_create_user_command(
       pat = pat:sub(3)
       table.insert(rg_opts, "-F")
     end
+    pat = pat:gsub("\\/", "/")
     local cmd = ("grep %s %s"):format(
       table.concat(rg_opts, " "),
       vim.fn.shellescape(pat)
