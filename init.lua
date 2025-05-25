@@ -19,12 +19,12 @@ require("jeremiah")
 -- Disable <Esc> in Replace mode
 -- vim.api.nvim_set_keymap('!', '<Esc>', '<Nop>', { noremap = true, silent = true })
 -- Insert mode
-vim.api.nvim_set_keymap('i', '<CR>', '<Esc>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<S-CR>', '<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('i', '<CR>', '<Esc>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('i', '<S-CR>', '<CR>', { noremap = true, silent = true })
 -- Visual Mode
-vim.api.nvim_set_keymap('v', '<CR>', '<Esc>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('v', '<CR>', '<Esc>', { noremap = true, silent = true })
 -- Replace mode
-vim.api.nvim_set_keymap('!', '<CR>', '<Esc>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('!', '<CR>', '<Esc>', { noremap = true, silent = true })
 
 -- Remap <Enter> in terminal mode to exit to normal mode
 -- vim.api.nvim_set_keymap('t', '<Enter>', [[<C-\><C-n>]], { noremap = true, silent = true })
@@ -73,9 +73,10 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 
 vim.api.nvim_set_keymap('n', "<leader>et", ':TroubleToggle<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<Backspace>', '<C-w>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('c', '<Backspace>', '<C-w>', { noremap = true, silent = true })
-
+vim.api.nvim_set_keymap('i', '<BS>', '<C-w>', { noremap = true, silent = true })
+-- vim.keymap.set('c', '<BS>', '<C-w>', { noremap = true, silent = true })
+-- the lua version above is not working for some strange reason, but this vim version does
+vim.cmd('cnoremap <bs> <C-w>')
 
 
 
