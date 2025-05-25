@@ -11,13 +11,13 @@ require("jeremiah")
 
 -- Remap esc to enter
 -- Disable <Esc> in Insert mode
-vim.api.nvim_set_keymap('i', '<Esc>', '<Nop>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('i', '<Esc>', '<Nop>', { noremap = true, silent = true })
 -- Disable <Esc> in Normal mode
-vim.api.nvim_set_keymap('n', '<Esc>', '<Nop>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Esc>', '<Nop>', { noremap = true, silent = true })
 -- Disable <Esc> in Visual mode
-vim.api.nvim_set_keymap('v', '<Esc>', '<Nop>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('v', '<Esc>', '<Nop>', { noremap = true, silent = true })
 -- Disable <Esc> in Replace mode
-vim.api.nvim_set_keymap('!', '<Esc>', '<Nop>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('!', '<Esc>', '<Nop>', { noremap = true, silent = true })
 -- Insert mode
 vim.api.nvim_set_keymap('i', '<CR>', '<Esc>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<S-CR>', '<CR>', { noremap = true, silent = true })
@@ -72,11 +72,8 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 
 vim.api.nvim_set_keymap('n', "<leader>et", ':TroubleToggle<CR>', { noremap = true, silent = true })
--- Disabling backspace so I use control + h instead since its closer
--- Disable <Backspace> in Normal mode
-vim.api.nvim_set_keymap('i', '<Backspace>', '<Nop>', { noremap = true, silent = true })
--- Disable <Backspace> in Command-Line mode
-vim.api.nvim_set_keymap('c', '<Backspace>', '<Nop>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<Backspace>', '<C-w>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('c', '<Backspace>', '<C-w>', { noremap = true, silent = true })
 
 
 
