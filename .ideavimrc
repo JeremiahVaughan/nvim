@@ -3,36 +3,6 @@
 " You can find a list of commands here: https://jb.gg/h38q75
 " Find more examples here: https://jb.gg/share-ideavimrc
 
-" Remap the Enter key to act as the Escape key in different modes:
-" Disable the functionality of the original Escape key:
-" Insert mode
-" imap <Esc> <Nop>
-" Normal mode
-" nmap <Esc> <Nop>
-" Visual mode
-" vmap <Esc> <Nop>
-" Insert mode
-" imap <CR> <Esc>
-" Visual mode
-" vmap <CR> <Esc>
-
-" Insert mode
-inoremap <Esc> <Nop>
-inoremap <CR> <Esc>
-inoremap <S-Enter> <Enter>
-" Normal mode
-nnoremap <Esc> <Nop>
-" Visual mode
-vnoremap <Esc> <Nop>
-vnoremap <CR> <Esc>
-" Replace mode
-rnoremap <Esc> <Nop>
-rnoremap <CR> <Esc>
-
-
-
-
-
 let mapleader = "\\"
 nnoremap <Leader>rn :action RenameElement<CR>
 
