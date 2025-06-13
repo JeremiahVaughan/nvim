@@ -1,0 +1,13 @@
+<script defer>
+    document.addEventListener('htmx:sendError', function(event) {
+        alert("request failed to send, please try again");
+    });
+    document.addEventListener('htmx:responseError', function(event) {
+        let msg = event.detail.xhr.responseText;
+        if (msg === "") {
+            msg = "unexpected error from server, please try again"
+        }
+        alert(msg);
+    });
+</script>
+
