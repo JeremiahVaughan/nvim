@@ -2,9 +2,9 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 
 1. Clone this repo:
     - Windows:
-        `git clone https://github.com/JeremiahVaughan/nvim-struggle ~/AppData/Local/nvim`
+        `git clone https://github.com/JeremiahVaughan/nvim ~/AppData/Local/nvim`
     - Linux:
-        `git clone https://github.com/JeremiahVaughan/nvim-struggle ~/.config/nvim`
+        `git clone https://github.com/JeremiahVaughan/nvim ~/.config/nvim`
     - Mac:
         `~/.config/nvim`
 2. Install nvim
