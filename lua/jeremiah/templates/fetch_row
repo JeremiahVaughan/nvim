@@ -14,6 +14,6 @@ if err != nil {
     if errors.Is(err, sql.ErrNoRows) {
         // todo implement
     } else {
-        return nil, fmt.Errorf("error, when attempting to execute sql statement. Error: %v", err)
+        return nil, fmt.Errorf("error, when attempting to execute sql statement. Error: %w", err)
     }
 }
