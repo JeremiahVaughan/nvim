@@ -1,0 +1,8 @@
+# example of how to query data and place in a file
+sqlite3 data.db <<EOF
+.headers on
+.mode csv
+.output output.csv
+SELECT profile_picture FROM users where profile_picture is not null;
+.output stdout
+EOF
