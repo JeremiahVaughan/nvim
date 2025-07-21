@@ -179,7 +179,7 @@ func (tl *TemplateLoader) HandleHotReload(w http.ResponseWriter, r *http.Request
 					err2 = fmt.Errorf("error, when parseDevTemplates() for handleHotreload(). Error: %v", err2)
 					// http.Error(w, err2.Error(), http.StatusInternalServerError) // not returning the error because in golang you can't set the status code more than once in a single call.
 					// And this is a long running call so it is likely to happen more than once
-					log.Printf(err2.Error()) // do not crash the program, as errors are expected during development
+					log.Println(err2.Error()) // do not crash the program, as errors are expected during development
                     return
 				}
 				evt := fmt.Sprintf(
