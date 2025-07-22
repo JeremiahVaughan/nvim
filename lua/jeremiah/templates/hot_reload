@@ -337,7 +337,7 @@ endpoints := map[string]http.HandlerFunc{
 3. UI code:
 ```
     {{ if .LocalMode }}
-    <script defer>
+    <script>
         const hotReloadPath = `/hotreload`
         console.log(`Hot reload initializing @ ${hotReloadPath}`)
         if (typeof(EventSource) !== "undefined") {
