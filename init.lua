@@ -737,3 +737,31 @@ end
 
 -- Map it to <leader>t
 vim.keymap.set('n', '<leader>i', insert_todo_log, { noremap = true, silent = true })
+
+local function transform_visual_selection(cmd)
+    local previous_selection = vim.fn.getreg('"')
+
+    -- Yank visual selection into "v register
+    vim.cmd('normal! "vy')
+
+    local selected_text = vim.fn.getreg('v')
+
+    -- Run the provided command
+    local decoded = vim.fn.system(cmd, selected_text)
+
+    -- Trim trailing newline if present
+    decoded = decoded:gsub("\n$", "")
+
+    -- Replace the visual selection with the result
+    vim.cmd('normal! gv')
+    vim.cmd("normal! c" .. decoded)
+
+    -- Restore previous unnamed register
+    vim.fn.setreg('"', previous_selection)
+end
+vim.keymap.set('v', '<leader>dtodo', function()
+    transform_visual_selection("base64 --decode")
+end, { noremap = true, silent = true })
+vim.keymap.set('v', '<leader>etodo', function()
+    transform_visual_selection("base64")
+end, { noremap = true, silent = true })
