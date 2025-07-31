@@ -735,8 +735,21 @@ local function insert_todo_log()
   vim.api.nvim_put({line}, 'c', true, true)
 end
 
+local function insert_random_string()
+  local chars = {}
+  for _ = 1, 5 do
+    local n = math.random(1, 52)
+    local c = string.char(n <= 26 and (n + 64) or (n + 70)) -- A-Z (65–90), a-z (97–122)
+    table.insert(chars, c)
+  end
+  local random_str = table.concat(chars)
+  vim.api.nvim_put({random_str}, 'c', true, true)
+end
+
+
 -- Map it to <leader>t
 vim.keymap.set('n', '<leader>i', insert_todo_log, { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>r', insert_random_string, { noremap = true, silent = true })
 
 local function transform_visual_selection(cmd)
     local previous_selection = vim.fn.getreg('"')

@@ -1,5 +1,5 @@
 -- Adding shortcut to save current file and open resource_monitor
-vim.api.nvim_set_keymap('n', '<leader>r', ':lua ToggleResourceMonitorTerminal()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>m', ':lua ToggleResourceMonitorTerminal()<CR>', { noremap = true, silent = true })
 
 -- Function to find the terminal buffer labeled as "resource_monitor"
 function FindResourceMonitorTerminalBuffer()
