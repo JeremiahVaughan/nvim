@@ -42,26 +42,6 @@ require("lazy").setup({
         dependencies = { { "echasnovski/mini.icons", opts = {} } },
         -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
     },
-    {
-        "leoluz/nvim-dap-go",
-        dependencies = {
-            -- delv must be installed (see README.md)
-            "mfussenegger/nvim-dap",
-        },
-    },
-    {
-        "rcarriga/nvim-dap-ui",
-        dependencies = {
-            "mfussenegger/nvim-dap",
-            "nvim-neotest/nvim-nio"
-        },
-    },
-    {
-        "theHamsta/nvim-dap-virtual-text",
-        dependencies = {
-            "mfussenegger/nvim-dap",
-        },
-    },
     { -- Used for keeping only one instance of Nvim, noticable when opening a file within lazygit with 'e'
         "willothy/flatten.nvim",
         config = true,
