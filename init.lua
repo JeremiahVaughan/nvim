@@ -675,13 +675,6 @@ vim.api.nvim_set_keymap('n', '<leader>dq', ':DapTerminate<CR>', { noremap = true
 
 -- vim.api.nvim_set_keymap('n', '<Leader>rt', ':lua require("dap").run_last()<CR>', { noremap = true, silent = true })
 
--- local kulala = require('kulala')
-vim.api.nvim_set_keymap('n', '<Leader>hg', "<CMD>lua require('kulala').run()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>hr', "<CMD>lua require('kulala').replay()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>hc', "<CMD>lua require('kulala').copy()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>hs', "<CMD>lua require('kulala').scratchpad()<CR>",
-    { noremap = true, silent = true })
-
 -- Clear current pattern
 vim.api.nvim_set_keymap('n', '<leader>/', ':nohlsearch<CR>', { noremap = true, silent = true })
 
@@ -778,3 +771,21 @@ end, { noremap = true, silent = true })
 vim.keymap.set('v', '<leader>etodo', function()
     transform_visual_selection("base64")
 end, { noremap = true, silent = true })
+
+local function toggle_diff_mode()
+  local win1 = vim.fn.win_getid(1)
+  local win2 = vim.fn.win_getid(2)
+
+  -- Check if both windows are in diff mode
+  local is_diff = vim.api.nvim_win_get_option(win1, 'diff') and vim.api.nvim_win_get_option(win2, 'diff')
+
+  if is_diff then
+    vim.api.nvim_win_call(win1, function() vim.cmd('diffoff') end)
+    vim.api.nvim_win_call(win2, function() vim.cmd('diffoff') end)
+  else
+    vim.api.nvim_win_call(win1, function() vim.cmd('diffthis') end)
+    vim.api.nvim_win_call(win2, function() vim.cmd('diffthis') end)
+  end
+end
+
+vim.keymap.set('n', '<leader>d', toggle_diff_mode, { desc = 'Toggle diff mode for 2 vertical splits' })

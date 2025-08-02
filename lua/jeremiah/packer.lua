@@ -26,8 +26,6 @@ require("lazy").setup({
     { 'kmonad/kmonad-vim' },
     -- Color Picker
     { 'uga-rosa/ccc.nvim' },
-    -- https://kulala.mwco.app/docs/getting-started
-    { 'mistweaverco/kulala.nvim', opts = {} },
     {
         'tpope/vim-dadbod',
         dependencies = {
