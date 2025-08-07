@@ -83,7 +83,7 @@ vim.cmd('cnoremap <bs> <C-w>')
 vim.g.have_nerd_font = true
 vim.opt.showmode = false -- mode is already in the status line
 
--- Color Scheme --
+-- -- Color Scheme --
 vim.api.nvim_set_hl(0, 'LineNrAbove', { fg = '#75aaff' })
 vim.api.nvim_set_hl(0, 'LineNrBelow', { fg = '#008518' })
 vim.opt.cursorline = true
@@ -99,66 +99,90 @@ ccc.setup({
         lsp = true,
     },
 })
-vim.cmd [[
-    highlight link TermCursor Cursor
-    highlight TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
-    highlight @boolean guifg=#ff00ff gui=bold
-    highlight @comment guifg=#808080
-    highlight @constant.builtin guifg=#ff00ff gui=bold
-    highlight @function guifg=#a7e22e
-    highlight @function.builtin guifg=#a7e22e
-    highlight @function.call guifg=#a7e22e
-    highlight @keyword guifg=#ff00ff gui=bold
-    highlight @keyword.conditional.ternary guifg=#a9b7c5
-    highlight @number guifg=#ae81ff
-    highlight @operator guifg=#a9b7c5
-    highlight @property guifg=#cf8823
-    highlight @punctuation.bracket guifg=#a9b7c5
-    highlight @punctuation.delimiter guifg=#a9b7c5
-    highlight @punctuation.special guifg=#a9b7c5
-    highlight @string guifg=#e6db74
-    highlight @tag gui=bold guifg=#28bda4
-    highlight @tag.attribute guifg=#cecece
-    highlight @tag.builtin gui=bold guifg=#e8be69
-    highlight @tag.delimiter guifg=#a9b7c5
-    highlight @type guifg=#66d9ef
-    highlight @type.builtin guifg=#20999d
-    highlight @type.definition guifg=#66d9ef
-    highlight @variable guifg=#cbad96
-    highlight @variable.member guifg=#cf8823
-    highlight cssBackgroundProp guifg=#a9b7c5
-    highlight cssBorderProp guifg=#a9b7c5
-    highlight cssBoxProp guifg=#a9b7c5
-    highlight cssColor guifg=#FD971F
-    highlight cssColorProp guifg=#a9b7c5
-    highlight cssFlexibleBoxAttr guifg=#679342
-    highlight cssFlexibleBoxProp guifg=#a9b7c5
-    highlight cssFontAttr guifg=#679342
-    highlight cssFontProp guifg=#a9b7c5
-    highlight cssMediaProp guifg=#a9b7c5
-    highlight cssMultiColumnAttr guifg=#679342
-    highlight cssPositioningAttr guifg=#679342
-    highlight cssPositioningProp guifg=#a9b7c5
-    highlight cssPseudoClass guifg=#C5BE69 gui=bold
-    highlight cssPseudoClassId guifg=#C5BE69 gui=bold
-    highlight cssTextAttr guifg=#679342
-    highlight cssTextProp guifg=#a9b7c5
-    highlight cssUIAttr guifg=#679342
-    highlight cssUIProp guifg=#a9b7c5
-    highlight cssUnitDecorators guifg=#679342
-    highlight cssValueLength guifg=#ae81ff
-    highlight cssValueNumber guifg=#ae81ff
-    highlight CursorLine cterm=NONE ctermbg=236 ctermfg=NONE guibg=#2a3359
-    highlight Normal guibg=#1d233d
-    highlight Pmenu guifg=#FFFFFF guibg=#707070
-    highlight PmenuSel guifg=#000000 guibg=#909090
-    highlight sassAmpersand guifg=#C5BE69 gui=bold
-    highlight sassClass guifg=#C5BE69 gui=bold
-    highlight sassDefinition guifg=#a9b7c5
-    highlight sassProperty guifg=#a9b7c5
-    highlight TelescopeSelection gui=bold guibg=White guifg=Black
-    highlight TelescopeSelectionCaret guifg=Re
-]]
+-- vim.cmd [[
+--     highlight link TermCursor Cursor
+--     highlight TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
+--     highlight @boolean guifg=#ff00ff gui=bold
+--     highlight @constant.builtin guifg=#ff00ff gui=bold
+--     highlight @function guifg=#a7e22e
+--     highlight @function.builtin guifg=#a7e22e
+--     highlight @function.call guifg=#a7e22e
+--     highlight @keyword guifg=#ff00ff gui=bold
+--     highlight @keyword.conditional.ternary guifg=#a9b7c5
+--     highlight @number guifg=#ae81ff
+--     highlight @operator guifg=#a9b7c5
+--     highlight @property guifg=#cf8823
+--     highlight @punctuation.bracket guifg=#a9b7c5
+--     highlight @punctuation.delimiter guifg=#a9b7c5
+--     highlight @punctuation.special guifg=#a9b7c5
+--     highlight @string guifg=#e6db74
+--     highlight @tag gui=bold guifg=#28bda4
+--     highlight @tag.attribute guifg=#cecece
+--     highlight @tag.builtin gui=bold guifg=#e8be69
+--     highlight @tag.delimiter guifg=#a9b7c5
+--     highlight @type guifg=#66d9ef
+--     highlight @type.builtin guifg=#20999d
+--     highlight @type.definition guifg=#66d9ef
+--     highlight @variable guifg=#cbad96
+--     highlight @variable.member guifg=#cf8823
+--     highlight cssBackgroundProp guifg=#a9b7c5
+--     highlight cssBorderProp guifg=#a9b7c5
+--     highlight cssBoxProp guifg=#a9b7c5
+--     highlight cssColor guifg=#FD971F
+--     highlight cssColorProp guifg=#a9b7c5
+--     highlight cssFlexibleBoxAttr guifg=#679342
+--     highlight cssFlexibleBoxProp guifg=#a9b7c5
+--     highlight cssFontAttr guifg=#679342
+--     highlight cssFontProp guifg=#a9b7c5
+--     highlight cssMediaProp guifg=#a9b7c5
+--     highlight cssMultiColumnAttr guifg=#679342
+--     highlight cssPositioningAttr guifg=#679342
+--     highlight cssPositioningProp guifg=#a9b7c5
+--     highlight cssPseudoClass guifg=#C5BE69 gui=bold
+--     highlight cssPseudoClassId guifg=#C5BE69 gui=bold
+--     highlight cssTextAttr guifg=#679342
+--     highlight cssTextProp guifg=#a9b7c5
+--     highlight cssUIAttr guifg=#679342
+--     highlight cssUIProp guifg=#a9b7c5
+--     highlight cssUnitDecorators guifg=#679342
+--     highlight cssValueLength guifg=#ae81ff
+--     highlight cssValueNumber guifg=#ae81ff
+--     highlight Pmenu guifg=#FFFFFF guibg=#707070
+--     highlight PmenuSel guifg=#000000 guibg=#909090
+--     highlight sassAmpersand guifg=#C5BE69 gui=bold
+--     highlight sassClass guifg=#C5BE69 gui=bold
+--     highlight sassDefinition guifg=#a9b7c5
+--     highlight sassProperty guifg=#a9b7c5
+--     highlight TelescopeSelection gui=bold guibg=White guifg=Black
+--     highlight TelescopeSelectionCaret guifg=Re
+-- ]]
+
+-- Color Scheme 2 -- 
+-- Set base background
+vim.api.nvim_set_hl(0, 'Normal', { bg = '#002b36', fg = '#839496' })
+vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#073642' })
+vim.api.nvim_set_hl(0, 'Comment', { fg = '#586e75', italic = true })
+
+-- -- Syntax groups
+vim.api.nvim_set_hl(0, '@keyword', { fg = '#d33682', bold = true })
+vim.api.nvim_set_hl(0, '@type', { fg = '#2aa198' })
+vim.api.nvim_set_hl(0, '@function', { fg = '#268bd2' })
+vim.api.nvim_set_hl(0, '@variable', { fg = '#839496' })
+vim.api.nvim_set_hl(0, '@string', { fg = '#859900' })
+vim.api.nvim_set_hl(0, '@number', { fg = '#b58900' })
+vim.api.nvim_set_hl(0, '@constant', { fg = '#cb4b16' })
+vim.api.nvim_set_hl(0, '@boolean', { fg = '#b58900', bold = true })
+vim.api.nvim_set_hl(0, '@operator', { fg = '#93a1a1' })
+
+-- -- UI elements
+vim.api.nvim_set_hl(0, 'Pmenu', { bg = '#073642', fg = '#93a1a1' })
+vim.api.nvim_set_hl(0, 'PmenuSel', { bg = '#586e75', fg = '#fdf6e3' })
+vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#073642', fg = '#93a1a1' })
+vim.api.nvim_set_hl(0, 'Visual', { bg = '#586e75' })
+
+-- -- Telescope (if you use it)
+vim.api.nvim_set_hl(0, 'TelescopeSelection', { bg = '#073642', fg = '#93a1a1', bold = true })
+vim.api.nvim_set_hl(0, 'TelescopeSelectionCaret', { fg = '#d33682' })
 
 -- white space visuals
 vim.opt.list = true
