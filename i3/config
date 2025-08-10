@@ -7,10 +7,10 @@ exec_always --no-startup-id setxkbmap us
 # this file and re-run i3-config-wizard(1).
 #
 
-#Disable auto screen turnoff
-    # exec xset dpms 0 0 0
-    # exec xset -dpms
-    # exec xset s 0
+# Disable auto screen turnoff
+     exec xset dpms 0 0 0
+     exec xset -dpms
+     exec xset s 0
 # i3 config file (v4)
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
@@ -195,8 +195,10 @@ bindsym $mod+p mode "resize"
 assign [class="Alacritty"] 1
 assign [class="firefox_firefox"] 2
 assign [class="1Password"] 3
+assign [class="jetbrains-datagrip"] 4
 for_window [class=".*"] border none
 
 exec --no-startup-id alacritty
 exec --no-startup-id firefox
 exec --no-startup-id 1password
+exec --no-startup-id datagrip
