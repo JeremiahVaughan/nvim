@@ -82,8 +82,6 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - Shortcut value: /home/piegarden/.config/nvim/screenshot.sh
     - Shortcut key map: ctrl+x
 34. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
-35. Install http lsp:
-    - `go install github.com/JeremiahVaughan/http-lsp@latest`
 36. Emplace hot-key remaps files
     - Windows create short cut: 
         - Shortcut location: `C:\Users\jv1143\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
@@ -104,6 +102,8 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 42. If setting up on Ubuntu:
     - Enabled "Night Light" -> Settings -> Displays -> Night Light
     - Setup up finger print reader
+43. Install fd
+   `webi fd` 
 
     
 
