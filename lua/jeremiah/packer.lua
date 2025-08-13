@@ -17,7 +17,6 @@ require("lazy").setup({
         "trixnz/sops.nvim",
         lazy = false
     },
-    { 'kmonad/kmonad-vim' },
     -- Color Picker
     { 'uga-rosa/ccc.nvim' },
     {
@@ -78,7 +77,6 @@ require("lazy").setup({
         build = ":TSUpdate",
     },
     'nvim-treesitter/playground',
-    'mbbill/undotree',
     -- auto-completion stuff
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
@@ -93,11 +91,6 @@ require("lazy").setup({
             'nvim-tree/nvim-web-devicons',
             opt = true,
         },
-    },
-    {
-        "folke/trouble.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = {}, -- for default options, refer to the configuration section for custom setup.
     },
     {
         "ThePrimeagen/harpoon",
