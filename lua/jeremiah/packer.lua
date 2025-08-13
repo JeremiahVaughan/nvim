@@ -13,12 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
-    rocks = {
-        -- Disable Lua dependency stuff since external dependencies are not needed right now and hopefully won't be
-        -- Installing these was a HUGE pain in past experience and I'm not looking to become a Lua ecosystem expert
-        enabled = false,
-        hererocks = false,
-    },
     {
         "trixnz/sops.nvim",
         lazy = false
@@ -110,4 +104,13 @@ require("lazy").setup({
         branch = "harpoon2",
         dependencies = { "nvim-lua/plenary.nvim" }
     }
-})
+},
+{
+    rocks = {
+        -- Disable Lua dependency stuff since external dependencies are not needed right now and hopefully won't be
+        -- Installing these was a HUGE pain in past experience and I'm not looking to become a Lua ecosystem expert
+        enabled = false,
+        hererocks = false,
+    },
+}
+)
