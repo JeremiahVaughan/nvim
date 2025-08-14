@@ -63,8 +63,10 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - Ref: `https://terragrunt.gruntwork.io/docs/features/provider-cache/`
 26. Install starship:
     - From: https://starship.rs
+        - put ./starship/starship.toml at ~/.config/starship.toml
     - Windows:
         - Add ./starship/Microsoft.PowerShell_profile.ps1 to the $profile location ($profile is meant to be run in powershell):
+        - put ./starship/starship.toml at ~/.config/starship.toml
 27. Set your open API key
     - export OPENAI_API_KEY=<key here>
 28. Install simple-chat-gpt:
