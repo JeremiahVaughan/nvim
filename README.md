@@ -106,6 +106,8 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - Setup up finger print reader
 43. Install fd
    `webi fd` 
+44. On windows install du (it is already installed on linux)
+    `choco install du`
 
     
 
