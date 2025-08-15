@@ -108,6 +108,8 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
    `webi fd` 
 44. On windows install du (it is already installed on linux)
     `choco install du`
+45. Install shellcheck for working with sh scripts:
+    `https://github.com/koalaman/shellcheck`
 
     
 
