@@ -26,9 +26,10 @@ require("jeremiah")
 -- Replace mode
 -- vim.api.nvim_set_keymap('!', '<CR>', '<Esc>', { noremap = true, silent = true })
 
--- Remap <Enter> in terminal mode to exit to normal mode
--- vim.api.nvim_set_keymap('t', '<Enter>', [[<C-\><C-n>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<S-Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+-- Windows is touchy here so going with c-q
+vim.api.nvim_set_keymap('t', '<C-q>', [[<C-\><C-n>]], { noremap = true, silent = true })
+
+
 
 -- Remap <S-Enter> in terminal mode to act as the default <Enter>
 -- vim.api.nvim_set_keymap('t', '<S-Enter>', '<Enter>', { noremap = true, silent = true })
