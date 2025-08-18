@@ -1,4 +1,5 @@
 os:
+  editPreset: 'nvim'
   editCommand: 'floaterm' # When editing files open up the file in the same instance of nvim
 
 gui:

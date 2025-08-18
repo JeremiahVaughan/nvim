@@ -30,6 +30,9 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - `:checkhealth`
 14. Install LazyGit
     - `https://github.com/jesseduffield/lazygit`
+    - emplace config file:  
+        - windows: `%APPDATA%\lazygit\config.yml`
+        - linux: `~/.config/lazygit/config.yml`
 15. Install LazyDocker
     - `https://github.com/jesseduffield/lazydocker`
 16. Install Delta-diff for better diff indicators for LazyGit
@@ -110,6 +113,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     `choco install du`
 45. Install shellcheck for working with sh scripts:
     `https://github.com/koalaman/shellcheck`
+
 
     
 
