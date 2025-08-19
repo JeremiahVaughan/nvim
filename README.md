@@ -117,6 +117,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - `https://github.com/wagoodman/dive`
     - Windows: add env var: DOCKER_HOST=npipe:////./pipe/docker_engine
     - Ensure you use `dive <image id>` with private repositories
+47. Set docker build kit as enabled: export DOCKER_BUILDKIT=1
 
     
 
