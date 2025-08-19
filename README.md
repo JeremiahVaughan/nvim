@@ -113,6 +113,8 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     `choco install du`
 45. Install shellcheck for working with sh scripts:
     `https://github.com/koalaman/shellcheck`
+46. Install dive for exploring docker images
+    `https://github.com/wagoodman/dive`
 
 
     
