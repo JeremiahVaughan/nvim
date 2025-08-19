@@ -116,6 +116,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 46. Install dive for exploring docker images
     - `https://github.com/wagoodman/dive`
     - Windows: add env var: DOCKER_HOST=npipe:////./pipe/docker_engine
+    - Ensure you use `dive <image id>` with private repositories
 
     
 
