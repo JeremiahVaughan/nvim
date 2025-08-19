@@ -114,8 +114,8 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 45. Install shellcheck for working with sh scripts:
     `https://github.com/koalaman/shellcheck`
 46. Install dive for exploring docker images
-    `https://github.com/wagoodman/dive`
-
+    - `https://github.com/wagoodman/dive`
+    - Windows: add env var: DOCKER_HOST=npipe:////./pipe/docker_engine
 
     
 
