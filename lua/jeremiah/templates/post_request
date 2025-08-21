@@ -10,8 +10,7 @@ if err != nil {
 
 request.Header.Set("Content-Type", "application/json")
 
-client := &http.Client{}
-response, err := client.Do(request)
+response, err := http.DefaultClient.Do(request)
 if response != nil {
     defer func(Body io.ReadCloser) {
         err = Body.Close()
