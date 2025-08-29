@@ -27,7 +27,12 @@ require("jeremiah")
 -- vim.api.nvim_set_keymap('!', '<CR>', '<Esc>', { noremap = true, silent = true })
 
 -- Windows is touchy here so going with c-q
-vim.api.nvim_set_keymap('t', '<C-q>', [[<C-\><C-n>]], { noremap = true, silent = true })
+-- Terminal mode: <C-q> escapes to normal
+vim.keymap.set('t', '<C-q>', [[<C-\><C-n>]], { noremap = true, silent = true })
+
+-- Normal mode: disable <C-q>
+vim.keymap.set('n', '<C-q>', '<Nop>', { noremap = true, silent = true })
+
 
 
 
