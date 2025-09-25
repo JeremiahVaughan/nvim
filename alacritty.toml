@@ -1,7 +1,5 @@
 [terminal]
 	osc52="CopyPaste"
-[font]
-	size=20
 [window]
     dimensions = { columns = 0, lines = 0 }
     startup_mode = "Maximized"
