@@ -1,6 +1,7 @@
 -- Reference: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 -- Book mark: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L701
 --
+
 -- if you don't specify the leader remaps first then any keybinds mapped before this remap will use the default leader key
 vim.g.mapleader = " "       -- Setting space as the leader key
 vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
@@ -584,6 +585,7 @@ vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 vim.keymap.set("n", "<space>-", require("oil").toggle_float)
 
 if vim.fn.has("win64") == 0 then
+    vim.g.clipboard = "osc52"                                             
     vim.o.shell = "bash"
 end
 
