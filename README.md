@@ -127,6 +127,9 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 50. install zsh
     `sudo apt install zsh -y`
     `chsh -s /bin/zsh`
+51. Add ssh key
+    `nvim id_ed25519`
+    `chmod 600 id_ed25519`
 
     
 
