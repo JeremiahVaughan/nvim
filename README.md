@@ -133,6 +133,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 52. Create deploy and service folder at home
     `mkdir -p ~/deploy`
     `mkdir -p ~/.local/share/systemd/user`
+53. Setup deploy.target in .ssh/config file
 
     
 
