@@ -130,8 +130,9 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 51. Add ssh key
     `nvim id_ed25519`
     `chmod 600 id_ed25519`
-52. Create deploy folder at home
+52. Create deploy and service folder at home
     `mkdir -p ~/deploy`
+    `mkdir -p ~/.local/share/systemd/user`
 
     
 
