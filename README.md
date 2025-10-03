@@ -72,69 +72,65 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
         - put ./starship/starship.toml at ~/.config/starship.toml
 27. Set your open API key
     - export OPENAI_API_KEY=<key here>
-28. Install simple-chat-gpt:
-    `go install github.com/JeremiahVaughan/simple-chat-gpt@latest`
-29. Install git-tool:
-    `go install github.com/JeremiahVaughan/git-tool@latest`
-30. Restore Vimium from backup
-31. Move karabiner or auto hotkey config into the correct directory
-32. Install htop for monitoring resources (its like top but much easier to read)
+28. Restore Vimium from backup
+29. Move karabiner or auto hotkey config into the correct directory
+30. Install htop for monitoring resources (its like top but much easier to read)
     - Unix: `brew install htop`
     - Windows: `choco install ntop.portable`
-33. Install Flameshot and bind screen shot and snip to control+x
+31. Install Flameshot and bind screen shot and snip to control+x
     - Screenshot setup reference: https://github.com/flameshot-org/flameshot/issues/3712#issuecomment-2380547929
     - Shortcut name: Screen Shot
     - Shortcut value: /home/piegarden/.config/nvim/screenshot.sh
     - Shortcut key map: ctrl+x
-34. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
-36. Emplace hot-key remaps files
+32. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
+34. Emplace hot-key remaps files
     - Windows create short cut: 
         - Shortcut location: `C:\Users\jv1143\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
         - Shortcut target: `C:\Users\jv1143\AppData\Local\nvim\ahk\key_remaps.ahk`
-37. Emplace .gitconfig file at ~/
-38. Ubuntu assessibility options:
+35. Emplace .gitconfig file at ~/
+36. Ubuntu assessibility options:
     - Turn off those slow animations
     - Opt in for large text
-39. Follow kmonad README.md at ./kmonad/README.md
-40. Install for dadbod plugin
+37. Follow kmonad README.md at ./kmonad/README.md
+38. Install for dadbod plugin
     - Windows:
         - `choco install psql`
         - `https://dev.mysql.com/downloads/installer/`
             - Ensure you have the correct version of mysql client installed for the corresponding server, otherwise you will get a password auth error of all things
-41. Install One Password TUI
+39. Install One Password TUI
     - Install one password CLI: `https://developer.1password.com/docs/cli/get-started/#install`
     - `go install github.com/JeremiahVaughan/one-password-tui@latest`
-42. If setting up on Ubuntu:
+40. If setting up on Ubuntu:
     - Enabled "Night Light" -> Settings -> Displays -> Night Light
     - Setup up finger print reader
-43. Install fd
+41. Install fd
    `webi fd` 
-44. On windows install du (it is already installed on linux)
+42. On windows install du (it is already installed on linux)
     `choco install du`
-45. Install shellcheck for working with sh scripts:
+43. Install shellcheck for working with sh scripts:
     `https://github.com/koalaman/shellcheck`
-46. Install dive for exploring docker images
+44. Install dive for exploring docker images
     - `https://github.com/wagoodman/dive`
     - Windows: add env var: DOCKER_HOST=npipe:////./pipe/docker_engine
     - Ensure you use `dive <image id>` with private repositories
-47. Set docker build kit as enabled: export DOCKER_BUILDKIT=1
-48. Install github cli:
+45. Set docker build kit as enabled: export DOCKER_BUILDKIT=1
+46. Install github cli:
     `webi gh`
-49. install i3
+47. install i3
     `sudo apt install i3 -y`
     `mkdir -p ~/.config/i3`
     `cp ./i3/config ~/.config/i3/config`
-50. install zsh
+48. install zsh
     `sudo apt install zsh -y`
     `chsh -s /bin/zsh`
-51. Add ssh key
+49. Add ssh key
     `nvim id_ed25519`
     `chmod 600 id_ed25519`
-52. Create deploy and service folder at home
+50. Create deploy and service folder at home
     `mkdir -p ~/deploy`
     `mkdir -p ~/.local/share/systemd/user`
-53. Setup deploy.target in .ssh/config file
-54. Install codex
+51. Setup deploy.target in .ssh/config file
+52. Install codex
     `brew install codex`
 
     
