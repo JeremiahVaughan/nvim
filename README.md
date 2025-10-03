@@ -134,6 +134,8 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     `mkdir -p ~/deploy`
     `mkdir -p ~/.local/share/systemd/user`
 53. Setup deploy.target in .ssh/config file
+54. Install codex
+    `brew install codex`
 
     
 
