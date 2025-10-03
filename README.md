@@ -7,8 +7,9 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
         `git clone https://github.com/JeremiahVaughan/nvim ~/.config/nvim`
     - Mac:
         `~/.config/nvim`
-2. Install nvim
-    - `brew install nvim`
+2. Install nvim 
+    - compile from source for latest version
+    - `https://github.com/neovim/neovim`
 3. Install ripgrep for fuzzy search
     - https://github.com/BurntSushi/ripgrep#installation
 4. Install make for :make command to work
@@ -19,33 +20,35 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     - https://github.com/dominikh/go-tools?tab=readme-ov-file 
 7. Install zig to avoid compilation issues
     - https://ziglang.org/learn/getting-started/#installing-zig
-8. Install nerd-fonts-hack for Hack Nerd Font Mono
+8. Install webi cli: 
+    - `https://webinstall.dev/webi/`
+9. Install nerd-fonts-hack for Hack Nerd Font Mono
     - `https://github.com/ryanoasis/nerd-fonts`
-9. Install wezterm
-10. Open nvim:
-    - `nvim`
-11. You will see an install error, its ok, it just means something needs to be installed before it can be used so just need to install
-12. Restart nvim
-13. Run this to ensure everything is working properly
-    - `:checkhealth`
-14. Install LazyGit
+    - use webi: `webi nerdfont`
+10. Install wezterm
+11. Install alacritty
+12. Open nvim:
+    - If You will see an install error, its ok, it just means something needs to be installed before it can be used so just need to install
+    - Restart nvim
+    - Run this to ensure everything is working properly
+        - `:checkhealth`
+13. Install LazyGit
     - `https://github.com/jesseduffield/lazygit`
     - emplace config file:  
         - windows: `%APPDATA%\lazygit\config.yml`
         - linux: `~/.config/lazygit/config.yml`
-15. Install LazyDocker
+14. Install LazyDocker
     - `https://github.com/jesseduffield/lazydocker`
-16. Install Delta-diff for better diff indicators for LazyGit
-17. Install jq
+15. Install jq
     - `https://jqlang.github.io/jq/download/`
-18. Install delta
+16. Install delta for better diff indicators for LazyGit
     - `https://github.com/dandavison/delta`
-19. Install k9s
+17. Install k9s
     - `https://k9scli.io/topics/install`
-20. Install bat (currently using this for my snippets generator)
+18. Install bat (currently using this for my snippets generator)
     - `https://github.com/sharkdp/bat?tab=readme-ov-file#installation`
 
-22. For copy paste to work on remote ssh sessions
+19. For copy paste to work on remote ssh sessions
     - Mac: `use Iterm2`
     - Mac other:
         - copy the file `.alacritty.toml` in the root of this project to `$HOME/.alacritty.toml`
@@ -55,91 +58,78 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
         - copy the file `.alacritty.toml` in the root of this project to `%APPDATA%\alacritty\alacritty.toml`
             or
         - copy the file `.wezterm.lua` in the root of this project to `$HOME/.wezterm.lua`
-23. Install delve for debugging
-    - `go install github.com/go-delve/delve/cmd/dlv@latest`
-24. The rest.nvim plugin requires these to be installed
+20. The rest.nvim plugin requires these to be installed
     - All of this:
         - Specific C compiler
             - `sudo apt update && sudo apt install gcc -y`
-25. If you plan on using terragrunt, enable provider cache so you disk doesn't bloat:
+21. If you plan on using terragrunt, enable provider cache so you disk doesn't bloat:
     - `export TERRAGRUNT_PROVIDER_CACHE=1`
     - Ref: `https://terragrunt.gruntwork.io/docs/features/provider-cache/`
-26. Install starship:
+22. Install starship:
     - From: https://starship.rs
         - put ./starship/starship.toml at ~/.config/starship.toml
     - Windows:
         - Add ./starship/Microsoft.PowerShell_profile.ps1 to the $profile location ($profile is meant to be run in powershell):
         - put ./starship/starship.toml at ~/.config/starship.toml
-27. Set your open API key
-    - export OPENAI_API_KEY=<key here>
-28. Restore Vimium from backup
-29. Move karabiner or auto hotkey config into the correct directory
-30. Install htop for monitoring resources (its like top but much easier to read)
+23. Restore Vimium from backup
+24. Install htop for monitoring resources (its like top but much easier to read)
     - Unix: `brew install htop`
     - Windows: `choco install ntop.portable`
-31. Install Flameshot and bind screen shot and snip to control+x
+25. Install Flameshot and bind screen shot and snip to control+x
     - Screenshot setup reference: https://github.com/flameshot-org/flameshot/issues/3712#issuecomment-2380547929
     - Shortcut name: Screen Shot
     - Shortcut value: /home/piegarden/.config/nvim/screenshot.sh
     - Shortcut key map: ctrl+x
-32. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
-34. Emplace hot-key remaps files
-    - Windows create short cut: 
-        - Shortcut location: `C:\Users\jv1143\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
-        - Shortcut target: `C:\Users\jv1143\AppData\Local\nvim\ahk\key_remaps.ahk`
-35. Emplace .gitconfig file at ~/
-36. Ubuntu assessibility options:
+26. Ensure the chrome web extension `Tab Limit` is installed and set to 4 tabs
+27. Emplace .gitconfig file at ~/
+28. Ubuntu assessibility options:
     - Turn off those slow animations
     - Opt in for large text
-37. Follow kmonad README.md at ./kmonad/README.md
-38. Install for dadbod plugin
+    - Enabled "Night Light" -> Settings -> Displays -> Night Light
+    - Setup up finger print reader
+29. Install for dadbod plugin
     - Windows:
         - `choco install psql`
         - `https://dev.mysql.com/downloads/installer/`
             - Ensure you have the correct version of mysql client installed for the corresponding server, otherwise you will get a password auth error of all things
-39. Install One Password TUI
+30. Install One Password TUI
     - Install one password CLI: `https://developer.1password.com/docs/cli/get-started/#install`
     - `go install github.com/JeremiahVaughan/one-password-tui@latest`
-40. If setting up on Ubuntu:
-    - Enabled "Night Light" -> Settings -> Displays -> Night Light
-    - Setup up finger print reader
-41. Install fd
+31. Install fd
    `webi fd` 
-42. On windows install du (it is already installed on linux)
+32. On windows install du (it is already installed on linux)
     `choco install du`
-43. Install shellcheck for working with sh scripts:
+33. Install shellcheck for working with sh scripts:
     `https://github.com/koalaman/shellcheck`
-44. Install dive for exploring docker images
+34. Install dive for exploring docker images
     - `https://github.com/wagoodman/dive`
     - Windows: add env var: DOCKER_HOST=npipe:////./pipe/docker_engine
     - Ensure you use `dive <image id>` with private repositories
-45. Set docker build kit as enabled: export DOCKER_BUILDKIT=1
-46. Install github cli:
+35. Set docker build kit as enabled: export DOCKER_BUILDKIT=1
+36. Install github cli:
     `webi gh`
-47. install i3
+37. install i3
     `sudo apt install i3 -y`
     `mkdir -p ~/.config/i3`
     `cp ./i3/config ~/.config/i3/config`
-48. install zsh
+38. install zsh (optional - bash is fine)
     `sudo apt install zsh -y`
     `chsh -s /bin/zsh`
-49. Add ssh key
+39. Add ssh key
     `nvim id_ed25519`
     `chmod 600 id_ed25519`
-50. Create deploy and service folder at home
+40. Create deploy and service folder at home
     `mkdir -p ~/deploy`
     `mkdir -p ~/.local/share/systemd/user`
-51. Setup deploy.target in .ssh/config file
-52. Install codex
+41. Setup deploy.target in .ssh/config file
+42. Install codex
     `brew install codex`
+43. Move .ideavimrc to the HOME directory and restart Jetbrains for it to take effect.
 
     
 
-
 Note:
-- nvim-qt is available on mac too: https://github.com/equalsraf/neovim-qt
-- .ideavimrc is also saved in this directory for convenience. Move this to the HOME directory and restart Jetbrains for it to take effect.
-- If you run into trouble you can read the init logs with:
+- If you run into trouble with nvim you can read the init logs with:
     - `:messages`
 
 Good References:
