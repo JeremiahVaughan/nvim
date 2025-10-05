@@ -1,6 +1,6 @@
 local M = {}
 
-function M.setup()
+local function define_command()
   vim.api.nvim_create_user_command("CopyAbsolutePath", function()
     local absolute_path = vim.fn.expand("%:p")
     if absolute_path == "" then
@@ -13,7 +13,13 @@ function M.setup()
     vim.fn.setreg("*", absolute_path)
 
     print("Copied path: " .. absolute_path)
-  end, {})
+  end, { force = true })
+end
+
+define_command()
+
+function M.setup()
+  define_command()
 end
 
 return M

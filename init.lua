@@ -198,5 +198,3 @@ if vim.fn.has("win64") == 0 then
     vim.g.clipboard = "osc52"                                             
     vim.o.shell = "bash"
 end
-
-require("jeremiah.copy_absolute_path").setup()
