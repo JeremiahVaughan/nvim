@@ -1,4 +1,6 @@
 require("jeremiah.util")
+require("jeremiah.colors")
+require("jeremiah.ccc")
 require("jeremiah.ripgrep")
 require("jeremiah.globals")
 require("jeremiah.packer")
