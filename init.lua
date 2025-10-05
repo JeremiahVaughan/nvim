@@ -170,55 +170,6 @@ vim.api.nvim_create_autocmd({ "FocusLost", "WinLeave" }, {
 })
 
 
--- Status bar setup
--- require('lualine').setup {
---     options = {
---         icons_enabled = true,
---         theme = 'wombat',
---         component_separators = { left = '', right = '' },
---         section_separators = { left = '', right = '' },
---         disabled_filetypes = {
---             statusline = {},
---             winbar = {},
---         },
---         ignore_focus = {},
---         always_divide_middle = true,
---         globalstatus = false,
---         refresh = {
---             statusline = 1000,
---             tabline = 1000,
---             winbar = 1000,
---         }
---     },
---     sections = {
---         lualine_a = { 'mode' },
---         lualine_b = { 'branch', 'diff', 'diagnostics' },
---         lualine_c = {
---             {
---                 'filename',
---                 path = 1,
---             },
---         },
---         lualine_x = {},
---         lualine_y = { 'progress' },
---         lualine_z = { 'location' }
---     },
---     inactive_sections = {
---         lualine_a = {},
---         lualine_b = {},
---         lualine_c = {},
---         lualine_x = { 'location', 'encoding', 'fileformat', 'filetype' },
---         lualine_y = {},
---         lualine_z = {}
---     },
---     tabline = {},
---     winbar = {},
---     inactive_winbar = {},
---     extensions = {}
--- }
-
-
-
 local harpoon = require("harpoon")
 
 -- REQUIRED
@@ -237,24 +188,6 @@ vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
 vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 
-
--- basic telescope configuration
--- local conf = require("telescope.config").values
--- local function toggle_telescope(harpoon_files)
--- 	local file_paths = {}
--- 	for _, item in ipairs(harpoon_files.items) do
--- 		table.insert(file_paths, item.value)
--- 	end
-
--- 	require("telescope.pickers").new({}, {
--- 		prompt_title = "Harpoon",
--- 		finder = require("telescope.finders").new_table({
--- 			results = file_paths,
--- 		}),
--- 		previewer = conf.file_previewer({}),
--- 		sorter = conf.generic_sorter({}),
--- 	}):find()
--- end
 
 -- vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
 
@@ -376,12 +309,6 @@ if (os.getenv('SSH_TTY') ~= nil) then
         },
     }
 end
-
--- if (os.getenv('SSH_TTY') == nil) then
--- 	vim.opt.shell = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
--- end
-
-
 
 local function load_env_vars(file_path)
     local env_vars = {}
