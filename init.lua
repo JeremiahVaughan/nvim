@@ -285,34 +285,6 @@ vim.api.nvim_create_user_command("CopyAbsolutePath", function()
     print("Copied path: " .. absolutePath)
 end, {})
 
-local function insert_todo_log()
-  local chars = {}
-  for _ = 1, 5 do
-    local n = math.random(1, 52)
-    local c = string.char(n <= 26 and (n + 64) or (n + 70)) -- A-Z (65–90), a-z (97–122)
-    table.insert(chars, c)
-  end
-  local random_str = table.concat(chars)
-  local line = 'log.Printf("todo remove ' .. random_str .. '")'
-  vim.api.nvim_put({line}, 'c', true, true)
-end
-
-local function insert_random_string()
-  local chars = {}
-  for _ = 1, 5 do
-    local n = math.random(1, 52)
-    local c = string.char(n <= 26 and (n + 64) or (n + 70)) -- A-Z (65–90), a-z (97–122)
-    table.insert(chars, c)
-  end
-  local random_str = table.concat(chars)
-  vim.api.nvim_put({random_str}, 'c', true, true)
-end
-
-
--- Map it to <leader>t
-vim.keymap.set('n', '<leader>i', insert_todo_log, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>r', insert_random_string, { noremap = true, silent = true })
-
 local function toggle_diff_mode()
   local win1 = vim.fn.win_getid(1)
   local win2 = vim.fn.win_getid(2)

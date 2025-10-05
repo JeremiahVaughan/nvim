@@ -2,25 +2,25 @@ local M = {}
 
 local runner_override
 
--- Toggle the selection between Base64 encoded and decoded states via the b64flip CLI.
+-- Toggle the selection between Base64 encoded and decoded states via the nvim-helper CLI.
 local function log_message(message)
     vim.api.nvim_echo({ { tostring(message), 'None' } }, true, {})
 end
 
-local function run_b64flip(input)
+local function run_helper(input)
     if runner_override then
         return runner_override(input)
     end
 
-    local executable = vim.g.b64flip_command or 'b64flip'
+    local executable = vim.g.nvim_helper_command or vim.g.b64flip_command or 'nvim-helper'
     if vim.fn.executable(executable) ~= 1 then
-        vim.notify('b64flip is not installed. See README for installation steps.', vim.log.levels.ERROR)
+        vim.notify('nvim-helper is not installed. See README for installation steps.', vim.log.levels.ERROR)
         return nil
     end
 
     local output = vim.fn.system({ executable }, input)
     if vim.v.shell_error ~= 0 then
-        vim.notify('b64flip failed: ' .. output, vim.log.levels.ERROR)
+        vim.notify('nvim-helper base64 failed: ' .. output, vim.log.levels.ERROR)
         return nil
     end
 
@@ -34,7 +34,7 @@ function M.toggle_visual_selection_base64()
     vim.cmd('normal! "vy')
     local selected_text = vim.fn.getreg('v')
 
-    local transformed = run_b64flip(selected_text)
+    local transformed = run_helper(selected_text)
     if not transformed then
         vim.fn.setreg('"', previous_selection)
         return
