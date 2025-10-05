@@ -107,7 +107,6 @@ vim.api.nvim_set_keymap('n', '<C-w>r', ':copen<CR>', { noremap = true, silent = 
 vim.api.nvim_set_keymap('n', '<C-w>q', ':cclose<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<F8>', ':cnext<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<F7>', ':cprev<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ut', ':UndotreeToggle<CR>', { noremap = true, silent = true })
 
 -- todo this hasn't worked a couple of times, so thinking of just not trusting it and ensuring I always save myself
 -- Auto-save function when Neovim loses focus or files are changed
