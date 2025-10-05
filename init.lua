@@ -73,7 +73,6 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 
-vim.api.nvim_set_keymap('n', "<leader>et", ':TroubleToggle<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<BS>', '<C-w>', { noremap = true, silent = true })
 -- vim.keymap.set('c', '<BS>', '<C-w>', { noremap = true, silent = true })
 -- the lua version above is not working for some strange reason, but this vim version does
