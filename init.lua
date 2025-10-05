@@ -1,6 +1,5 @@
 -- Reference: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 -- Book mark: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L701
---
 
 -- if you don't specify the leader remaps first then any keybinds mapped before this remap will use the default leader key
 vim.g.mapleader = " "       -- Setting space as the leader key
@@ -270,20 +269,7 @@ if vim.fn.has("win64") == 0 then
     vim.o.shell = "bash"
 end
 
-vim.api.nvim_create_user_command("CopyAbsolutePath", function()
-    local absolutePath = vim.fn.expand("%:p") -- Get absolute path of the current buffer
-    if absolutePath == "" then
-        print("No file name")
-        return
-    end
-
-
-    -- Copy to the system clipboard (works on most systems)
-    vim.fn.setreg("+", absolutePath) -- Uses `+` register (system clipboard)
-    vim.fn.setreg("*", absolutePath) -- Also supports primary clipboard (Linux/X11)
-
-    print("Copied path: " .. absolutePath)
-end, {})
+require("jeremiah.copy_absolute_path").setup()
 
 local function toggle_diff_mode()
   local win1 = vim.fn.win_getid(1)
