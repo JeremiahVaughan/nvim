@@ -313,34 +313,6 @@ end
 vim.keymap.set('n', '<leader>i', insert_todo_log, { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>r', insert_random_string, { noremap = true, silent = true })
 
-local function transform_visual_selection(cmd)
-    local previous_selection = vim.fn.getreg('"')
-
-    -- Yank visual selection into "v register
-    vim.cmd('normal! "vy')
-
-    local selected_text = vim.fn.getreg('v')
-
-    -- Run the provided command
-    local decoded = vim.fn.system(cmd, selected_text)
-
-    -- Trim trailing newline if present
-    decoded = decoded:gsub("\n$", "")
-
-    -- Replace the visual selection with the result
-    vim.cmd('normal! gv')
-    vim.cmd("normal! c" .. decoded)
-
-    -- Restore previous unnamed register
-    vim.fn.setreg('"', previous_selection)
-end
-vim.keymap.set('v', '<leader>dtodo', function()
-    transform_visual_selection("base64 --decode")
-end, { noremap = true, silent = true })
-vim.keymap.set('v', '<leader>etodo', function()
-    transform_visual_selection("base64")
-end, { noremap = true, silent = true })
-
 local function toggle_diff_mode()
   local win1 = vim.fn.win_getid(1)
   local win2 = vim.fn.win_getid(2)

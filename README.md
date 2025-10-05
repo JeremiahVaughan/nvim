@@ -235,6 +235,15 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 
 43. Move `.ideavimrc` to the home directory and restart JetBrains.
 
+44. Install the Base64 toggle helper used by `<leader>b`.
+   ```bash
+   cd ~/.config/nvim/tools/b64flip
+   go install
+   ```
+   - Ensure the resulting binary directory (usually `$GOBIN` or `$GOPATH/bin`) is on your `PATH`.
+   - Run `make b64flip-test` (from the repo root) to execute the helper's unit tests; the command automatically isolates Go's build cache in `/tmp/nvim-gocache`.
+   - Run `make base64-test` to execute the Neovim end-to-end check that exercises the mapping against a scratch buffer.
+
 ## Notes
 - If Neovim misbehaves, view logs with:
   ```vim
