@@ -9,23 +9,6 @@ require("jeremiah")
 
 -- Built in Comment/Uncomment --> normal mode gcgc --> visual mode gc
 
--- Remap esc to enter
--- Disable <Esc> in Insert mode
--- vim.api.nvim_set_keymap('i', '<Esc>', '<Nop>', { noremap = true, silent = true })
--- Disable <Esc> in Normal mode
--- vim.api.nvim_set_keymap('n', '<Esc>', '<Nop>', { noremap = true, silent = true })
--- Disable <Esc> in Visual mode
--- vim.api.nvim_set_keymap('v', '<Esc>', '<Nop>', { noremap = true, silent = true })
--- Disable <Esc> in Replace mode
--- vim.api.nvim_set_keymap('!', '<Esc>', '<Nop>', { noremap = true, silent = true })
--- Insert mode
--- vim.api.nvim_set_keymap('i', '<CR>', '<Esc>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('i', '<S-CR>', '<CR>', { noremap = true, silent = true })
--- Visual Mode
--- vim.api.nvim_set_keymap('v', '<CR>', '<Esc>', { noremap = true, silent = true })
--- Replace mode
--- vim.api.nvim_set_keymap('!', '<CR>', '<Esc>', { noremap = true, silent = true })
-
 -- Windows is touchy here so going with c-q
 -- Terminal mode: <C-q> escapes to normal
 vim.keymap.set('t', '<C-q>', [[<C-\><C-n>]], { noremap = true, silent = true })
@@ -33,17 +16,6 @@ vim.keymap.set('t', '<C-q>', [[<C-\><C-n>]], { noremap = true, silent = true })
 -- Normal mode: disable <C-q>
 vim.keymap.set('n', '<C-q>', '<Nop>', { noremap = true, silent = true })
 
-
-
-
--- Remap <S-Enter> in terminal mode to act as the default <Enter>
--- vim.api.nvim_set_keymap('t', '<S-Enter>', '<Enter>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<S-Enter>', 'i<CR>', { noremap = true, silent = true })
-
-
--- Easy exit terminal mode
--- todo problem with pressing escape twice is that I sometimes actually want to press it a few times quickly in the program itself like when navigating in k9s
--- vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- Saves the file then executes make
 vim.cmd('command! M write | make')
@@ -175,9 +147,6 @@ vim.api.nvim_create_user_command(
     { nargs = '+' }                -- This command requires at least one argument
 )
 
--- Map <Leader>h to the 'Help' command
--- vim.api.nvim_set_keymap('n', '<Leader>h', ':Help ', { noremap = true, silent = true })
-
 -- Create a custom command 'Make' that saves the buffer and runs 'make'
 vim.api.nvim_create_user_command(
     'M', -- Command name
@@ -219,50 +188,11 @@ if (os.getenv('SSH_TTY') ~= nil) then
     }
 end
 
-local function load_env_vars(file_path)
-    local env_vars = {}
-    local file = io.open(file_path, "r")
-    if not file then
-        print("Could not open env file: " .. file_path)
-        return env_vars
-    end
-    for line in file:lines() do
-        -- Trim leading and trailing whitespace
-        line = line:match("^%s*(.-)%s*$")
-        -- Split the line into key and value
-        local delimiter_pos = line:find("=")
-        if delimiter_pos then
-            local key = line:sub(1, delimiter_pos - 1)
-            local value = line:sub(delimiter_pos + 1)
-            env_vars[key] = value
-        end
-    end
-    file:close()
-    return env_vars
-end
-
-
 -- Clear current pattern
 vim.api.nvim_set_keymap('n', '<leader>/', ':nohlsearch<CR>', { noremap = true, silent = true })
 
 -- no mouse
 vim.opt.mouse = ""
--- oil
-require("oil").setup({
-    view_options = {
-        show_hidden = true,
-    },
-    keymaps = {
-        ["<C-h>"] = false,
-    },
-    columns = { "icon" },
-})
-
--- Open parent directory in current window
-vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-
--- Open parent directory in floating window
-vim.keymap.set("n", "<space>-", require("oil").toggle_float)
 
 if vim.fn.has("win64") == 0 then
     vim.g.clipboard = "osc52"                                             
