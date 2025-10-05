@@ -131,29 +131,7 @@ vim.cmd('syntax enable') -- Enables syntax highlighting
 -- vim.opt.clipboard = "unnamedplus"
 
 
--- Function to search for the current visually selected text
-local function search_visual_selection()
-    local previous_selection = vim.fn.getreg('"')
-    vim.cmd('normal! "vy')
-    local selected_text = vim.fn.getreg('"')
-    vim.fn.setreg('"', previous_selection)
-    require('telescope.builtin').live_grep({
-        default_text = selected_text,
-    })
-end
-
-vim.api.nvim_set_keymap('n', '<leader>sf', ':Telescope find_files<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sg', ':Telescope live_grep<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ss', ':Telescope grep_string<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sb', ':Telescope buffers<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sr', ':Telescope registers<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sc', ':Telescope command_history<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sqf', ':Telescope quickfix<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sqh', ':Telescope quickfixhistory<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sp', ':Telescope search_history<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>sk', ':Telescope keymaps<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>sd', ':Telescope diagnostics<CR>', { noremap = true, silent = true })
-vim.keymap.set("v", "<leader>s", search_visual_selection)
+-- Telescope configuration lives in lua/jeremiah/telescope.lua
 vim.api.nvim_set_keymap('n', '<C-w>r', ':copen<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-w>q', ':cclose<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<F8>', ':cnext<CR>', { noremap = true, silent = true })
@@ -190,74 +168,6 @@ vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 
 
 -- vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
-
--- Telescope Setup
-local actions = require('telescope.actions')
-local teleBuiltin = require 'telescope.builtin'
-require('telescope').setup {
-    defaults = {
-        -- this mapping appears to be required if you are using custom pickers
-        mappings = {
-            i = {
-                ["<C-c>"] = actions.close, -- Map Ctrl+C to close action
-            },
-        },
-        -- todo figure out how to make this fuzzy refine thing work
-        -- mappings = {
-        --     i = { ['<C-s>'] = 'to_fuzzy_refine' },
-        -- },
-        find_command = { 'rg', '--files', '--hidden', '--glob', '!.git/*' },
-        vimgrep_arguments = {
-            'rg',
-            '--color=never',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--smart-case',
-            '--hidden', -- Add this line to include hidden files
-            '--glob',
-            '!.git/*'   -- Optionally exclude .git directory
-        },
-        file_ignore_patterns = {
-            "node_modules",
-            "%.jpg",
-            "%.png",
-            "%.git\\", -- Windows
-            "%.git/",  -- other
-            -- 'grpc',
-            "debug",   -- debug bin
-        },
-        layout_strategy = 'flex',
-        layout_config = {
-            flex = {
-                flip_columns = 120 -- Adjust this value based on your preference
-            },
-            width = 0.95,          -- Percentage of the screen width
-            height = 0.95,         -- Percentage of the screen height
-            preview_cutoff = 120,  -- When to start showing the preview pane
-        }
-    },
-    pickers = {
-        find_files = {
-            hidden = true
-        }
-    }
-}
-
--- Enable Telescope extensions if they are installed
-pcall(require('telescope').load_extension, 'fzf')
-pcall(require('telescope').load_extension, 'ui-select')
-
--- Shortcut for searching your Neovim configuration files
-vim.keymap.set('n', '<leader>sn', function()
-    teleBuiltin.find_files { cwd = vim.fn.stdpath 'config' }
-end, { desc = '[S]earch [N]eovim files' })
-
--- Finding templates
-vim.keymap.set('n', '<leader>st', function()
-    teleBuiltin.find_files { cwd = vim.fn.stdpath('config') .. '/lua/jeremiah/templates' }
-end, { desc = '[S]earch [T]emplate files' })
 
 -- Define the 'Help' command that opens the help menu in a vertical split on the right
 vim.api.nvim_create_user_command(
