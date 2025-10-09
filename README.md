@@ -243,6 +243,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
    - Ensure the resulting binary directory (usually `$GOBIN` or `$GOPATH/bin`) is on your `PATH`.
    - Run `make nvim-helper-test` (from the repo root) to execute the helper's unit tests; the command automatically isolates Go's build cache in `/tmp/nvim-gocache`.
    - Run `make base64-test` to execute the Neovim end-to-end check that exercises the mapping against a scratch buffer.
+   - Use `:GoUpdate` inside Neovim to run the helper's Go module updater; set `vim.g.go_update_target_version` (defaults to `1.24.7`) to control the enforced `go` directive and populate the quickfix list with updated `go.mod` files.
 
 ## Notes
 - If Neovim misbehaves, view logs with:

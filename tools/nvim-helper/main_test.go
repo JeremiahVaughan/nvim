@@ -1,7 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"encoding/base64"
+	"errors"
+	"os"
+	"path/filepath"
+	"sort"
 	"strings"
 	"testing"
 )
@@ -89,4 +94,221 @@ func TestRunUnknownCommand(t *testing.T) {
 	if err := run([]string{"nope"}); err == nil {
 		t.Fatalf("expected error for unknown command")
 	}
+}
+
+func TestEnsureGoDirectiveUpdatesVersion(t *testing.T) {
+	tempDir := t.TempDir()
+	modPath := filepath.Join(tempDir, "go.mod")
+	initial := "module example.com/test\n\n\tgo 1.24.6\n"
+	if err := os.WriteFile(modPath, []byte(initial), 0o644); err != nil {
+		t.Fatalf("failed to prepare go.mod: %v", err)
+	}
+
+	changed, err := ensureGoDirective(modPath, "1.24.7")
+	if err != nil {
+		t.Fatalf("ensureGoDirective returned error: %v", err)
+	}
+	if !changed {
+		t.Fatalf("expected version update to be reported")
+	}
+
+	data, err := os.ReadFile(modPath)
+	if err != nil {
+		t.Fatalf("failed to read go.mod: %v", err)
+	}
+	contents := string(data)
+	if !strings.Contains(contents, "go 1.24.7\n") {
+		t.Fatalf("go.mod missing updated version: %q", contents)
+	}
+
+	changed, err = ensureGoDirective(modPath, "1.24.7")
+	if err != nil {
+		t.Fatalf("second ensureGoDirective returned error: %v", err)
+	}
+	if changed {
+		t.Fatalf("expected no changes when version already matches")
+	}
+}
+
+func TestEnsureGoDirectiveInsertsMissingVersion(t *testing.T) {
+	tempDir := t.TempDir()
+	modPath := filepath.Join(tempDir, "go.mod")
+	initial := "module example.com/test\n\nrequire example.com/dep v1.2.3\n"
+	if err := os.WriteFile(modPath, []byte(initial), 0o644); err != nil {
+		t.Fatalf("failed to prepare go.mod: %v", err)
+	}
+
+	changed, err := ensureGoDirective(modPath, "1.24.7")
+	if err != nil {
+		t.Fatalf("ensureGoDirective returned error: %v", err)
+	}
+	if !changed {
+		t.Fatalf("expected insertion to be reported")
+	}
+
+	data, err := os.ReadFile(modPath)
+	if err != nil {
+		t.Fatalf("failed to read go.mod: %v", err)
+	}
+
+	lines := strings.Split(strings.TrimSpace(string(data)), "\n")
+	if len(lines) < 3 {
+		t.Fatalf("unexpected go.mod layout: %v", lines)
+	}
+	if lines[1] != "" {
+		t.Fatalf("expected blank line between module and go directive, got %q", lines[1])
+	}
+	if lines[2] != "go 1.24.7" {
+		t.Fatalf("expected inserted go directive, got %q", lines[2])
+	}
+}
+
+func TestGoUpdateProcessesModules(t *testing.T) {
+	tempDir := t.TempDir()
+	modPaths := []string{
+		filepath.Join(tempDir, "a", "go.mod"),
+		filepath.Join(tempDir, "b", "c", "go.mod"),
+	}
+	for _, path := range modPaths {
+		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+			t.Fatalf("failed to create directory: %v", err)
+		}
+		contents := "module example.com/test\n\nrequire example.com/dep v1.0.0\n"
+		if err := os.WriteFile(path, []byte(contents), 0o644); err != nil {
+			t.Fatalf("failed to write %s: %v", path, err)
+		}
+	}
+
+	origRunner := commandRunner
+	var calls []struct {
+		dir  string
+		name string
+		args []string
+	}
+	commandRunner = func(dir, name string, args ...string) ([]byte, error) {
+		calls = append(calls, struct {
+			dir  string
+			name string
+			args []string
+		}{dir: dir, name: name, args: append([]string(nil), args...)})
+		return []byte{}, nil
+	}
+	defer func() { commandRunner = origRunner }()
+
+	var output bytes.Buffer
+	origOutput := goUpdateOutput
+	goUpdateOutput = &output
+	defer func() { goUpdateOutput = origOutput }()
+
+	if err := goUpdate([]string{"--root", tempDir, "--version", "1.24.7"}); err != nil {
+		t.Fatalf("goUpdate returned error: %v", err)
+	}
+
+	if len(calls) != len(modPaths) {
+		t.Fatalf("expected %d go get invocations, saw %d", len(modPaths), len(calls))
+	}
+	for _, call := range calls {
+		if call.name != "go" {
+			t.Fatalf("expected command 'go', got %q", call.name)
+		}
+		if !equalStrings(call.args, []string{"get", "-u", "./..."}) {
+			t.Fatalf("unexpected args: %v", call.args)
+		}
+	}
+
+	expectedPaths := append([]string(nil), modPaths...)
+	for i, path := range expectedPaths {
+		absPath, err := filepath.Abs(path)
+		if err != nil {
+			t.Fatalf("failed to resolve absolute path: %v", err)
+		}
+		expectedPaths[i] = absPath
+	}
+	sort.Strings(expectedPaths)
+
+	lines := strings.Split(strings.TrimSpace(output.String()), "\n")
+	if !equalStrings(lines, expectedPaths) {
+		t.Fatalf("unexpected output lines: %v", lines)
+	}
+
+	for _, path := range modPaths {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatalf("failed to read %s: %v", path, err)
+		}
+		if !strings.Contains(string(data), "go 1.24.7\n") {
+			t.Fatalf("go version not updated in %s", path)
+		}
+	}
+}
+
+func TestGoUpdateAggregatesErrors(t *testing.T) {
+	tempDir := t.TempDir()
+	modPaths := []string{
+		filepath.Join(tempDir, "a", "go.mod"),
+		filepath.Join(tempDir, "b", "go.mod"),
+	}
+	for _, path := range modPaths {
+		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+			t.Fatalf("failed to create directory: %v", err)
+		}
+		contents := "module example.com/test\n"
+		if err := os.WriteFile(path, []byte(contents), 0o644); err != nil {
+			t.Fatalf("failed to write %s: %v", path, err)
+		}
+	}
+
+	failingDir := filepath.Dir(modPaths[1])
+	origRunner := commandRunner
+	commandRunner = func(dir, name string, args ...string) ([]byte, error) {
+		if dir == failingDir {
+			return []byte("network failure"), errors.New("go get failed")
+		}
+		return []byte{}, nil
+	}
+	defer func() { commandRunner = origRunner }()
+
+	var output bytes.Buffer
+	origOutput := goUpdateOutput
+	goUpdateOutput = &output
+	defer func() { goUpdateOutput = origOutput }()
+
+	err := goUpdate([]string{"--root", tempDir, "--version", "1.24.7"})
+	if err == nil {
+		t.Fatalf("expected goUpdate to report failure")
+	}
+	if !strings.Contains(err.Error(), "completed with errors") {
+		t.Fatalf("expected aggregated error message, got %q", err)
+	}
+	if !strings.Contains(err.Error(), failingDir) {
+		t.Fatalf("expected error to mention failing module, got %q", err)
+	}
+
+	trimmed := strings.TrimSpace(output.String())
+	if trimmed == "" {
+		t.Fatalf("expected successful module path in output, got empty string")
+	}
+	lines := strings.Split(trimmed, "\n")
+	if len(lines) != 1 {
+		t.Fatalf("expected only successful module path in output, got %v", lines)
+	}
+	successPath, err := filepath.Abs(modPaths[0])
+	if err != nil {
+		t.Fatalf("failed to resolve absolute path: %v", err)
+	}
+	if lines[0] != successPath {
+		t.Fatalf("unexpected success path %q", lines[0])
+	}
+}
+
+func equalStrings(a, b []string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
 }
