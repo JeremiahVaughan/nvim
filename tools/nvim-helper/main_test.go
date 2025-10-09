@@ -169,11 +169,24 @@ func TestGoUpdateProcessesModules(t *testing.T) {
 		filepath.Join(tempDir, "a", "go.mod"),
 		filepath.Join(tempDir, "b", "c", "go.mod"),
 	}
+	dockerPaths := []string{
+		filepath.Join(tempDir, "a", "Dockerfile"),
+		filepath.Join(tempDir, "b", "Dockerfile.dev"),
+	}
 	for _, path := range modPaths {
 		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 			t.Fatalf("failed to create directory: %v", err)
 		}
 		contents := "module example.com/test\n\nrequire example.com/dep v1.0.0\n"
+		if err := os.WriteFile(path, []byte(contents), 0o644); err != nil {
+			t.Fatalf("failed to write %s: %v", path, err)
+		}
+	}
+	for _, path := range dockerPaths {
+		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+			t.Fatalf("failed to create directory: %v", err)
+		}
+		contents := "FROM golang:1.22.1\nRUN echo hello\n"
 		if err := os.WriteFile(path, []byte(contents), 0o644); err != nil {
 			t.Fatalf("failed to write %s: %v", path, err)
 		}
@@ -216,17 +229,29 @@ func TestGoUpdateProcessesModules(t *testing.T) {
 		}
 	}
 
-	expectedPaths := append([]string(nil), modPaths...)
-	for i, path := range expectedPaths {
+	var expectedPaths []string
+	for _, path := range append([]string(nil), modPaths...) {
 		absPath, err := filepath.Abs(path)
 		if err != nil {
 			t.Fatalf("failed to resolve absolute path: %v", err)
 		}
-		expectedPaths[i] = absPath
+		expectedPaths = append(expectedPaths, absPath)
+	}
+	for _, path := range append([]string(nil), dockerPaths...) {
+		absPath, err := filepath.Abs(path)
+		if err != nil {
+			t.Fatalf("failed to resolve absolute path: %v", err)
+		}
+		expectedPaths = append(expectedPaths, absPath)
 	}
 	sort.Strings(expectedPaths)
 
-	lines := strings.Split(strings.TrimSpace(output.String()), "\n")
+	raw := strings.TrimSpace(output.String())
+	lines := []string{}
+	if raw != "" {
+		lines = strings.Split(raw, "\n")
+		sort.Strings(lines)
+	}
 	if !equalStrings(lines, expectedPaths) {
 		t.Fatalf("unexpected output lines: %v", lines)
 	}
@@ -238,6 +263,15 @@ func TestGoUpdateProcessesModules(t *testing.T) {
 		}
 		if !strings.Contains(string(data), "go 1.24.7\n") {
 			t.Fatalf("go version not updated in %s", path)
+		}
+	}
+	for _, path := range dockerPaths {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatalf("failed to read %s: %v", path, err)
+		}
+		if !strings.Contains(string(data), "FROM golang:1.24.7") {
+			t.Fatalf("golang image not updated in %s", path)
 		}
 	}
 }

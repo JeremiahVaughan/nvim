@@ -24,6 +24,17 @@ local function collect_paths(raw_output)
     return paths
 end
 
+local function describe_path(path, version)
+    local name = path:match('([^/\\]+)$') or path
+    if name == 'go.mod' then
+        return ('go.mod updated to Go %s'):format(version)
+    end
+    if name:find('Dockerfile', 1, true) then
+        return ('Dockerfile golang tag updated to %s'):format(version)
+    end
+    return ('Updated to Go %s'):format(version)
+end
+
 function M.run()
     local executable = resolve_executable()
     if vim.fn.executable(executable) ~= 1 then
@@ -48,7 +59,7 @@ function M.run()
 
     local paths = collect_paths(raw_output)
     if #paths == 0 then
-        vim.notify('nvim-helper go-update completed but returned no go.mod paths.', vim.log.levels.WARN)
+        vim.notify('nvim-helper go-update completed but returned no paths.', vim.log.levels.WARN)
         vim.fn.setqflist({}, 'r')
         return
     end
@@ -59,13 +70,13 @@ function M.run()
             filename = path,
             lnum = 1,
             col = 1,
-            text = ('go.mod updated to Go %s'):format(version),
+            text = describe_path(path, version),
         })
     end
 
     vim.fn.setqflist(qf, 'r')
     vim.cmd('copen')
-    vim.notify(('Updated %d go.mod files to Go %s'):format(#qf, version), vim.log.levels.INFO)
+    vim.notify(('Go update touched %d files (target %s)'):format(#qf, version), vim.log.levels.INFO)
 end
 
 vim.api.nvim_create_user_command('GoUpdate', function()

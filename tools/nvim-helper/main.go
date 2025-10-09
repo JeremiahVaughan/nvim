@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -21,6 +22,7 @@ import (
 var (
 	commandRunner            = defaultCommandRunner
 	goUpdateOutput io.Writer = os.Stdout
+	dockerfileVersionRegexp  = regexp.MustCompile(`golang:\d+(?:\.\d+){1,2}`)
 )
 
 func main() {
@@ -161,6 +163,7 @@ func goUpdate(args []string) error {
 	}
 
 	var goMods []string
+	var dockerfiles []string
 	err = filepath.WalkDir(rootAbs, func(path string, d fs.DirEntry, walkErr error) error {
 		if walkErr != nil {
 			return walkErr
@@ -170,6 +173,10 @@ func goUpdate(args []string) error {
 		}
 		if d.Name() == "go.mod" {
 			goMods = append(goMods, path)
+			return nil
+		}
+		if strings.Contains(d.Name(), "Dockerfile") {
+			dockerfiles = append(dockerfiles, path)
 		}
 		return nil
 	})
@@ -182,6 +189,7 @@ func goUpdate(args []string) error {
 	}
 
 	sort.Strings(goMods)
+	sort.Strings(dockerfiles)
 
 	var errs []error
 	for _, modPath := range goMods {
@@ -190,6 +198,20 @@ func goUpdate(args []string) error {
 			continue
 		}
 		if _, err := fmt.Fprintln(goUpdateOutput, modPath); err != nil {
+			return fmt.Errorf("failed to report result: %w", err)
+		}
+	}
+
+	for _, dockerPath := range dockerfiles {
+		updated, err := ensureDockerfileGoVersion(dockerPath, *version)
+		if err != nil {
+			errs = append(errs, fmt.Errorf("processing %s: %w", dockerPath, err))
+			continue
+		}
+		if !updated {
+			continue
+		}
+		if _, err := fmt.Fprintln(goUpdateOutput, dockerPath); err != nil {
 			return fmt.Errorf("failed to report result: %w", err)
 		}
 	}
@@ -295,6 +317,38 @@ func ensureGoDirective(path, version string) (bool, error) {
 	if updated != "" || hadTrailingNewline {
 		updated += "\n"
 	}
+	if err := os.WriteFile(path, []byte(updated), info.Mode()); err != nil {
+		return false, fmt.Errorf("write %s: %w", path, err)
+	}
+	return true, nil
+}
+
+func ensureDockerfileGoVersion(path, version string) (bool, error) {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false, fmt.Errorf("stat %s: %w", path, err)
+	}
+
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return false, fmt.Errorf("read %s: %w", path, err)
+	}
+
+	content := string(data)
+	changed := false
+	replacement := "golang:" + version
+	updated := dockerfileVersionRegexp.ReplaceAllStringFunc(content, func(match string) string {
+		if match == replacement {
+			return match
+		}
+		changed = true
+		return replacement
+	})
+
+	if !changed {
+		return false, nil
+	}
+
 	if err := os.WriteFile(path, []byte(updated), info.Mode()); err != nil {
 		return false, fmt.Errorf("write %s: %w", path, err)
 	}
