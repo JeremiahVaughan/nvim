@@ -228,10 +228,12 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 
 41. Configure `deploy.target` in `.ssh/config`.
 
-42. Install Codex.
+42. Install Codex (he likes using python as a tool so we add that for him).
    ```bash
    brew install codex
+   webi python3
    ```
+
 
 43. Move `.ideavimrc` to the home directory and restart JetBrains.
 
