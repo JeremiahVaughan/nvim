@@ -22,7 +22,7 @@ import (
 var (
 	commandRunner            = defaultCommandRunner
 	goUpdateOutput io.Writer = os.Stdout
-	dockerfileVersionRegexp  = regexp.MustCompile(`golang:\d+(?:\.\d+){1,2}`)
+	dockerfileVersionRegexp  = regexp.MustCompile(`golang:\d+(?:\.\d+){1,2}-alpine\d+(\.)\d+`)
 )
 
 func main() {
@@ -147,11 +147,15 @@ func goUpdate(args []string) error {
 	flagSet.SetOutput(io.Discard)
 	root := flagSet.String("root", ".", "root directory to search for go.mod files")
 	version := flagSet.String("version", "", "Go version to enforce (for example, 1.24.7)")
+	alpineVersion := flagSet.String("alpine-version", "", "Go alpine-version to enforce (for example, 3.22)")
 	if err := flagSet.Parse(args); err != nil {
 		return err
 	}
 	if *version == "" {
 		return fmt.Errorf("go-update requires --version=<version>")
+	}
+	if *alpineVersion == "" {
+		return fmt.Errorf("go-update requires --alpine-version=<alpineVersion>")
 	}
 	if flagSet.NArg() > 0 {
 		return fmt.Errorf("unexpected argument %q", flagSet.Arg(0))
@@ -203,7 +207,7 @@ func goUpdate(args []string) error {
 	}
 
 	for _, dockerPath := range dockerfiles {
-		updated, err := ensureDockerfileGoVersion(dockerPath, *version)
+		updated, err := ensureDockerfileGoVersion(dockerPath, *version, *alpineVersion)
 		if err != nil {
 			errs = append(errs, fmt.Errorf("processing %s: %w", dockerPath, err))
 			continue
@@ -323,7 +327,7 @@ func ensureGoDirective(path, version string) (bool, error) {
 	return true, nil
 }
 
-func ensureDockerfileGoVersion(path, version string) (bool, error) {
+func ensureDockerfileGoVersion(path, version, alpineVersion string) (bool, error) {
 	info, err := os.Stat(path)
 	if err != nil {
 		return false, fmt.Errorf("stat %s: %w", path, err)
@@ -336,7 +340,7 @@ func ensureDockerfileGoVersion(path, version string) (bool, error) {
 
 	content := string(data)
 	changed := false
-	replacement := "golang:" + version
+	replacement := "golang:" + version + "-alpine" + alpineVersion
 	updated := dockerfileVersionRegexp.ReplaceAllStringFunc(content, func(match string) string {
 		if match == replacement {
 			return match

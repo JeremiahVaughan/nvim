@@ -12,6 +12,15 @@ local function resolve_target_version()
     return tostring(version)
 end
 
+local function resolve_target_alpine_version()
+    local version = vim.g.go_update_target_alpine_version
+    if version == nil or version == '' then
+        return '3.22'
+    end
+    return tostring(version)
+end
+
+
 local function collect_paths(raw_output)
     local paths = {}
     local lines = vim.split(raw_output or '', '\n', { trimempty = true })
@@ -43,7 +52,8 @@ function M.run()
     end
 
     local version = resolve_target_version()
-    local command = { executable, 'go-update', '--version', version }
+    local alpineVersion = resolve_target_alpine_version()
+    local command = { executable, 'go-update', '--version', version, '--alpine-version', alpineVersion}
 
     local raw_output = vim.fn.system(command)
     local exit_code = vim.v.shell_error
