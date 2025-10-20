@@ -213,7 +213,7 @@ func TestGoUpdateProcessesModules(t *testing.T) {
 	goUpdateOutput = &output
 	defer func() { goUpdateOutput = origOutput }()
 
-	if err := goUpdate([]string{"--root", tempDir, "--version", "1.24.7"}); err != nil {
+	if err := goUpdate([]string{"--root", tempDir, "--version", "1.24.7", "--alpine-version", "3.22"}); err != nil {
 		t.Fatalf("goUpdate returned error: %v", err)
 	}
 

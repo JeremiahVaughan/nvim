@@ -232,11 +232,11 @@ func goUpdate(args []string) error {
 }
 
 func processModule(modPath, version string) error {
-	dir := filepath.Dir(modPath)
-	if err := runGoGet(dir); err != nil {
+	if _, err := ensureGoDirective(modPath, version); err != nil {
 		return fmt.Errorf("processing %s: %w", modPath, err)
 	}
-	if _, err := ensureGoDirective(modPath, version); err != nil {
+	dir := filepath.Dir(modPath)
+	if err := runGoGet(dir); err != nil {
 		return fmt.Errorf("processing %s: %w", modPath, err)
 	}
 	return nil
