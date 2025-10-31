@@ -1,5 +1,5 @@
 -- Adding shortcut to save current file and open lazygit
-vim.api.nvim_set_keymap('n', '<leader>lg', ':lua ToggleLazyGitTerminal()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gg', ':lua ToggleLazyGitTerminal()<CR>', { noremap = true, silent = true })
 
 -- Function to find the terminal buffer labeled as "lazygit"
 function FindLazyGitTerminalBuffer()

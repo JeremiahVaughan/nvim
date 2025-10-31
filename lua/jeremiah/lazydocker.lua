@@ -1,5 +1,5 @@
 -- Adding shortcut to save current file and open lazydocker
-vim.api.nvim_set_keymap('n', '<leader>ld', ':lua ToggleLazyDockerTerminal()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dd', ':lua ToggleLazyDockerTerminal()<CR>', { noremap = true, silent = true })
 
 -- Function to find the terminal buffer labeled as "lazydocker"
 function FindLazydockerTerminalBuffer()

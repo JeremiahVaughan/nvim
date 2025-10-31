@@ -234,6 +234,13 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
    webi python3
    ```
 
+43. fzf
+   ```bash
+   webi fzf
+   ```
+
+
+
 
 43. Move `.ideavimrc` to the home directory and restart JetBrains.
 
