@@ -5,10 +5,10 @@ local plugin_modules = {
     "jeremiah.plugins.dadbod",
     "jeremiah.plugins.ccc",
     "jeremiah.plugins.oil",
-    "jeremiah.plugins.telescope",
+    -- "jeremiah.plugins.telescope",
     "jeremiah.plugins.treesitter",
     "jeremiah.plugins.harpoon",
-    -- "jeremiah.plugins.fzf",
+    "jeremiah.plugins.fzf",
 }
 
 local plugins = {}

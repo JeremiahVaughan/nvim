@@ -4,7 +4,7 @@ local M = {
         build = ":TSUpdate",
         lazy = false,
         dependencies = {
-            "nvim-treesitter/playground",
+            -- "nvim-treesitter/playground",
             "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
@@ -14,5 +14,10 @@ local M = {
         end,
     },
 }
+
+
+
+
+
 
 return M

@@ -1,7 +1,6 @@
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
-
 cmp.setup({
     sources = {
         { name = 'path' },
@@ -22,7 +21,6 @@ cmp.setup({
         end,
     },
 })
-
 
 -- Treesitter setup
 require('nvim-treesitter.configs').setup({
@@ -45,6 +43,3 @@ require('nvim-treesitter.configs').setup({
     -- It was always placing my cursor at the beginning of the line regardless of indents of the current line.
     -- indent = { enable = true } -- Enable indentation
 })
-
-
-
