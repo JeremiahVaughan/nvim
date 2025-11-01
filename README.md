@@ -248,6 +248,9 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
    - Run `make base64-test` to execute the Neovim end-to-end check that exercises the mapping against a scratch buffer.
    - Use `:GoUpdate` inside Neovim to run the helper's Go module updater; set `vim.g.go_update_target_version` (defaults to `1.24.7`) to control the enforced `go` directive and populate the quickfix list with updated `go.mod` files.
 
+44. Install sops
+    - `https://github.com/getsops/sops/releases`
+
 ## Notes
 - If Neovim misbehaves, view logs with:
   ```vim
