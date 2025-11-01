@@ -1,5 +1,5 @@
 -- Adding shortcut to save current file and open chatgpt
-vim.api.nvim_set_keymap('n', '<leader>c', ':lua ToggleChatGptTerminal()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>cc', ':lua ToggleChatGptTerminal()<CR>', { noremap = true, silent = true })
 
 -- Function to find the terminal buffer labeled as "chatgpt"
 function FindChatGptTerminalBuffer()
