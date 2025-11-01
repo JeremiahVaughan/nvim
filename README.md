@@ -105,19 +105,13 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
      Copy-Item .\.wezterm.lua $env:USERPROFILE\.wezterm.lua
      ```
 
-20. Install dependencies required by the `rest.nvim` plugin.
-   ```bash
-   sudo apt update
-   sudo apt install gcc -y
-   ```
-
-21. Enable the Terraform provider cache when using Terragrunt.
+20. Enable the Terraform provider cache when using Terragrunt.
    ```bash
    export TERRAGRUNT_PROVIDER_CACHE=1
    ```
    - Reference: https://terragrunt.gruntwork.io/docs/features/provider-cache/
 
-22. Install Starship.
+21. Install Starship.
    - Reference: https://starship.rs
    - Place configs:
      ```bash
@@ -128,9 +122,9 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
      Copy-Item .\starship\Microsoft.PowerShell_profile.ps1 $profile
      ```
 
-23. Restore Vimium from backup.
+22. Restore Vimium from backup.
 
-24. Install `htop` for resource monitoring.
+23. Install `htop` for resource monitoring.
    - Unix
      ```bash
      brew install htop
@@ -140,23 +134,23 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
      choco install ntop.portable
      ```
 
-25. Install Flameshot and bind screenshot/snipping to `Ctrl+X`.
+24. Install Flameshot and bind screenshot/snipping to `Ctrl+X`.
    - Reference: https://github.com/flameshot-org/flameshot/issues/3712#issuecomment-2380547929
    - Shortcut name: Screen Shot
    - Shortcut value: /home/piegarden/.config/nvim/screenshot.sh
    - Shortcut key map: ctrl+x
 
-26. Ensure the Chrome Tab Limit extension is installed and set to 4 tabs.
+25. Ensure the Chrome Tab Limit extension is installed and set to 4 tabs.
 
-27. Emplace `.gitconfig` at `~/`.
+26. Emplace `.gitconfig` at `~/`.
 
-28. Ubuntu accessibility adjustments:
+27. Ubuntu accessibility adjustments:
    - Disable slow animations.
    - Enable large text.
    - Enable Night Light via Settings → Displays.
    - Configure fingerprint reader.
 
-29. Install database clients for `vim-dadbod`.
+28. Install database clients for `vim-dadbod`.
    - Windows
      ```powershell
      choco install psql
@@ -164,26 +158,26 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
    - Reference: https://dev.mysql.com/downloads/installer/
      - Ensure the client version matches the server to avoid password auth errors.
 
-30. Install 1Password TUI.
+29. Install 1Password TUI.
    - Install 1Password CLI: https://developer.1password.com/docs/cli/get-started/#install
    ```bash
    go install github.com/JeremiahVaughan/one-password-tui@latest
    ```
 
-31. Install `fd`.
+30. Install `fd`.
    ```bash
    webi fd
    ```
 
-32. On Windows install `du`.
+31. On Windows install `du`.
    ```powershell
    choco install du
    ```
 
-33. Install `shellcheck` for shell script linting.
+32. Install `shellcheck` for shell script linting.
    - Reference: https://github.com/koalaman/shellcheck
 
-34. Install `dive` for inspecting Docker images.
+33. Install `dive` for inspecting Docker images.
    - Reference: https://github.com/wagoodman/dive
    - Windows: set
      ```powershell
@@ -191,50 +185,50 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
      ```
    - Use `dive <image-id>` with private repositories.
 
-35. Enable Docker BuildKit.
+34. Enable Docker BuildKit.
    ```bash
    export DOCKER_BUILDKIT=1
    ```
 
-36. Install GitHub CLI.
+35. Install GitHub CLI.
    ```bash
    webi gh
    ```
 
-37. Install i3.
+36. Install i3.
    ```bash
    sudo apt install i3 -y
    mkdir -p ~/.config/i3
    cp ./i3/config ~/.config/i3/config
    ```
 
-38. Install zsh (optional; bash is fine).
+37. Install zsh (optional; bash is fine).
    ```bash
    sudo apt install zsh -y
    chsh -s /bin/zsh
    ```
 
-39. Add SSH key.
+38. Add SSH key.
    ```bash
    nvim id_ed25519
    chmod 600 id_ed25519
    ```
 
-40. Create deploy and service directories.
+39. Create deploy and service directories.
    ```bash
    mkdir -p ~/deploy
    mkdir -p ~/.local/share/systemd/user
    ```
 
-41. Configure `deploy.target` in `.ssh/config`.
+40. Configure `production` & `staging` in `.ssh/config`.
 
-42. Install Codex (he likes using python as a tool so we add that for him).
+41. Install Codex (he likes using python as a tool so we add that for him).
    ```bash
    brew install codex
    webi python3
    ```
 
-43. fzf
+42. fzf
    ```bash
    webi fzf
    ```
@@ -242,9 +236,9 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 
 
 
-43. Move `.ideavimrc` to the home directory and restart JetBrains.
+42. Move `.ideavimrc` to the home directory and restart JetBrains.
 
-44. Install the `nvim-helper` CLI used by `<leader>b` and the random log helpers.
+43. Install the `nvim-helper` CLI used by `<leader>b` and the random log helpers.
    ```bash
    cd ~/.config/nvim/tools/nvim-helper
    go install
