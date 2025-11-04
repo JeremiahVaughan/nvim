@@ -188,63 +188,63 @@ vim.keymap.set(
 
 -- ======== lsp diagnostics ========
 
--- by args
-vim.keymap.set(
-  "n",
-  "<leader>dg",
-  "<cmd>FzfxLspDiagnostics<cr>",
-  { silent = true, noremap = true, desc = "Search lsp diagnostics" }
-)
+-- -- by args
+-- vim.keymap.set(
+--   "n",
+--   "<leader>dg",
+--   "<cmd>FzfxLspDiagnostics<cr>",
+--   { silent = true, noremap = true, desc = "Search lsp diagnostics" }
+-- )
 
--- ======== lsp symbols ========
+-- -- ======== lsp symbols ========
 
--- lsp definitions
-vim.keymap.set(
-  "n",
-  "gd",
-  "<cmd>FzfxLspDefinitions<cr>",
-  { silent = true, noremap = true, desc = "Goto lsp definitions" }
-)
+-- -- lsp definitions
+-- vim.keymap.set(
+--   "n",
+--   "gd",
+--   "<cmd>FzfxLspDefinitions<cr>",
+--   { silent = true, noremap = true, desc = "Goto lsp definitions" }
+-- )
 
--- lsp type definitions
-vim.keymap.set(
-  "n",
-  "gt",
-  "<cmd>FzfxLspTypeDefinitions<cr>",
-  { silent = true, noremap = true, desc = "Goto lsp type definitions" }
-)
+-- -- lsp type definitions
+-- vim.keymap.set(
+--   "n",
+--   "gt",
+--   "<cmd>FzfxLspTypeDefinitions<cr>",
+--   { silent = true, noremap = true, desc = "Goto lsp type definitions" }
+-- )
 
--- lsp references
-vim.keymap.set(
-  "n",
-  "gr",
-  "<cmd>FzfxLspReferences<cr>",
-  { silent = true, noremap = true, desc = "Goto lsp references" }
-)
+-- -- lsp references
+-- vim.keymap.set(
+--   "n",
+--   "gr",
+--   "<cmd>FzfxLspReferences<cr>",
+--   { silent = true, noremap = true, desc = "Goto lsp references" }
+-- )
 
--- lsp implementations
-vim.keymap.set(
-  "n",
-  "gi",
-  "<cmd>FzfxLspImplementations<cr>",
-  { silent = true, noremap = true, desc = "Goto lsp implementations" }
-)
+-- -- lsp implementations
+-- vim.keymap.set(
+--   "n",
+--   "gi",
+--   "<cmd>FzfxLspImplementations<cr>",
+--   { silent = true, noremap = true, desc = "Goto lsp implementations" }
+-- )
 
--- lsp incoming calls
-vim.keymap.set(
-  "n",
-  "gI",
-  "<cmd>FzfxLspIncomingCalls<cr>",
-  { silent = true, noremap = true, desc = "Goto lsp incoming calls" }
-)
+-- -- lsp incoming calls
+-- vim.keymap.set(
+--   "n",
+--   "gI",
+--   "<cmd>FzfxLspIncomingCalls<cr>",
+--   { silent = true, noremap = true, desc = "Goto lsp incoming calls" }
+-- )
 
--- lsp outgoing calls
-vim.keymap.set(
-  "n",
-  "gO",
-  "<cmd>FzfxLspOutgoingCalls<cr>",
-  { silent = true, noremap = true, desc = "Goto lsp outgoing calls" }
-)
+-- -- lsp outgoing calls
+-- vim.keymap.set(
+--   "n",
+--   "gO",
+--   "<cmd>FzfxLspOutgoingCalls<cr>",
+--   { silent = true, noremap = true, desc = "Goto lsp outgoing calls" }
+-- )
 
 -- ======== vim commands ========
 
