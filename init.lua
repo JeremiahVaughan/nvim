@@ -34,12 +34,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
-vim.api.nvim_set_keymap('i', '<BS>', '<C-w>', { noremap = true, silent = true })
--- vim.keymap.set('c', '<BS>', '<C-w>', { noremap = true, silent = true })
--- the lua version above is not working for some strange reason, but this vim version does
-vim.cmd('cnoremap <bs> <C-w>')
-
-
+vim.api.nvim_set_keymap('i', '<BS>', '<C-w>', { noremap = false, silent = true })
 
 vim.g.have_nerd_font = true
 vim.opt.showmode = false -- mode is already in the status line
