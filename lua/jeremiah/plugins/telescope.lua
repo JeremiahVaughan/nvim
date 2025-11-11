@@ -26,6 +26,12 @@ local M = {
                 vim.cmd('normal! "vy')
                 local selected_text = vim.fn.getreg('"')
                 vim.fn.setreg('"', previous_selection)
+
+                if selected_text:find("\n") then
+                    vim.notify("Telescope live_grep cannot search selections containing newlines.", vim.log.levels.ERROR)
+                    return
+                end
+
                 tele_builtin.live_grep({ default_text = selected_text })
             end
 
