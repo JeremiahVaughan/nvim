@@ -17,8 +17,11 @@ vim.keymap.set('t', '<C-q>', [[<C-\><C-n>]], { noremap = true, silent = true })
 vim.keymap.set('n', '<C-q>', '<Nop>', { noremap = true, silent = true })
 
 
--- Saves the file then executes make
-vim.cmd('command! M write | make')
+vim.api.nvim_create_user_command("M", function()
+    jeremiah.utils.SaveAll()
+    vim.cmd("compiler make") -- reset makeprg/errorformat before running :make
+    vim.cmd("make")
+end, { desc = "Save buffers and run make" })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -108,17 +111,6 @@ vim.api.nvim_create_user_command(
     'rightbelow vert help <args>', -- Execute 'rightbelow vert help' with additional arguments
     { nargs = '+' }                -- This command requires at least one argument
 )
-
--- Create a custom command 'Make' that saves the buffer and runs 'make'
-vim.api.nvim_create_user_command(
-    'M', -- Command name
-    function()
-        jeremiah.utils.SaveAll()
-        vim.cmd('make')                   -- Run make
-    end,
-    { desc = "Save buffer and run make" } -- Description for the command
-)
-
 
 -- Remap to enable pasting from registers to terminal
 vim.keymap.set('t', '<c-r>', function()
