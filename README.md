@@ -234,8 +234,17 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
    ```
 
 43. install neovide https://neovide.dev/
+    - Arch
     ```
     sudo pacman -S neovide
+    ```
+    - Windows
+    ```
+    scoop bucket add extras
+    scoop install neovide
+    Open shortcut location
+    Right click shortcut and select properties
+    Add  "--wsl --neovim-bin /home/linuxbrew/.linuxbrew/bin/nvim" to the end of the target
     ```
 
 
