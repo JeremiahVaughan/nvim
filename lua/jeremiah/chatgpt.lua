@@ -14,7 +14,7 @@ end
 -- Function to open a new terminal buffer and run the server
 function OpenChatGptTerminal()
 	-- Open a new buffer and start a terminal
-	vim.cmd('te codex')
+	vim.cmd('te /home/linuxbrew/.linuxbrew/bin/codex')
 	vim.b.is_chatgpt_terminal = true
 end
 

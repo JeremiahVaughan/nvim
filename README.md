@@ -233,6 +233,11 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
    webi fzf
    ```
 
+43. install neovide https://neovide.dev/
+    ```
+    sudo pacman -S neovide
+    ```
+
 
 
 
