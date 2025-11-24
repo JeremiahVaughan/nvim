@@ -16,29 +16,30 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
      git clone https://github.com/JeremiahVaughan/nvim ~/.config/nvim
      ```
 
-2. Install Neovim.
+2. Install Webi CLI.
+   - Reference: https://webinstall.dev/webi/
+
+
+3. Install Neovim.
    - Prefer compiling from source for the latest version.
    - Reference: https://github.com/neovim/neovim
 
-3. Install ripgrep for fuzzy search.
+4. Install ripgrep for fuzzy search.
    - Reference: https://github.com/BurntSushi/ripgrep#installation
 
-4. Install `make` for the `:make` command.
+5. Install `make` for the `:make` command.
    - Windows
      ```powershell
      choco install make
      ```
 
-5. On Windows install Git Bash.
+6. On Windows install Git Bash.
 
-6. Install `staticcheck` for additional Go analysis.
+7. Install `staticcheck` for additional Go analysis.
    - Reference: https://github.com/dominikh/go-tools?tab=readme-ov-file
 
-7. Install Zig to avoid compilation issues.
+8. Install Zig to avoid compilation issues.
    - Reference: https://ziglang.org/learn/getting-started/#installing-zig
-
-8. Install Webi CLI.
-   - Reference: https://webinstall.dev/webi/
 
 9. Install Nerd Fonts Hack (Hack Nerd Font Mono).
    - Reference: https://github.com/ryanoasis/nerd-fonts
