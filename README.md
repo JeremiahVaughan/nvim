@@ -266,6 +266,14 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 44. Install sops
     - `https://github.com/getsops/sops/releases`
 
+45. Install raspberry pi imager
+    ```
+    sudo pacman -S flatpak
+    flatpak install flathub org.raspberrypi.rpi-imager
+    flatpak run org.raspberrypi.rpi-imager
+
+    ```
+
 ## Notes
 - If Neovim misbehaves, view logs with:
   ```vim
