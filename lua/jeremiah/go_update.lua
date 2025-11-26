@@ -1,9 +1,5 @@
 local M = {}
 
-local function resolve_executable()
-    return vim.g.nvim_helper_command or 'nvim-helper'
-end
-
 local function resolve_target_version()
     local version = vim.g.go_update_target_version
     if version == nil or version == '' then

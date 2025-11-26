@@ -12,7 +12,7 @@ local function run_helper(input)
         return runner_override(input)
     end
 
-    local executable = vim.g.nvim_helper_command or vim.g.b64flip_command or 'nvim-helper'
+    local executable = vim.loop.os_homedir() .. '/go/bin/nvim-helper'
     if vim.fn.executable(executable) ~= 1 then
         vim.notify('nvim-helper is not installed. See README for installation steps.', vim.log.levels.ERROR)
         return nil
