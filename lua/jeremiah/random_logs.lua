@@ -28,7 +28,23 @@ function M.insert_todo_log()
         return
     end
 
-    local line = 'log.Printf("todo remove ' .. random_str .. '")'
+    local filetype = vim.bo.filetype
+    local line_generators = {
+        go = function(id)
+            return 'log.Printf("todo remove ' .. id .. '")'
+        end,
+        rust = function(id)
+            return 'println!("todo remove {}", "' .. id .. '");'
+        end,
+    }
+
+    local generator = line_generators[filetype]
+    if not generator then
+        vim.notify('random_logs: unsupported filetype ' .. filetype, vim.log.levels.WARN)
+        return
+    end
+
+    local line = generator(random_str)
     vim.api.nvim_put({ line }, 'c', true, true)
 end
 
