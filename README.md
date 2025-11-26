@@ -273,6 +273,31 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     flatpak run org.raspberrypi.rpi-imager
 
     ```
+46. AP mode in case you don't have a wireless AP handy:
+ref: https://wiki.archlinux.org/title/Software_access_point
+    ```
+    sudo pacman -S hostapd
+    sudo pacman -S dnsmasq
+    in /etc/hostapd/hostapd.conf
+        set ssid, wpa_passphrase, 
+        enable ieee80211n, ieee80211d, ieee80211ac, ieee80211ax, 
+        disable require_ht (windows wants this)
+        set: wpa=2, wpa_key_mgmt=WPA-PSK, rsn_pairwise=CCMP, country_code=US 
+    sudo systemctl enable hostapd
+    sudo systemctl start hostapd
+    sudo systemctl enable dnsmasq
+    sudo systemctl start dnsmasq
+    sudo mkdir /etc/systemd/system/hostapd.service.d
+    sudo nvim /etc/systemd/system/hostapd.service.d/override.conf
+
+[Unit]
+BindsTo=sys-subsystem-net-devices-wlan0.device
+After=sys-subsystem-net-devices-wlan0.device
+
+    # check active dns leases
+    cat /var/lib/misc/dnsmasq.leases
+    
+    ```
 
 ## Notes
 - If Neovim misbehaves, view logs with:
