@@ -34,24 +34,17 @@ local M = {
                 },
             })
 
-            require("nvim-treesitter.config").setup({
-                modules = {},
-                auto_install = true,
-                sync_install = false,
-                ignore_install = {},
-                highlight = {
-                    enable = true,
-                    disable = {},
-                    additional_vim_regex_highlighting = false,
-                },
-                incremental_selection = {
-                    enable = true,
-                    init_selection = "gnn",
-                    node_incremental = "grn",
-                    node_decremental = "grm",
-                },
-                -- Treesitter indent had previously caused cursor placement issues on new lines.
-                -- indent = { enable = true },
+            -- The new nvim-treesitter rewrite does not auto-enable highlights.
+            -- Attach the Treesitter highlighter for every FileType so the `@`
+            -- highlight groups from colors.lua are actually used (fallback is
+            -- legacy Vim syntax).
+            local ts_group = vim.api.nvim_create_augroup("JeremiahTreesitter", { clear = true })
+            vim.api.nvim_create_autocmd("FileType", {
+                group = ts_group,
+                pattern = "*",
+                callback = function(args)
+                    pcall(vim.treesitter.start, args.buf)
+                end,
             })
         end,
     },
