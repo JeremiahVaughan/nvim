@@ -299,6 +299,19 @@ After=sys-subsystem-net-devices-wlan0.device
     
     ```
 
+47. Fixing path issues for GUI applicaitons like NEOVIDE
+Set env vars like $PATH in: ~/.config/hypr/envs.conf. This lets your
+```
+env = PATH,/home/piegarden/.local/opt/go/bin:/home/piegarden/go/bin:$PATH
+```
+Reload for changes to take effect:
+```
+hyperctl reload
+# then restart session (reload alone isn't enough)
+```
+
+
+
 ## Notes
 - If Neovim misbehaves, view logs with:
   ```vim

@@ -132,3 +132,4 @@ vim.api.nvim_set_keymap('n', '<leader>/', ':nohlsearch<CR>', { noremap = true, s
 
 -- no mouse
 vim.opt.mouse = ""
+
