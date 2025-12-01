@@ -250,10 +250,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
 
 
 
-
-42. Move `.ideavimrc` to the home directory and restart JetBrains.
-
-43. Install the `nvim-helper` CLI used by `<leader>b` and the random log helpers.
+44. Install the `nvim-helper` CLI used by `<leader>b` and the random log helpers.
    ```bash
    cd ~/.config/nvim/tools/nvim-helper
    go install
@@ -263,7 +260,7 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
    - Run `make base64-test` to execute the Neovim end-to-end check that exercises the mapping against a scratch buffer.
    - Use `:GoUpdate` inside Neovim to run the helper's Go module updater; set `vim.g.go_update_target_version` (defaults to `1.24.7`) to control the enforced `go` directive and populate the quickfix list with updated `go.mod` files.
 
-44. Install sops
+45. Install sops
     - `https://github.com/getsops/sops/releases`
 
 45. Install raspberry pi imager
@@ -306,7 +303,7 @@ env = PATH,/home/piegarden/.local/opt/go/bin:/home/piegarden/go/bin:$PATH
 ```
 Reload for changes to take effect:
 ```
-hyperctl reload
+hyprctl reload
 # then restart session (reload alone isn't enough)
 ```
 
