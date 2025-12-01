@@ -41,12 +41,6 @@ local function describe_path(path, version)
 end
 
 function M.run()
-    local executable = resolve_executable()
-    if vim.fn.executable(executable) ~= 1 then
-        vim.notify(('nvim-helper command %q not found.'):format(executable), vim.log.levels.ERROR)
-        return
-    end
-
     local version = resolve_target_version()
     local alpineVersion = resolve_target_alpine_version()
     local command = { executable, 'go-update', '--version', version, '--alpine-version', alpineVersion}
