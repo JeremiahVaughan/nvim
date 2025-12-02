@@ -34,6 +34,24 @@ local M = {
                 },
             })
 
+            require("nvim-treesitter.configs").setup({
+                modules = {},
+                auto_install = true,
+                sync_install = false,
+                ignore_install = {},
+                highlight = {
+                    enable = true,
+                    disable = {},
+                    additional_vim_regex_highlighting = false,
+                },
+                incremental_selection = {
+                    enable = true,
+                    init_selection = "gnn",
+                    node_incremental = "grn",
+                    node_decremental = "grm",
+                },
+            })
+
             -- The new nvim-treesitter rewrite does not auto-enable highlights.
             -- Attach the Treesitter highlighter for every FileType so the `@`
             -- highlight groups from colors.lua are actually used (fallback is
