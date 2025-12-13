@@ -287,6 +287,7 @@ ref: https://wiki.archlinux.org/title/Software_access_point
     sudo mkdir /etc/systemd/system/hostapd.service.d
     sudo nvim /etc/systemd/system/hostapd.service.d/override.conf
 
+
 [Unit]
 BindsTo=sys-subsystem-net-devices-wlan0.device
 After=sys-subsystem-net-devices-wlan0.device
@@ -307,6 +308,9 @@ hyprctl reload
 # then restart session (reload alone isn't enough)
 ```
 
+47. Install LVFS to update bios
+    ```
+    sudo pacman -S fwupd
 
 
 ## Notes
