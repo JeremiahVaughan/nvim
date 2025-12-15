@@ -5,6 +5,10 @@ import (
 
 opts := &server.Options{ 
     Port: 3000,
+	Websocket: server.WebsocketOpts{
+		Host:  "0.0.0.0",
+		Port:  4430,
+	},
 }
 ns, err := server.NewServer(opts)
 if err != nil {
