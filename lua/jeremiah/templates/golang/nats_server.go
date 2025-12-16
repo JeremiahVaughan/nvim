@@ -3,6 +3,7 @@ import (
 	"github.com/nats-io/nats-server/v2/server"
 )
 
+// When behind proxy make sure the clients configure nats.ProxyPath, see ./nats_client.go
 opts := &server.Options{ 
     Port: 3000,
 	Authorization: "some-super-secret-token",
