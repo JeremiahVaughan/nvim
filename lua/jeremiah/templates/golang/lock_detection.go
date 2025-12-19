@@ -3,6 +3,7 @@
 // -- Set busy_timeout to 5000 milliseconds (5 seconds)
 // -- This ensures SQLite will wait up to 5 seconds for a lock before returning SQLITE_BUSY
 // PRAGMA busy_timeout = 5000;
+// PRAGMA journal_mode = WAL;
 
 // -- Create a test table for health check lock testing
 // -- This table is used to test database lock detection
