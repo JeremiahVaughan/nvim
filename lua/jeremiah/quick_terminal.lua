@@ -1,5 +1,9 @@
 -- Key mapping to toggle (start/restart) the server
 vim.api.nvim_set_keymap('n', '<leader>t', ':lua ToggleQuickTerminal("b")<CR>', { noremap = true, silent = true })
+
+-- The other way to handle this flow is to add watchers to trigger rebuids on file saves. 
+-- However this tempts you to not check the startup logs and go strait to the browser to see changes. 
+-- This causes a lot of confusion because if the startup fails or encounters issues like failed template parsing, the browser tries to pretend like everything is ok (half rendering, no page refresh, etc).
 vim.api.nvim_set_keymap('n', '<leader>r', ':lua RebuildQuickTerminal("b")<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>rr', ':lua ToggleQuickTerminal("r")<CR>', { noremap = true, silent = true })
 
