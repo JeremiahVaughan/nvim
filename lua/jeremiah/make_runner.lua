@@ -78,7 +78,7 @@ end
 
 local function run_cargo_tests_with_capture()
     local current_win = vim.api.nvim_get_current_win()
-    vim.cmd('botright split')
+    vim.cmd('botright vsplit')
     local win = vim.api.nvim_get_current_win()
     local term_buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_win_set_buf(win, term_buf)
@@ -97,10 +97,18 @@ local function run_cargo_tests_with_capture()
 
     local function on_exit(_, code, _)
         vim.schedule(function()
+            if vim.api.nvim_win_is_valid(current_win) then
+                vim.api.nvim_set_current_win(current_win)
+                vim.cmd('stopinsert')
+            end
+            if vim.api.nvim_win_is_valid(win) then
+                local line_count = vim.api.nvim_buf_line_count(term_buf)
+                pcall(vim.api.nvim_win_set_cursor, win, { line_count, 0 })
+            end
             local qf = parse_test_output(output)
             if #qf > 0 then
                 vim.fn.setqflist(qf, 'r')
-                vim.cmd('copen')
+                vim.cmd('belowright copen')
                 vim.cmd('cfirst')
             elseif code == 0 then
                 vim.fn.setqflist({}, 'r')
@@ -131,6 +139,10 @@ local function run_cargo_tests_with_capture()
     end
     if vim.api.nvim_win_is_valid(current_win) then
         vim.api.nvim_set_current_win(current_win)
+    end
+    if vim.api.nvim_win_is_valid(win) then
+        local line_count = vim.api.nvim_buf_line_count(term_buf)
+        pcall(vim.api.nvim_win_set_cursor, win, { line_count, 0 })
     end
 end
 
@@ -228,7 +240,7 @@ local function run_cargo_quickfix()
     local qf = parse_cargo_json(lines)
     if #qf > 0 then
         vim.fn.setqflist(qf, 'r')
-        vim.cmd('copen')
+        vim.cmd('belowright copen')
         vim.cmd('cfirst')
     elseif exit_code == 0 then
         vim.fn.setqflist({}, 'r')
