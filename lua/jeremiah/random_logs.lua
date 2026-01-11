@@ -65,6 +65,5 @@ function M._set_runner_override(fn)
 end
 
 vim.keymap.set('n', '<leader>i', M.insert_todo_log, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>r', M.insert_random_string, { noremap = true, silent = true })
 
 return M
