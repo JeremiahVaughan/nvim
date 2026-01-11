@@ -16,12 +16,8 @@ vim.keymap.set('t', '<C-q>', [[<C-\><C-n>]], { noremap = true, silent = true })
 -- Normal mode: disable <C-q>
 vim.keymap.set('n', '<C-q>', '<Nop>', { noremap = true, silent = true })
 
-
-vim.api.nvim_create_user_command("M", function()
-    jeremiah.utils.SaveAll()
-    vim.cmd("compiler make") -- reset makeprg/errorformat before running :make
-    vim.cmd("make")
-end, { desc = "Save buffers and run make" })
+-- debug logs for make_runner
+-- vim.g.make_runner_debug = true
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -132,4 +128,3 @@ vim.api.nvim_set_keymap('n', '<leader>/', ':nohlsearch<CR>', { noremap = true, s
 
 -- no mouse
 vim.opt.mouse = ""
-
