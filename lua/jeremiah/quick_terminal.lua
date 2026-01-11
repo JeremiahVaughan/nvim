@@ -1,5 +1,6 @@
 -- Key mapping to toggle (start/restart) the server
 vim.api.nvim_set_keymap('n', '<leader>t', ':lua ToggleQuickTerminal("b")<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>r', ':lua RebuildQuickTerminal("b")<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>rr', ':lua ToggleQuickTerminal("r")<CR>', { noremap = true, silent = true })
 
 -- Function to open a new terminal buffer and run the server
@@ -33,4 +34,25 @@ function ToggleQuickTerminal(label)
 		-- Server is not running, so start it
 		OpenQuickTerminal(label)
 	end
+end
+
+local function SendToTerminal(buf, text)
+	local ok, job_id = pcall(vim.api.nvim_buf_get_var, buf, 'terminal_job_id')
+	if not ok then
+		return
+	end
+	vim.api.nvim_chan_send(job_id, text)
+end
+
+function RebuildQuickTerminal(label)
+	jeremiah.utils.SaveAll()
+	local buf = FindServerTerminalBuffer(label)
+	if buf then
+		vim.api.nvim_set_current_buf(buf)
+		SendToTerminal(buf, '\x03')
+	else
+		OpenQuickTerminal(label)
+		buf = vim.api.nvim_get_current_buf()
+	end
+	SendToTerminal(buf, 'make b\n')
 end
