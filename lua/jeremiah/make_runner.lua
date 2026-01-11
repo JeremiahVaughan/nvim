@@ -112,6 +112,7 @@ local function run_cargo_tests_with_capture()
                 vim.cmd('cfirst')
             elseif code == 0 then
                 vim.fn.setqflist({}, 'r')
+                vim.cmd('cclose')
             else
                 vim.fn.setqflist({}, 'r')
                 vim.notify('Tests failed but no file:line could be parsed.', vim.log.levels.WARN)
@@ -244,6 +245,7 @@ local function run_cargo_quickfix()
         vim.cmd('cfirst')
     elseif exit_code == 0 then
         vim.fn.setqflist({}, 'r')
+        vim.cmd('cclose')
     end
     return exit_code == 0
 end
