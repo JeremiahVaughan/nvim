@@ -36,6 +36,9 @@ function M.insert_todo_log()
         rust = function(id)
             return 'println!("todo remove {}", "' .. id .. '");'
         end,
+        javascript = function(id)
+            return 'console.log("todo remove ' .. id .. '");'
+        end,
     }
 
     local generator = line_generators[filetype]
