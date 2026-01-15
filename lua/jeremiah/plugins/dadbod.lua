@@ -8,4 +8,11 @@ local M = {
     },
 }
 
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "dbui", "dbout" },
+    callback = function()
+        vim.opt_local.winfixbuf = true
+    end,
+})
+
 return M
