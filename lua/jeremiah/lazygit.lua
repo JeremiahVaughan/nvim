@@ -1,16 +1,47 @@
 -- Adding shortcut to save current file and open lazygit
 vim.api.nvim_set_keymap('n', '<leader>gg', ':lua ToggleLazyGitTerminal()<CR>', { noremap = true, silent = true })
 
+-- Function to find the terminal buffer labeled as "lazygit"
+function FindLazyGitTerminalBuffer()
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_valid(buf) and vim.b[buf].is_lazygit_terminal then
+            return buf
+        end
+    end
+    return nil
+end
+
+local function FindLazyGitTerminalWindow(buf)
+    for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tab)) do
+            if vim.api.nvim_win_is_valid(win) and vim.api.nvim_win_get_buf(win) == buf then
+                return { tab = tab, win = win }
+            end
+        end
+    end
+    return nil
+end
+
 -- Function to open a new terminal buffer and run the server
 function OpenLazyGitTerminal()
-    jeremiah.utils.OpenTerminalTabKind('lazygit', 'lazygit')
+    -- Open a new tab and start a terminal
+    vim.cmd('tabnew')
+    vim.cmd('te lazygit')
+    vim.b.is_lazygit_terminal = true
 end
 
 function ToggleLazyGitTerminal()
     jeremiah.utils.SaveAll()
-    local buf = jeremiah.utils.FindTerminalBuffer('lazygit')
+    local buf = FindLazyGitTerminalBuffer()
     if buf then
-        jeremiah.utils.FocusBufferInTab(buf)
+        local location = FindLazyGitTerminalWindow(buf)
+        if location then
+            vim.api.nvim_set_current_tabpage(location.tab)
+            vim.api.nvim_set_current_win(location.win)
+        else
+            vim.cmd('tabnew')
+            vim.api.nvim_set_current_buf(buf)
+        end
     else
         OpenLazyGitTerminal()
     end
