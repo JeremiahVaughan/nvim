@@ -1,5 +1,4 @@
 require("jeremiah.plugin-manager")
-require("jeremiah.1password")
 require("jeremiah.base64")
 require("jeremiah.chatgpt")
 require("jeremiah.colors")
