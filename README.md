@@ -321,3 +321,17 @@ hyprctl reload
 
 ## References
 - https://github.com/nvim-treesitter/nvim-treesitter/wiki/Windows-support
+
+# Using vim-dadbod
+Command to open vim-dadbod
+```
+:DBUI 
+```
+Connection string format for sqlite
+```
+sqlite://<file-system-path>
+```
+Example:
+```
+sqlite:///data/data.db
+```
