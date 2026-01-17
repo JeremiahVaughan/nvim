@@ -76,6 +76,7 @@ local M = {
                         "%.git/",
                         "debug",
                         "target",
+                        "vendor",
                     },
                     layout_strategy = "flex",
                     layout_config = {
