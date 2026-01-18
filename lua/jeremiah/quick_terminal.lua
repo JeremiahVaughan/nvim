@@ -58,5 +58,5 @@ function RebuildQuickTerminal(label)
 		OpenQuickTerminal(label)
 		buf = vim.api.nvim_get_current_buf()
 	end
-	SendToTerminal(buf, 'make b\n')
+	SendToTerminal(buf, ' make b\n') -- Adding a space at the beginning of the command because for some reason (probably timing) the first char is getting cut off
 end
