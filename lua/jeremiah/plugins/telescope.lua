@@ -69,14 +69,15 @@ local M = {
                         "!.git/*",
                     },
                     file_ignore_patterns = {
-                        "node_modules",
+                        "node_modules", -- heaviest object in the known universe
                         "%.jpg",
                         "%.png",
                         "%.git\\",
                         "%.git/",
-                        "debug",
-                        "target",
-                        "vendor",
+                        "debug", -- rust dev artifacts
+                        "target", -- rust artifacts
+                        "vendor", -- golang keyword
+                        "vendoring", -- custom keyword to not conflict with golang keyword but means same thing
                     },
                     layout_strategy = "flex",
                     layout_config = {
