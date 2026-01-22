@@ -340,3 +340,16 @@ Example:
 ```
 sqlite:///data/data.db
 ```
+
+
+# Usage:
+## Setup
+```
+sudo apt-get install graphviz -y
+```
+## Generate profile and view:
+```
+make p
+go tool pprof http://localhost:8081/debug/pprof/profile?seconds=30
+go tool pprof -http=:8082 http://localhost:8081/debug/pprof/profile?seconds=1
+```
