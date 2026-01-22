@@ -269,6 +269,11 @@ Main goal of my setup: Be platform agnostic, so it should be a very similar expe
     flatpak install flathub org.raspberrypi.rpi-imager
     flatpak run org.raspberrypi.rpi-imager
 
+    or
+
+    install without flatpak 
+    sudo -E rpi-imager
+
     ```
 46. AP mode in case you don't have a wireless AP handy:
 ref: https://wiki.archlinux.org/title/Software_access_point
