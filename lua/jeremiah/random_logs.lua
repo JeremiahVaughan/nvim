@@ -39,6 +39,9 @@ function M.insert_todo_log()
         javascript = function(id)
             return 'console.log("todo remove ' .. id .. '");'
         end,
+        sh = function(id)
+            return 'echo "todo remove ' .. id .. '"'
+        end,
     }
 
     local generator = line_generators[filetype]
