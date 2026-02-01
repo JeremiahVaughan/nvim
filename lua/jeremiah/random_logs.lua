@@ -42,6 +42,9 @@ function M.insert_todo_log()
         sh = function(id)
             return 'echo "todo remove ' .. id .. '"'
         end,
+        lua = function(id)
+            return 'vim.notify("todo remove ' .. id .. '")'
+        end,
     }
 
     local generator = line_generators[filetype]

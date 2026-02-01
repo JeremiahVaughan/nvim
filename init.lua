@@ -128,3 +128,29 @@ vim.api.nvim_set_keymap('n', '<leader>/', ':nohlsearch<CR>', { noremap = true, s
 
 -- no mouse
 vim.opt.mouse = ""
+
+-- Reload entire config without restarting Neovim.
+vim.api.nvim_create_user_command("ReloadConfig", function()
+    -- Clear your lua modules so they can be re-required
+    for name, _ in pairs(package.loaded) do
+        if name:match("^jeremiah") then
+            package.loaded[name] = nil
+        end
+    end
+
+    local config_dir = vim.fn.stdpath("config")
+    vim.cmd("luafile " .. config_dir .. "/init.lua")
+
+    -- Reload ginit.vim if present (GUI-specific settings)
+    local ginit = config_dir .. "/ginit.vim"
+    if vim.fn.filereadable(ginit) == 1 then
+        vim.cmd("source " .. ginit)
+    end
+
+    -- Reload all plugins, uncomment if it turns out you need this
+    -- pcall(function()
+    --     require("lazy").reload()
+    -- end)
+
+    vim.notify("Config reloaded", vim.log.levels.INFO)
+end, {})
