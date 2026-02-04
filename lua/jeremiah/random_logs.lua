@@ -40,7 +40,7 @@ function M.insert_todo_log()
             return 'console.log("todo remove ' .. id .. '");'
         end,
         sh = function(id)
-            return 'echo "todo remove ' .. id .. '"'
+            return 'echo "todo remove ' .. id .. '" >&2'
         end,
         lua = function(id)
             return 'vim.notify("todo remove ' .. id .. '")'
