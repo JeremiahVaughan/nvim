@@ -78,6 +78,7 @@ local M = {
                         "target", -- rust artifacts
                         "vendor", -- golang keyword
                         "vendoring", -- custom keyword to not conflict with golang keyword but means same thing
+                        ".gocache",
                     },
                     layout_strategy = "flex",
                     layout_config = {
