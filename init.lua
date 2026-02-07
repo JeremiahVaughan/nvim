@@ -51,8 +51,10 @@ vim.opt.shiftwidth = 4        -- Size of an indent
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 
-vim.opt.expandtab = true
--- vim.opt.expandtab = false -- using tab chars because they are required in makefiles, and I also like how the placeholder char forms a line, so I can see scope much easier
+
+-- Using tab chars because they are required in makefiles, and
+-- I also like how the placeholder char forms a line, so I can see scope much easier
+vim.opt.expandtab = false 
 
 
 vim.opt.hlsearch = true  -- Highlight search results
