@@ -9,6 +9,7 @@ local plugin_modules = {
     "jeremiah.plugins.treesitter",
     "jeremiah.plugins.harpoon",
     "jeremiah.plugins.gitsigns",
+    "jeremiah.plugins.emoji",
     -- "jeremiah.plugins.fzf",
 }
 
