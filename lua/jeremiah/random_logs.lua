@@ -38,6 +38,9 @@ function M.insert_todo_log()
         end,
         javascript = function(id)
             return 'console.log("todo remove ' .. id .. '");'
+		end,
+        html = function(id)
+            return 'console.log("todo remove ' .. id .. '");'
         end,
         sh = function(id)
             return 'echo "todo remove ' .. id .. '" >&2'
