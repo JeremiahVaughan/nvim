@@ -39,7 +39,7 @@ local M = {
             vim.api.nvim_set_keymap("n", "<leader>sg", ":Telescope live_grep<CR>", { noremap = true, silent = true })
             vim.api.nvim_set_keymap("n", "<leader>ss", ":Telescope grep_string<CR>", { noremap = true, silent = true })
             vim.api.nvim_set_keymap("n", "<leader>sb", ":Telescope buffers<CR>", { noremap = true, silent = true })
-            vim.api.nvim_set_keymap("n", "<leader>sr", ":Telescope registers<CR>", { noremap = true, silent = true })
+            vim.api.nvim_set_keymap("n", "<leader>sR", ":Telescope registers<CR>", { noremap = true, silent = true })
             vim.api.nvim_set_keymap("n", "<leader>sc", ":Telescope command_history<CR>", { noremap = true, silent = true })
             vim.api.nvim_set_keymap("n", "<leader>sqf", ":Telescope quickfix<CR>", { noremap = true, silent = true })
             vim.api.nvim_set_keymap("n", "<leader>sqh", ":Telescope quickfixhistory<CR>", { noremap = true, silent = true })
@@ -79,6 +79,8 @@ local M = {
                         "vendor", -- golang keyword
                         "vendoring", -- custom keyword to not conflict with golang keyword but means same thing
                         ".gocache",
+						".stfolder",
+						".stignore",
                     },
                     layout_strategy = "flex",
                     layout_config = {
@@ -103,6 +105,12 @@ local M = {
             vim.keymap.set("n", "<leader>sn", function()
                 tele_builtin.find_files({ cwd = vim.fn.stdpath("config") })
             end, { desc = "[S]earch [N]eovim files" })
+
+            vim.keymap.set("n", "<leader>sr", function()
+				tele_builtin.find_files({
+					cwd = vim.fn.expand("~/deploy/wiki-data"),
+				})
+            end, { desc = "[S]earch [R]eference files" })
 
             vim.keymap.set("n", "<leader>st", function()
                 tele_builtin.find_files({ cwd = vim.fn.stdpath("config") .. "/lua/jeremiah/templates" })
