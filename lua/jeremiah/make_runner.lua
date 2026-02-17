@@ -262,6 +262,12 @@ function M.run()
     end
 
     vim.cmd('compiler make')
+    local nproc = vim.fn.trim(vim.fn.system('nproc 2>/dev/null') or '')
+    if nproc == '' or tonumber(nproc) == nil or tonumber(nproc) < 1 then
+        nproc = '1'
+    end
+    vim.opt.makeprg = 'make -j' .. nproc
+    vim.notify('make -j' .. nproc .. ' (using ' .. nproc .. ' cores)', vim.log.levels.INFO)
     vim.cmd('make')
 end
 
