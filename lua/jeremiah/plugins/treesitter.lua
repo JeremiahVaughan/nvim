@@ -34,7 +34,7 @@ local M = {
                 },
             })
 
-            require("nvim-treesitter.configs").setup({
+            require("nvim-treesitter.config").setup({
                 modules = {},
                 auto_install = true,
                 sync_install = false,
