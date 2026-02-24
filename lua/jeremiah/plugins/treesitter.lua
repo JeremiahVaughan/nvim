@@ -34,7 +34,7 @@ local M = {
                     end,
                 },
             })
-
+			require('nvim-treesitter.install').compilers = { "zig", "gcc", "clang" } 
             require("nvim-treesitter.config").setup({
                 modules = {},
                 auto_install = true,
