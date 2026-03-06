@@ -1,3 +1,6 @@
+-- ensure go binary is always found
+vim.env.PATH = vim.env.HOME .. "/.local/opt/go/bin:" .. vim.env.PATH
+
 -- Reference: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 -- Book mark: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L701
 
