@@ -3,6 +3,10 @@ local M = {}
 vim.opt.cursorline = true
 vim.opt.termguicolors = true -- without this option set to true, alacritty does not show color when nvim is ran over ssh
 
+-- Completion suggestions for directories so they don't turn up as very dark blue
+vim.g.terminal_color_4 = "#7aa2f7"
+vim.g.terminal_color_12 = "#7aa2f7"
+
 -- Line number colors
 vim.api.nvim_set_hl(0, 'LineNrAbove', { fg = '#75aaff' })
 vim.api.nvim_set_hl(0, 'LineNrBelow', { fg = '#008518' })
