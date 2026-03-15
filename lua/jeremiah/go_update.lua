@@ -43,7 +43,13 @@ end
 function M.run()
     local version = resolve_target_version()
     local alpineVersion = resolve_target_alpine_version()
-    local command = { 'nvim-helper', 'go-update', '--version', version, '--alpine-version', alpineVersion}
+    local executable = vim.loop.os_homedir() .. '/go/bin/nvim-helper'
+    if vim.fn.executable(executable) ~= 1 then
+        vim.notify('nvim-helper is not installed. See README for installation steps.', vim.log.levels.ERROR)
+        return
+    end
+
+    local command = { executable, 'go-update', '--version', version, '--alpine-version', alpineVersion }
 
     local raw_output = vim.fn.system(command)
     local exit_code = vim.v.shell_error
