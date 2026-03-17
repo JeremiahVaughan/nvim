@@ -4,46 +4,11 @@ local SEPARATOR = "────────────────────�
 local SEPARATOR_END = "────────────────────────────────────────────────────────"
 
 local function get_visual_selection()
-    local buf = vim.api.nvim_get_current_buf()
-    local start_pos = vim.api.nvim_buf_get_mark(buf, "<")
-    local end_pos = vim.api.nvim_buf_get_mark(buf, ">")
-    if not start_pos or not end_pos then
-        return ""
-    end
-    local start_row = math.min(start_pos[1], end_pos[1])
-    local end_row = math.max(start_pos[1], end_pos[1])
-    local first_col = (start_pos[1] <= end_pos[1]) and start_pos[2] or end_pos[2]
-    local last_col = (start_pos[1] <= end_pos[1]) and end_pos[2] or start_pos[2]
-
-    local lines = vim.api.nvim_buf_get_lines(buf, start_row - 1, end_row, false)
-    if #lines == 0 then
-        return ""
-    end
-
-    local col_start = math.min(first_col, last_col) + 1
-    local col_end = math.max(first_col, last_col) + 1
-
-    local parts = {}
-    for i, line in ipairs(lines) do
-        local first, last = (i == 1), (i == #lines)
-        local s, e
-        if first and last then
-            s = col_start
-            e = math.min(col_end, #line)
-        elseif first then
-            s = first_col + 1
-            e = #line
-        elseif last then
-            s = 1
-            e = math.min(last_col + 1, #line)
-        else
-            s = 1
-            e = #line
-        end
-        table.insert(parts, line:sub(s, e))
-    end
-    local selected = table.concat(parts, "\n")
-    return selected:match("^%s*(.-)%s*$") or selected
+	local start_pos = vim.fn.getpos('v')
+	local end_pos = vim.fn.getpos('.')
+	local region = vim.fn.getregion(start_pos, end_pos, { type = vim.fn.mode() })
+	local selection = table.concat(region, "\n")
+	return selection
 end
 
 local function execute_and_append()
