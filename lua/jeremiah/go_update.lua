@@ -3,7 +3,7 @@ local M = {}
 local function resolve_target_version()
     local version = vim.g.go_update_target_version
     if version == nil or version == '' then
-        return '1.25.8'
+        return '1.26.1'
     end
     return tostring(version)
 end
