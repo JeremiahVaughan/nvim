@@ -58,3 +58,5 @@ vim.api.nvim_create_user_command(
   end,
   { desc = "ripgrep for current search pattern" }
 )
+
+vim.opt.grepprg = "rg --vimgrep --hidden --glob '!.git/*'"
