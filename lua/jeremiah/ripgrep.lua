@@ -1,5 +1,8 @@
 
 -- In case grep is used in the command line, ensuring it is set to ripgrep
+local ignorePatterns = { "--glob", "!.git/*", "--glob", "!**/vendor/*" }
+local ignoreStr = table.concat(ignorePatterns, " ")
+
 vim.api.nvim_create_user_command(
   "G",
   function()
@@ -18,14 +21,15 @@ vim.api.nvim_create_user_command(
       table.insert(rg_opts, "-F")
     end
     pat = pat:gsub("\\/", "/")
-    local cmd = ("rg %s %s ."):format(
+    local cmd = ("rg %s %s %s ."):format(
       table.concat(rg_opts, " "),
+      ignoreStr,
       vim.fn.shellescape(pat)
     )
     -- Run :grep {pat} .   ( '.' = current dir; grepprg runs ripgrep )
 
     -- for debugging uncomment
-    print("RG CMD:", cmd)
+    -- print("RG CMD:", cmd)
 
     local handle = io.popen(cmd)
     if not handle then
@@ -59,4 +63,4 @@ vim.api.nvim_create_user_command(
   { desc = "ripgrep for current search pattern" }
 )
 
-vim.opt.grepprg = "rg --vimgrep --hidden --glob '!.git/*'"
+vim.opt.grepprg = "rg --vimgrep --hidden " .. ignoreStr
