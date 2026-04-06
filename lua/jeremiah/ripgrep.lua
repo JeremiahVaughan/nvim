@@ -1,6 +1,6 @@
 
 -- In case grep is used in the command line, ensuring it is set to ripgrep
-local ignorePatterns = { "--glob", "!.git/*", "--glob", "!**/vendor/*" }
+local ignorePatterns = { "--glob", "!.git/*", "--glob", "!**/vendor/*", "!**/target/*"}
 local ignoreStr = table.concat(ignorePatterns, " ")
 
 vim.api.nvim_create_user_command(
