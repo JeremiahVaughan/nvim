@@ -1,2 +1,4 @@
 .idea
 brandons_setup
+# Hyperland config tools create backup files that we don't want cluttering up version control
+*conf.bak*
