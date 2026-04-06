@@ -10,7 +10,8 @@ local plugin_modules = {
     "jeremiah.plugins.harpoon",
     "jeremiah.plugins.gitsigns",
     "jeremiah.plugins.emoji",
-    -- "jeremiah.plugins.fzf",
+	-- uncomment to enable leetcode
+    -- "jeremiah.leetcode",
 }
 
 local plugins = {}
