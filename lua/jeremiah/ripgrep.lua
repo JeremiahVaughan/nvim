@@ -1,7 +1,20 @@
 
 -- In case grep is used in the command line, ensuring it is set to ripgrep
-local ignorePatterns = { "--glob", "!.git/*", "--glob", "!**/vendor/*", "!**/target/*"}
-local ignoreStr = table.concat(ignorePatterns, " ")
+local ignorePatterns = {
+  "--glob", "!.git/**",
+  "--glob", "!**/vendor/**",
+  "--glob", "!**/target/**",
+}
+
+local function build_rg_args(base_args)
+  local args = vim.deepcopy(base_args)
+  vim.list_extend(args, ignorePatterns)
+  return args
+end
+
+local function shell_join(args)
+  return table.concat(vim.tbl_map(vim.fn.shellescape, args), " ")
+end
 
 vim.api.nvim_create_user_command(
   "G",
@@ -11,37 +24,32 @@ vim.api.nvim_create_user_command(
       vim.notify("Search register is empty", vim.log.levels.WARN)
       return
     end
-    local rg_opts = { "--vimgrep", "--case-sensitive" }
+    local rg_args = build_rg_args({ "rg", "--vimgrep", "--case-sensitive" })
     -- ripgrep can't search in-memory buffers
 	jeremiah.utils.SaveAll()
 
     -- translate leading Vim regex modifiers
     if pat:sub(1, 2) == "\\V" then         -- very nomagic → literal search
       pat = pat:sub(3)
-      table.insert(rg_opts, "-F")
+      table.insert(rg_args, "-F")
     end
     pat = pat:gsub("\\/", "/")
-    local cmd = ("rg %s %s %s ."):format(
-      table.concat(rg_opts, " "),
-      ignoreStr,
-      vim.fn.shellescape(pat)
-    )
+    table.insert(rg_args, pat)
+    table.insert(rg_args, ".")
     -- Run :grep {pat} .   ( '.' = current dir; grepprg runs ripgrep )
 
     -- for debugging uncomment
-    -- print("RG CMD:", cmd)
+    -- print("RG CMD:", shell_join(rg_args))
 
-    local handle = io.popen(cmd)
-    if not handle then
-      vim.notify("Failed to run rg", vim.log.levels.ERROR)
+    local output = vim.fn.systemlist(rg_args)
+    local exit_code = vim.v.shell_error
+    if exit_code > 1 then
+      vim.notify("Failed to run rg: " .. table.concat(output, "\n"), vim.log.levels.ERROR)
       return
     end
 
-    local output = handle:read("*a")
-    handle:close()
-
     local qf = {}
-    for line in output:gmatch("[^\r\n]+") do
+    for _, line in ipairs(output) do
       local filename, lnum, col, text = line:match("^(.-):(%d+):(%d+):(.*)$")
       if filename then
         table.insert(qf, {
@@ -63,4 +71,4 @@ vim.api.nvim_create_user_command(
   { desc = "ripgrep for current search pattern" }
 )
 
-vim.opt.grepprg = "rg --vimgrep --hidden " .. ignoreStr
+vim.opt.grepprg = shell_join(build_rg_args({ "rg", "--vimgrep", "--hidden" }))
