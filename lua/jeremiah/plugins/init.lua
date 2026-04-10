@@ -10,6 +10,7 @@ local plugin_modules = {
     "jeremiah.plugins.harpoon",
     "jeremiah.plugins.gitsigns",
     "jeremiah.plugins.emoji",
+    -- "jeremiah.plugins.himalaya",
 	-- uncomment to enable leetcode
     -- "jeremiah.leetcode",
 }
