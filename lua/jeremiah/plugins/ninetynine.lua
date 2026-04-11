@@ -55,6 +55,7 @@ local M = {
                     },
                     source = "native",
                 },
+                auto_add_skills = true,
             })
 
             vim.keymap.set("n", "<leader>9s", function()
