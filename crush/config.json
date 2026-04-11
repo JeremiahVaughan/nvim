@@ -1,4 +1,13 @@
 {
+  "$schema": "https://charm.land/crush.json",
+  "options": {
+    "disabled_skills": [
+      "crush-config"
+    ],
+    "skills_paths": [
+      "~/.config/nvim/crush/skills"
+    ]
+  },
   "models": {
     "large": {
       "model": "gemini-3-flash-preview",
@@ -7,6 +16,7 @@
       "max_tokens": 50000
     }
   },
+  "think": false,
   "recent_models": {
     "large": [
       {
