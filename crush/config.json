@@ -5,7 +5,7 @@
       "crush-config"
     ],
     "skills_paths": [
-      "~/.config/nvim/crush/skills"
+      "~/.agents/skills"
     ]
   },
   "models": {
