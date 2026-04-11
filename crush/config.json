@@ -14,5 +14,13 @@
         "provider": "gemini"
       }
     ]
+  },
+  "lsp": {
+    "go": {
+      "command": "gopls"
+    },
+    "rust": {
+      "command": "rust-analyzer"
+    }
   }
 }
