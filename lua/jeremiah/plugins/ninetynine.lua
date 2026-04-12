@@ -12,6 +12,21 @@ local M = {
             local providers = require("99.providers")
 
             local CrushProvider = setmetatable({}, { __index = providers.BaseProvider })
+            local LocalModelProvider = setmetatable({}, { __index = providers.BaseProvider })
+            local helper_executable = vim.loop.os_homedir() .. "/go/bin/nvim-helper"
+            local local_model_host = "http://192.168.1.173:11434"
+            local local_model_names = {
+                "gemma4:e2b",
+                "gemma4:e4b",
+                "gemma4:26b",
+                "gemma4:31b",
+            }
+            local local_model_preprompt = table.concat({
+                "Return only code that can be written directly to the target file.",
+                "Do not include Markdown fences.",
+                "Do not include explanations, commentary, or surrounding prose.",
+                "Do not prefix the answer with a language name.",
+            }, "\n")
 
             function CrushProvider._build_command(_, query, context)
                 return {
@@ -23,6 +38,33 @@ local M = {
 
             function CrushProvider._get_provider_name()
                 return "CrushProvider"
+            end
+
+            function LocalModelProvider._build_command(_, query, context)
+                return {
+                    helper_executable,
+                    "local-model",
+                    "--host",
+                    local_model_host,
+                    "--model",
+                    context.model,
+                    "--prompt",
+                    local_model_preprompt .. "\n\n" .. query,
+                    "--output",
+                    context.tmp_file,
+                }
+            end
+
+            function LocalModelProvider._get_provider_name()
+                return "LocalModel"
+            end
+
+            function LocalModelProvider._get_default_model()
+                return local_model_names[1]
+            end
+
+            function LocalModelProvider.fetch_models(callback)
+                callback(vim.deepcopy(local_model_names), nil)
             end
 
             local function with_telescope_extension(method)
@@ -37,6 +79,9 @@ local M = {
 
             local cwd = vim.uv.cwd()
             local basename = vim.fs.basename(cwd)
+
+            _99.Providers.CrushProvider = CrushProvider
+            _99.Providers.LocalModel = LocalModelProvider
 
             _99.setup({
                 provider = CrushProvider,

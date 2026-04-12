@@ -1,14 +1,17 @@
 package main
 
 import (
+	"bytes"
 	"crypto/rand"
 	"encoding/base64"
+	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
 	"io"
 	"io/fs"
 	"math/big"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -20,9 +23,10 @@ import (
 )
 
 var (
-	commandRunner            = defaultCommandRunner
-	goUpdateOutput io.Writer = os.Stdout
-	dockerfileVersionRegexp  = regexp.MustCompile(`golang:\d+(?:\.\d+){1,2}-alpine\d+(\.)\d+`)
+	commandRunner                     = defaultCommandRunner
+	goUpdateOutput          io.Writer = os.Stdout
+	dockerfileVersionRegexp           = regexp.MustCompile(`golang:\d+(?:\.\d+){1,2}-alpine\d+(\.)\d+`)
+	httpClient                        = http.DefaultClient
 )
 
 func main() {
@@ -54,6 +58,8 @@ func run(args []string) error {
 			return nil
 		case "go-update":
 			return goUpdate(args[1:])
+		case "local-model":
+			return localModelGenerate(args[1:])
 		default:
 			return fmt.Errorf("unknown subcommand %q", args[0])
 		}
@@ -140,6 +146,78 @@ func randomString(length int) (string, error) {
 	}
 
 	return string(result), nil
+}
+
+type localModelRequest struct {
+	Model  string `json:"model"`
+	Prompt string `json:"prompt"`
+	Stream bool   `json:"stream"`
+}
+
+type localModelResponse struct {
+	Response string `json:"response"`
+}
+
+func localModelGenerate(args []string) error {
+	flagSet := flag.NewFlagSet("local-model", flag.ContinueOnError)
+	flagSet.SetOutput(io.Discard)
+	host := flagSet.String("host", "http://192.168.1.173:11434", "base URL for the local model API")
+	model := flagSet.String("model", "gemma4:31b", "model name to request")
+	prompt := flagSet.String("prompt", "", "prompt text to send")
+	outputPath := flagSet.String("output", "", "file path to write the response body to")
+	if err := flagSet.Parse(args); err != nil {
+		return err
+	}
+	if *prompt == "" {
+		return fmt.Errorf("local-model requires --prompt=<prompt>")
+	}
+	if *outputPath == "" {
+		return fmt.Errorf("local-model requires --output=<path>")
+	}
+	if flagSet.NArg() > 0 {
+		return fmt.Errorf("unexpected argument %q", flagSet.Arg(0))
+	}
+
+	requestBody, err := json.Marshal(localModelRequest{
+		Model:  *model,
+		Prompt: *prompt,
+		Stream: false,
+	})
+	if err != nil {
+		return fmt.Errorf("marshal request: %w", err)
+	}
+
+	endpoint := strings.TrimRight(*host, "/") + "/api/generate"
+	req, err := http.NewRequest(http.MethodPost, endpoint, bytes.NewReader(requestBody))
+	if err != nil {
+		return fmt.Errorf("build request: %w", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := httpClient.Do(req)
+	if err != nil {
+		return fmt.Errorf("post %s: %w", endpoint, err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("read response: %w", err)
+	}
+	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
+		return fmt.Errorf("local model request failed with status %d: %s", resp.StatusCode, strings.TrimSpace(string(body)))
+	}
+
+	var payload localModelResponse
+	if err := json.Unmarshal(body, &payload); err != nil {
+		return fmt.Errorf("decode response JSON: %w", err)
+	}
+
+	if err := os.WriteFile(*outputPath, []byte(payload.Response), 0o644); err != nil {
+		return fmt.Errorf("write output %s: %w", *outputPath, err)
+	}
+
+	return nil
 }
 
 func goUpdate(args []string) error {

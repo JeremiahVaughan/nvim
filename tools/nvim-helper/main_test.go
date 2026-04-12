@@ -3,13 +3,22 @@ package main
 import (
 	"bytes"
 	"encoding/base64"
+	"encoding/json"
 	"errors"
+	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"sort"
 	"strings"
 	"testing"
 )
+
+type roundTripFunc func(*http.Request) (*http.Response, error)
+
+func (fn roundTripFunc) RoundTrip(req *http.Request) (*http.Response, error) {
+	return fn(req)
+}
 
 func TestToggleBase64Decode(t *testing.T) {
 	got := toggleBase64("SGVsbG8=\n")
@@ -93,6 +102,92 @@ func TestRandomStringInvalidLength(t *testing.T) {
 func TestRunUnknownCommand(t *testing.T) {
 	if err := run([]string{"nope"}); err == nil {
 		t.Fatalf("expected error for unknown command")
+	}
+}
+
+func TestLocalModelGenerateWritesResponse(t *testing.T) {
+	tempDir := t.TempDir()
+	outputPath := filepath.Join(tempDir, "response.txt")
+
+	origHTTPClient := httpClient
+	httpClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			if r.URL.String() != "http://example.test/api/generate" {
+				t.Fatalf("unexpected URL %q", r.URL.String())
+			}
+			if got := r.Header.Get("Content-Type"); !strings.HasPrefix(got, "application/json") {
+				t.Fatalf("unexpected content type %q", got)
+			}
+
+			var req localModelRequest
+			if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+				t.Fatalf("failed to decode request: %v", err)
+			}
+			if req.Model != "gemma4:31b" {
+				t.Fatalf("unexpected model %q", req.Model)
+			}
+			if req.Prompt != "hello there" {
+				t.Fatalf("unexpected prompt %q", req.Prompt)
+			}
+			if req.Stream {
+				t.Fatalf("expected stream=false")
+			}
+
+			return &http.Response{
+				StatusCode: http.StatusOK,
+				Body:       io.NopCloser(strings.NewReader(`{"response":"Hello! How can I help you today?"}`)),
+				Header:     make(http.Header),
+			}, nil
+		}),
+	}
+	defer func() { httpClient = origHTTPClient }()
+
+	err := localModelGenerate([]string{
+		"--host", "http://example.test",
+		"--model", "gemma4:31b",
+		"--prompt", "hello there",
+		"--output", outputPath,
+	})
+	if err != nil {
+		t.Fatalf("localModelGenerate returned error: %v", err)
+	}
+
+	data, err := os.ReadFile(outputPath)
+	if err != nil {
+		t.Fatalf("failed to read output file: %v", err)
+	}
+	if string(data) != "Hello! How can I help you today?" {
+		t.Fatalf("unexpected output %q", string(data))
+	}
+}
+
+func TestLocalModelGenerateRequiresPrompt(t *testing.T) {
+	err := localModelGenerate([]string{"--output", filepath.Join(t.TempDir(), "response.txt")})
+	if err == nil || !strings.Contains(err.Error(), "requires --prompt") {
+		t.Fatalf("expected missing prompt error, got %v", err)
+	}
+}
+
+func TestLocalModelGenerateReportsHTTPFailure(t *testing.T) {
+	origHTTPClient := httpClient
+	httpClient = &http.Client{
+		Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+			return &http.Response{
+				StatusCode: http.StatusBadGateway,
+				Body:       io.NopCloser(strings.NewReader("nope\n")),
+				Header:     make(http.Header),
+			}, nil
+		}),
+	}
+	defer func() { httpClient = origHTTPClient }()
+
+	err := localModelGenerate([]string{
+		"--host", "http://example.test",
+		"--prompt", "hello there",
+		"--output", filepath.Join(t.TempDir(), "response.txt"),
+	})
+	if err == nil || !strings.Contains(err.Error(), "status 502") {
+		t.Fatalf("expected HTTP status error, got %v", err)
 	}
 }
 
