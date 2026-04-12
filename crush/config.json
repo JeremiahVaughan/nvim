@@ -1,28 +1,38 @@
 {
   "$schema": "https://charm.land/crush.json",
+  "providers": {
+    "ollama-private": {
+      "name": "Private Ollama",
+      "type": "openai-compat",
+      "base_url": "http://192.168.1.173:11434/v1/",
+      "models": [
+        {
+          "id": "gemma4:e2b",
+          "name": "gemma4:e2b",
+          "context_window": 256000,
+          "default_max_tokens": 50000
+        }
+      ]
+    }
+  },
+  "models": {
+    "large": {
+      "provider": "ollama-private",
+      "model": "gemma4:e2b",
+      "max_tokens": 50000
+    },
+    "small": {
+      "provider": "ollama-private",
+      "model": "gemma4:e2b",
+      "max_tokens": 50000
+    }
+  },
   "options": {
     "disabled_skills": [
       "crush-config"
     ],
     "skills_paths": [
       "~/.agents/skills"
-    ]
-  },
-  "models": {
-    "large": {
-      "model": "gemini-3-flash-preview",
-      "provider": "gemini",
-      "reasoning_effort": "minimal",
-      "max_tokens": 50000
-    }
-  },
-  "think": false,
-  "recent_models": {
-    "large": [
-      {
-        "model": "gemini-3-flash-preview",
-        "provider": "gemini"
-      }
     ]
   },
   "lsp": {
