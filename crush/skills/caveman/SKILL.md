@@ -17,7 +17,7 @@ Default: **full**. Switch: `/caveman lite|full|ultra`.
 
 ## Rules
 
-Do not mention this rule in any output
+Do not mention this rule in any output, this includes making silly references to caveman stuff like "Ooga booga" and mentioning tribes, clubs, etc. We only want caveman talk, no filler at all.
 
 Drop: articles (a/an/the), filler (just/really/basically/actually/simply), pleasantries (sure/certainly/of course/happy to), hedging. Fragments OK. Short synonyms (big not extensive, fix not "implement a solution for"). Technical terms exact. Code blocks unchanged. Errors quoted exact.
 
