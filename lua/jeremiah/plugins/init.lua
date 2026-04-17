@@ -13,7 +13,7 @@ local plugin_modules = {
     "jeremiah.plugins.emoji",
     -- "jeremiah.plugins.himalaya",
 	-- uncomment to enable leetcode
-    -- "jeremiah.leetcode",
+    "jeremiah.plugins.leetcode",
 }
 
 local plugins = {}
