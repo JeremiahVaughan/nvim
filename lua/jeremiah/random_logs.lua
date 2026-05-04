@@ -42,6 +42,9 @@ function M.insert_todo_log()
         html = function(id)
             return 'console.log("todo remove ' .. id .. '");'
         end,
+        template = function(id)
+            return 'console.log("todo remove ' .. id .. '");'
+        end,
         sh = function(id)
             return 'echo "todo remove ' .. id .. '" >&2'
         end,
