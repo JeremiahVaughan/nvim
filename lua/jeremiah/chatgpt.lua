@@ -1,6 +1,6 @@
 -- Adding shortcut to save current file and open chatgpt
 vim.api.nvim_set_keymap('n', '<leader>cc', ':lua ToggleChatGptTerminal("default")<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>CC', ':lua ToggleChatGptTerminal("super")<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>CC', ':lua ToggleChatGptTerminal("custom")<CR>', { noremap = true, silent = true })
 
 local function ChatGptTerminalId(id)
 	return 'chatgpt:' .. (id or 'default')
@@ -8,10 +8,10 @@ end
 
 local function ChatGptTerminalCommand(id)
 	local mode = id or 'default'
-	if mode == 'super' then
-		return '/home/linuxbrew/.linuxbrew/bin/codex'
+	if mode == 'custom' then
+		return '/home/piegarden/go/bin/crush'
 	end
-	return '/home/piegarden/go/bin/crush'
+	return '/home/linuxbrew/.linuxbrew/bin/codex'
 end
 
 -- Function to find the terminal buffer labeled as "chatgpt"
