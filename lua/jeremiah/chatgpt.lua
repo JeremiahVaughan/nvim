@@ -11,7 +11,7 @@ local function ChatGptTerminalCommand(id)
 	if mode == 'custom' then
 		return '/home/piegarden/go/bin/crush'
 	end
-	return '/home/linuxbrew/.linuxbrew/bin/codex'
+	return 'codex'
 end
 
 -- Function to find the terminal buffer labeled as "chatgpt"

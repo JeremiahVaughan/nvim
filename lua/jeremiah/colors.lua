@@ -2,7 +2,7 @@ local M = {}
 
 if vim.g.neovide then
   -- todo having issues getting this working on windows
-  vim.o.guifont = "JetBrainsMono Nerd Font Mono:h13"
+  -- vim.o.guifont = "JetBrainsMono Nerd Font Mono:h13"
   vim.opt.linespace = 0
 end
 

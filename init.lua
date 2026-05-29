@@ -1,5 +1,15 @@
 -- ensure go binary is always found
 vim.env.PATH = vim.env.HOME .. "/.local/opt/go/bin:" .. vim.env.PATH
+vim.env.PATH = "/opt/homebrew/bin:/usr/local/bin:" .. vim.env.PATH
+vim.env.PATH = "/home/linuxbrew/.linuxbrew/bin:" .. vim.env.PATH
+vim.env.PATH = vim.env.HOME .. "/go/bin:" .. vim.env.PATH
+
+local default_dir = vim.env.HOME .. "/create"
+
+-- Change directory only if no file or directory argument was passed to Neovim
+if vim.fn.argc() == 0 then
+  pcall(vim.api.nvim_set_current_dir, default_dir)
+end
 
 -- Reference: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 -- Book mark: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L701
