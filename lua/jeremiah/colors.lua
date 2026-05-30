@@ -1,8 +1,9 @@
 local M = {}
 
 if vim.g.neovide then
-  -- todo having issues getting this working on windows
-  -- vim.o.guifont = "JetBrainsMono Nerd Font Mono:h13"
+  if (vim.uv or vim.loop).os_uname().sysname == "Linux" then
+    vim.o.guifont = "JetBrainsMono Nerd Font Mono:h13"
+  end
   vim.opt.linespace = 0
 end
 
