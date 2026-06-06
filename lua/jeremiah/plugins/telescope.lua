@@ -108,7 +108,7 @@ local M = {
 
             vim.keymap.set("n", "<leader>sr", function()
 				tele_builtin.find_files({
-					cwd = vim.fn.expand("~/deploy/wiki-data"),
+					cwd = vim.fn.expand("~/deploy/production/wiki-data"),
 				})
             end, { desc = "[S]earch [R]eference files" })
 
