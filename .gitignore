@@ -4,3 +4,4 @@ brandons_setup
 *conf.bak*
 /.nvimlog
 tmp
+/nvim.log
