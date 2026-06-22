@@ -9,5 +9,4 @@ gui:
       - underline
 git:
   pagers:
-    - colorArg: never
-      pager: delta --dark --paging=never
+    - pager: delta --dark --paging=never
