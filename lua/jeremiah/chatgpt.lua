@@ -9,7 +9,7 @@ end
 local function ChatGptTerminalCommand(id)
 	local mode = id or 'default'
 	if mode == 'custom' then
-		return '/home/piegarden/go/bin/crush'
+		return '/Users/jvaughan/.local/bin/claude'
 	end
 	return 'codex'
 end
