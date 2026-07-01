@@ -11,7 +11,7 @@ end
 local function resolve_target_alpine_version()
     local version = vim.g.go_update_target_alpine_version
     if version == nil or version == '' then
-        return '3.23'
+        return '3.24'
     end
     return tostring(version)
 end
