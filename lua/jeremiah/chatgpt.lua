@@ -11,7 +11,7 @@ local function ChatGptTerminalCommand(id)
 	if mode == 'custom' then
 		return '/Users/jvaughan/.local/bin/claude'
 	end
-	return 'codex'
+	return 'codex resume'
 end
 
 -- Function to find the terminal buffer labeled as "chatgpt"
