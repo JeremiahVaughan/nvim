@@ -8,10 +8,10 @@ local function safe_json_decode(line)
 end
 
 local function debug_log(line)
-    if not vim.g.make_runner_debug then
+    if not vim.g.unit_tester_debug then
         return
     end
-    local log_path = '/tmp/make_runner.log'
+    local log_path = '/tmp/unit_tester.log'
     local ts = os.date('%Y-%m-%d %H:%M:%S')
     vim.fn.writefile({ ('[%s] %s'):format(ts, line) }, log_path, 'a')
 end
@@ -82,7 +82,7 @@ local function run_cargo_tests_with_capture()
     local win = vim.api.nvim_get_current_win()
     local term_buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_win_set_buf(win, term_buf)
-    pcall(vim.api.nvim_buf_set_var, term_buf, 'term_id', 'rust-make')
+    pcall(vim.api.nvim_buf_set_var, term_buf, 'term_id', 'rust-unit-test')
     local output = {}
     local function on_output(_, data, _)
         if type(data) ~= 'table' then
@@ -250,10 +250,34 @@ local function run_cargo_quickfix()
     return exit_code == 0
 end
 
+local function run_go_tests()
+    if vim.fn.executable('go') == 0 then
+        vim.notify('go executable not found', vim.log.levels.ERROR)
+        return
+    end
+
+    pcall(vim.cmd, 'compiler go')
+    local makeprg = 'go test ./...'
+    vim.opt.makeprg = makeprg
+    vim.notify(makeprg, vim.log.levels.INFO)
+    vim.cmd('make')
+
+    local exit_code = vim.v.shell_error
+    local qf = vim.fn.getqflist({ size = 0 })
+    if qf.size > 0 then
+        vim.cmd('belowright copen')
+        vim.cmd('cfirst')
+    elseif exit_code == 0 then
+        vim.cmd('cclose')
+    else
+        vim.notify('Tests failed but no file:line could be parsed.', vim.log.levels.WARN)
+    end
+end
+
 function M.run()
     jeremiah.utils.SaveAll()
     if is_rust_project() then
-        cleanup_terminal('rust-make')
+        cleanup_terminal('rust-unit-test')
         local ok = run_cargo_quickfix()
         if ok then
             run_cargo_tests_with_capture()
@@ -261,15 +285,11 @@ function M.run()
         return
     end
 
-    vim.cmd('compiler make')
-    local makeprg = 'make -j"$(getconf _NPROCESSORS_ONLN)"'
-    vim.opt.makeprg = makeprg
-    vim.notify(makeprg, vim.log.levels.INFO)
-    vim.cmd('make')
+    run_go_tests()
 end
 
 vim.api.nvim_create_user_command('M', function()
     M.run()
-end, { desc = 'Save buffers and run make/cargo tests' })
+end, { desc = 'Save buffers and run unit tests' })
 
 return M

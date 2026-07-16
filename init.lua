@@ -29,8 +29,8 @@ vim.keymap.set('t', '<C-q>', [[<C-\><C-n>]], { noremap = true, silent = true })
 -- Normal mode: disable <C-q>
 vim.keymap.set('n', '<C-q>', '<Nop>', { noremap = true, silent = true })
 
--- debug logs for make_runner
--- vim.g.make_runner_debug = true
+-- debug logs for unit_tester
+-- vim.g.unit_tester_debug = true
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
