@@ -16,11 +16,21 @@ local function debug_log(line)
     vim.fn.writefile({ ('[%s] %s'):format(ts, line) }, log_path, 'a')
 end
 
+local function find_project_file_from_cwd(name)
+    local cwd = vim.fn.getcwd()
+    if vim.fs and vim.fs.find then
+        local matches = vim.fs.find(name, { path = cwd, upward = true, type = 'file' })
+        return matches[1] ~= nil
+    end
+
+    return vim.fn.findfile(name, cwd .. ';') ~= ''
+end
+
 local function is_rust_project()
     if vim.fn.executable('cargo') == 0 then
         return false
     end
-    return vim.fn.findfile('Cargo.toml', '.;') ~= ''
+    return find_project_file_from_cwd('Cargo.toml')
 end
 
 local function find_terminal_buf(label)
