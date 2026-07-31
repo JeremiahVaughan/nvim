@@ -81,6 +81,7 @@ local M = {
                         ".gocache",
 						".stfolder",
 						".stignore",
+						".rumdl_cache",
                     },
                     layout_strategy = "flex",
                     layout_config = {
