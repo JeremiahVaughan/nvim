@@ -2,25 +2,20 @@ local M = {}
 
 local runner_override
 
--- Toggle the selection between Base64 encoded and decoded states via the nvim-helper CLI.
-local function log_message(message)
-    vim.api.nvim_echo({ { tostring(message), 'None' } }, true, {})
-end
-
-local function run_helper(input)
+local function run_base64_toggle(input)
     if runner_override then
         return runner_override(input)
     end
 
-    local executable = vim.loop.os_homedir() .. '/go/bin/nvim-helper'
+    local executable = 'base64-toggle'
     if vim.fn.executable(executable) ~= 1 then
-        vim.notify('nvim-helper is not installed. See README for installation steps.', vim.log.levels.ERROR)
+        vim.notify('base64-toggle is not installed. Install from: https://codeberg.org/jeremiahvaughan/base64-toggle', vim.log.levels.ERROR)
         return nil
     end
 
     local output = vim.fn.system({ executable }, input)
     if vim.v.shell_error ~= 0 then
-        vim.notify('nvim-helper base64 failed: ' .. output, vim.log.levels.ERROR)
+        vim.notify('base64-toggle base64 failed: ' .. output, vim.log.levels.ERROR)
         return nil
     end
 
@@ -34,13 +29,11 @@ function M.toggle_visual_selection_base64()
     vim.cmd('normal! "vy')
     local selected_text = vim.fn.getreg('v')
 
-    local transformed = run_helper(selected_text)
+    local transformed = run_base64_toggle(selected_text)
     if not transformed then
         vim.fn.setreg('"', previous_selection)
         return
     end
-
-    transformed = transformed:gsub('\r?\n$', '')
 
     vim.fn.setreg('v', transformed, 'v')
     vim.cmd('normal! gv"vp')

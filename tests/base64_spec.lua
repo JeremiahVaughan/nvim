@@ -17,7 +17,7 @@ local function with_scratch_buffer(fn)
     end
 end
 
-function M.run()
+function M.replace_visual_selection_with_transformed_text()
     base64._set_runner_override(function(input)
         return string.upper(input)
     end)
