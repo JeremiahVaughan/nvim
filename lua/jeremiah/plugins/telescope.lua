@@ -79,9 +79,11 @@ local M = {
                         "vendor", -- golang keyword
                         "vendoring", -- custom keyword to not conflict with golang keyword but means same thing
                         ".gocache",
+						".cache",
 						".stfolder",
 						".stignore",
 						".rumdl_cache",
+						".upkeep",
                     },
                     layout_strategy = "flex",
                     layout_config = {
