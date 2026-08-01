@@ -3,7 +3,6 @@ local plugin_modules = {
     "jeremiah.plugins.commentary",
     "jeremiah.plugins.flatten",
     "jeremiah.plugins.dadbod",
-    "jeremiah.plugins.ninetynine",
     "jeremiah.plugins.ccc",
     "jeremiah.plugins.oil",
     "jeremiah.plugins.telescope",
