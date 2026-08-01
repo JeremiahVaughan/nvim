@@ -7,15 +7,15 @@ local function run_random_string(length)
         return runner_override(length)
     end
 
-    local executable = vim.loop.os_homedir() .. '/go/bin/nvim-helper'
+    local executable = 'random-string'
     if vim.fn.executable(executable) ~= 1 then
-        vim.notify('nvim-helper is not installed. See README for installation steps.', vim.log.levels.ERROR)
+        vim.notify('random-string is not installed. See README for installation steps.', vim.log.levels.ERROR)
         return nil
     end
 
-    local output = vim.fn.system({ executable, 'random-string', tostring(length) })
+    local output = vim.fn.system({ executable })
     if vim.v.shell_error ~= 0 then
-        vim.notify('nvim-helper random-string failed: ' .. output, vim.log.levels.ERROR)
+        vim.notify('random-string failed: ' .. output, vim.log.levels.ERROR)
         return nil
     end
 
