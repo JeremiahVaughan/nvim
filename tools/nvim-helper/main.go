@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"crypto/rand"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -10,14 +9,12 @@ import (
 	"fmt"
 	"io"
 	"io/fs"
-	"math/big"
 	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"regexp"
 	"sort"
-	"strconv"
 	"strings"
 	"unicode/utf8"
 )
@@ -39,23 +36,6 @@ func main() {
 func run(args []string) error {
 	if len(args) > 0 {
 		switch args[0] {
-		case "random-string":
-			length := 5
-			if len(args) > 1 {
-				value, err := strconv.Atoi(args[1])
-				if err != nil || value <= 0 {
-					return fmt.Errorf("random-string requires a positive integer length")
-				}
-				length = value
-			}
-
-			result, err := randomString(length)
-			if err != nil {
-				return fmt.Errorf("failed to generate random string: %w", err)
-			}
-
-			fmt.Println(result)
-			return nil
 		case "go-update":
 			return goUpdate(args[1:])
 		case "local-model":
@@ -124,28 +104,6 @@ func toggleBase64(input string) string {
 	}
 
 	return base64.StdEncoding.EncodeToString([]byte(trimmed))
-}
-
-const randomAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-
-func randomString(length int) (string, error) {
-	if length <= 0 {
-		return "", fmt.Errorf("length must be positive")
-	}
-
-	letters := []rune(randomAlphabet)
-	result := make([]rune, length)
-	max := big.NewInt(int64(len(letters)))
-
-	for i := range result {
-		n, err := rand.Int(rand.Reader, max)
-		if err != nil {
-			return "", err
-		}
-		result[i] = letters[n.Int64()]
-	}
-
-	return string(result), nil
 }
 
 type localModelRequest struct {

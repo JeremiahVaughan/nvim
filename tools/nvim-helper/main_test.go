@@ -77,28 +77,6 @@ func TestToggleBase64EmptyInput(t *testing.T) {
 	}
 }
 
-func TestRandomStringLength(t *testing.T) {
-	const length = 16
-	got, err := randomString(length)
-	if err != nil {
-		t.Fatalf("randomString returned error: %v", err)
-	}
-	if len(got) != length {
-		t.Fatalf("expected length %d, got %d", length, len(got))
-	}
-	for _, r := range got {
-		if !strings.ContainsRune(randomAlphabet, r) {
-			t.Fatalf("unexpected rune %q in random string", r)
-		}
-	}
-}
-
-func TestRandomStringInvalidLength(t *testing.T) {
-	if _, err := randomString(0); err == nil {
-		t.Fatalf("expected error for non-positive length")
-	}
-}
-
 func TestRunUnknownCommand(t *testing.T) {
 	if err := run([]string{"nope"}); err == nil {
 		t.Fatalf("expected error for unknown command")
@@ -402,7 +380,7 @@ func TestGoUpdateAggregatesErrors(t *testing.T) {
 	goUpdateOutput = &output
 	defer func() { goUpdateOutput = origOutput }()
 
-	err := goUpdate([]string{"--root", tempDir, "--version", "1.24.7"})
+	err := goUpdate([]string{"--root", tempDir, "--version", "1.24.7", "--alpine-version", "22"})
 	if err == nil {
 		t.Fatalf("expected goUpdate to report failure")
 	}
