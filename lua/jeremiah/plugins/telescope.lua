@@ -115,6 +115,12 @@ local M = {
 				})
             end, { desc = "[S]earch [R]eference files" })
 
+            vim.keymap.set("n", "<leader>sw", function()
+				tele_builtin.find_files({
+					cwd = vim.fn.expand("~/create/personal-docs"),
+				})
+            end, { desc = "[S]earch [W]ork reference files" })
+
             vim.keymap.set("n", "<leader>st", function()
                 tele_builtin.find_files({ cwd = vim.fn.stdpath("config") .. "/lua/jeremiah/templates" })
             end, { desc = "[S]earch [T]emplate files" })
