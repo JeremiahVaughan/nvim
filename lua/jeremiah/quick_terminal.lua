@@ -7,31 +7,40 @@ vim.api.nvim_set_keymap('n', '<leader>t', ':lua ToggleQuickTerminal("b")<CR>', {
 vim.api.nvim_set_keymap('n', '<leader>r', ':lua RebuildQuickTerminal("b")<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>rr', ':lua ToggleQuickTerminal("r")<CR>', { noremap = true, silent = true })
 
+local QUICK_TERMINAL_VAR_PREFIX = 'jeremiah_quick_terminal_'
+
+local function quick_terminal_var(label)
+	return QUICK_TERMINAL_VAR_PREFIX .. label .. '_buf'
+end
+
+-- Function to find the terminal buffer labeled as "server"
+local function get_quick_terminal_buf(label)
+	local buf = vim.t[quick_terminal_var(label)]
+	if type(buf) == 'number' and vim.api.nvim_buf_is_valid(buf) then
+		return buf
+	end
+
+	vim.t[quick_terminal_var(label)] = nil
+	return nil
+end
+
+local function set_quick_terminal_buf(label, buf)
+	vim.t[quick_terminal_var(label)] = buf
+end
+
 -- Function to open a new terminal buffer and run the server
 function OpenQuickTerminal(label)
 	-- Open a new buffer and start a terminal
 	vim.cmd('term')
 	-- Label this terminal buffer as "server"
 	vim.b.term_id = label
-end
-
--- Function to find the terminal buffer labeled as "server"
-function FindServerTerminalBuffer(label)
-	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-		if vim.api.nvim_buf_is_valid(buf) then
-			local success, buf_label = pcall(vim.api.nvim_buf_get_var, buf, 'term_id')
-			if success and buf_label == label then
-				return buf
-			end
-		end
-	end
-	return nil
+	set_quick_terminal_buf(label, vim.api.nvim_get_current_buf())
 end
 
 -- Function to toggle the server state (start or restart)
 function ToggleQuickTerminal(label)
 	jeremiah.utils.SaveAll()
-	local buf = FindServerTerminalBuffer(label)
+	local buf = get_quick_terminal_buf(label)
 	if buf then
 		vim.api.nvim_set_current_buf(buf)
 	else
@@ -50,7 +59,7 @@ end
 
 function RebuildQuickTerminal(label)
 	jeremiah.utils.SaveAll()
-	local buf = FindServerTerminalBuffer(label)
+	local buf = get_quick_terminal_buf(label)
 	if buf then
 		vim.api.nvim_set_current_buf(buf)
 		SendToTerminal(buf, '\x03')
