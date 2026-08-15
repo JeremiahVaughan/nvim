@@ -285,7 +285,7 @@ local function run_go_tests()
 end
 
 function M.run()
-    jeremiah.utils.SaveAll()
+    jeremiah.utils.save_all()
     if is_rust_project() then
         cleanup_terminal('rust-unit-test')
         local ok = run_cargo_quickfix()

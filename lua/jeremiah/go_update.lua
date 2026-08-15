@@ -86,7 +86,7 @@ function M.run()
 end
 
 vim.api.nvim_create_user_command('GoUpdate', function()
-    jeremiah.utils.SaveAll()
+    jeremiah.utils.save_all()
     M.run()
 end, { desc = 'Update Go modules via nvim-helper' })
 

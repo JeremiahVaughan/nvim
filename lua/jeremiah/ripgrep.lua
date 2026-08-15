@@ -26,7 +26,7 @@ vim.api.nvim_create_user_command(
     end
     local rg_args = build_rg_args({ "rg", "--vimgrep", "--case-sensitive" })
     -- ripgrep can't search in-memory buffers
-	jeremiah.utils.SaveAll()
+	jeremiah.utils.save_all()
 
     -- translate leading Vim regex modifiers
     if pat:sub(1, 2) == "\\V" then         -- very nomagic → literal search
