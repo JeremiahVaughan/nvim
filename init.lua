@@ -100,6 +100,8 @@ vim.cmd('syntax enable') -- Enables syntax highlighting
 -- Use system clipboard by default todo trying this out disabled to see if I like it better
 -- vim.opt.clipboard = "unnamedplus"
 
+require("config.remote_clipboard").setup()
+
 
 -- Telescope configuration lives in lua/jeremiah/telescope.lua
 vim.api.nvim_set_keymap('n', '<C-w>r', ':copen<CR>', { noremap = true, silent = true })
