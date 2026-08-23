@@ -32,7 +32,10 @@ local M = {
                     return
                 end
 
-                tele_builtin.live_grep({ default_text = selected_text })
+                tele_builtin.live_grep({
+                    default_text = selected_text,
+                    additional_args = { "--fixed-strings" },
+                })
             end
 
             vim.api.nvim_set_keymap("n", "<leader>sf", ":Telescope find_files<CR>", { noremap = true, silent = true })
