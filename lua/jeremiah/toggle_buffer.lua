@@ -32,7 +32,8 @@ function toggle_buff(cmd, label)
 	end
 end
 
-vim.api.nvim_set_keymap('n', '<leader>cc', ':lua toggle_buff("te codex resume", "codex")<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>cc', ':lua toggle_buff("te codex", "codex")<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>CC', ':lua toggle_buff("te codex resume", "codex")<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>t', ':lua toggle_buff("te", "term")<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>j', ':lua toggle_buff("", "scratch")<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>k', ':lua toggle_buff("te k9s", "k9s")<CR>', { noremap = true, silent = true })
