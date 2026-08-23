@@ -7,6 +7,8 @@
 --   input = {
 --     -- Use multiple keyboard layouts and switch between them with Left Alt + Right Alt.
 --     kb_layout = "us,dk,eu",
+--
+--     -- LEAVE THIS COMMENTED, CAPSLOCK IS THE DEVIL AND SHOULD NEVER BE TURNED ON FOR ANY REASON. DO NOT SUMMON SATAN!
 --     kb_options = "compose:caps,shift:both_capslock_cancel,grp:alts_toggle",
 --
 --     -- Use a specific keyboard variant if needed (e.g. intl for international keyboards).
